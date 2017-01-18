@@ -14,5 +14,18 @@
   <TextView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="Hello World!"/>
+      android:text="Hello World!" android:id="@+id/textView"/>
+  <Button
+      android:text="feedly account"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/FeedlyAccountBtn"
+      style="@style/Widget.AppCompat.Button.Colored" android:layout_below="@+id/textView"
+      android:layout_alignParentStart="true"/>
+  <TextView
+      android:text="TextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content" android:layout_below="@+id/FeedlyAccountBtn"
+      android:layout_alignParentStart="true" android:layout_marginTop="18dp"
+      android:id="@+id/textView2" android:layout_alignParentEnd="true"/>
 </RelativeLayout>
