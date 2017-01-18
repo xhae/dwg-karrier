@@ -13,22 +13,5 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-
-    DataBaseOpenHelper dataBaseOpenHelper = new DataBaseOpenHelper(this);
-
-    ArrayList<ScriptedURL> scriptedURLs = dataBaseOpenHelper.getUrlList();
-
-    TextView textView = (TextView) findViewById(R.id.testText);
-    Log.d("arraylist","start");
-
-    int i=0;
-    String str="";
-    while(i<scriptedURLs.size()){
-      str = str+"\n"+scriptedURLs.get(i).url;
-      i++;
-    }
-
-    textView.setText(str);
-
   }
 }
