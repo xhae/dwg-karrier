@@ -13,8 +13,7 @@ import java.util.Date;
  */
 
 public class ContentView extends AppCompatActivity{
-  String fin_time;
-  Date dfin_time;
+  Date fin_time;
 
   @Override
   protected void onCreate(Bundle savedInstanceState){
@@ -22,7 +21,7 @@ public class ContentView extends AppCompatActivity{
     setContentView(R.layout.content);
 
     final Intent intent = new Intent(this.getIntent());
-    fin_time = intent.getStringExtra("text");
+    fin_time = (Date)intent.getSerializableExtra("fin_time");
     final Date cur_time = new Date(System.currentTimeMillis());
 
 
@@ -31,8 +30,8 @@ public class ContentView extends AppCompatActivity{
       @Override
       public void onClick(View v){
         Intent intent1 = new Intent(ContentView.this, ListActivity.class);
-        intent1.putExtra("text", fin_time);
-        intent1.putExtra("time", cur_time);
+        intent1.putExtra("fin_time", fin_time);
+        intent1.putExtra("cur_time", cur_time);
         startActivity(intent1);
         finish();
       }
