@@ -15,7 +15,7 @@ public class item {
     return spend_time;
   }
 
-  public item(String title, String spend_time){
+  public item(String title, String spend_time) {
     this.title = title;
     this.spend_time = spend_time;
   }

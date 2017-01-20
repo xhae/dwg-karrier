@@ -46,6 +46,7 @@ public class ListActivity extends AppCompatActivity{
       }
     });
   }
+
   private ArrayList<item> getData() {
     ArrayList ret = new ArrayList<item>();
 
@@ -73,8 +74,6 @@ public class ListActivity extends AppCompatActivity{
 
     /*word_count 기반으로 시간 계산하는 함수*/
     // cal_time();
-
-
 
     return ret;
   }
