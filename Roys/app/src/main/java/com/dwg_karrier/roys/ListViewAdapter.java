@@ -40,7 +40,7 @@ public class ListViewAdapter extends BaseAdapter {
   public View getView (int position, View convertView, ViewGroup parent){
 
     if (convertView == null) {
-      convertView=inflater.inflate(layout,parent, false);
+      convertView = inflater.inflate(layout,parent, false);
     }
     item item = data.get(position);
     TextView title = (TextView)convertView.findViewById(R.id.TitleView);
