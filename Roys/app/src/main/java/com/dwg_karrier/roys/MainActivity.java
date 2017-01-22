@@ -12,17 +12,13 @@ import android.widget.Toast;
 import java.util.Calendar;
 import java.util.Date;
 
-import android.util.Log;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+
 
     Button b = (Button)findViewById(R.id.button);
     final EditText editText = (EditText)findViewById(R.id.editText);
@@ -37,16 +33,16 @@ public class MainActivity extends AppCompatActivity {
           return;
         }
 
-        Date cur_time = new Date(System.currentTimeMillis());
+        Date curTime = new Date(System.currentTimeMillis());
         Calendar cal = Calendar.getInstance();
-        cal.setTime(cur_time);
-        String take_time = String.valueOf(editText.getText());
-        cal.add(Calendar.MINUTE, Integer.parseInt(take_time));
+        cal.setTime(curTime);
+        String inputTime = String.valueOf(editText.getText());
+        cal.add(Calendar.MINUTE, Integer.parseInt(inputTime));
         Date d = new Date(cal.getTimeInMillis());
 
         Intent intent = new Intent(MainActivity.this, ListActivity.class);
-        intent.putExtra("fin_time", d);
-        intent.putExtra("cur_time", cur_time);
+        intent.putExtra("finTime", d);
+        intent.putExtra("curTime", curTime);
         startActivity(intent);
       }
     });

@@ -17,7 +17,7 @@
       android:onClick="onClick"
       android:text="Input Sparetime" android:textSize="36sp"
       android:layout_marginBottom="33dp" android:layout_above="@+id/editText"
-      android:layout_centerHorizontal="true"/>
+      android:layout_centerHorizontal="true" android:id="@+id/textView2"/>
   <Button
       android:text="OK"
       android:layout_width="wrap_content"
@@ -41,4 +41,5 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content" android:layout_alignBottom="@+id/editText"
       android:layout_toEndOf="@+id/editText" android:id="@+id/textView3" android:textSize="18sp"/>
+
 </RelativeLayout>

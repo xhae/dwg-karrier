@@ -18,6 +18,8 @@
 
     <activity android:name=".ListActivity"/>
     <activity android:name=".ContentView"/>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
   </application>
 
 

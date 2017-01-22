@@ -10,26 +10,23 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * Created by userpc on 2017-01-16.
- */
-
-public class ListActivity extends AppCompatActivity{
+public class ListActivity extends AppCompatActivity {
   ListView lv;
-  ArrayList<item> data;
-  Date fin_time; /* expected finish time */
-  Date cur_time; /* current time*/
-  long duration; /* time duration between current_time and finish time */
+  ArrayList<ScriptedData> data;
+  Date finTime; // expected finish time
+  Date curTime; // current time
+  long duration; // time duration between current_time and finish time
 
-  protected void onCreate (Bundle savedInstanceState){
+  protected void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.list);
 
+    final int minute = 60000;
     final Intent intent = new Intent(this.getIntent());
-    fin_time = (Date)intent.getSerializableExtra("fin_time");
-    cur_time = (Date)intent.getSerializableExtra("cur_time");
+    finTime = (Date)intent.getSerializableExtra("finTime");
+    curTime = (Date)intent.getSerializableExtra("curTime");
 
-    duration = (fin_time.getTime() - cur_time.getTime()) / 60000;
+    duration = (finTime.getTime() - curTime.getTime()) / minute;
     data = getData();
 
     lv = (ListView)findViewById(R.id.listView);
@@ -39,46 +36,52 @@ public class ListActivity extends AppCompatActivity{
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent1 = new Intent(ListActivity.this, ContentView.class);
-        intent1.putExtra("fin_time", fin_time);
-        intent1.putExtra("cur_time", cur_time);
+        intent1.putExtra("finTime", finTime);
+        intent1.putExtra("curTime", curTime);
         startActivity(intent1);
         finish();
       }
     });
   }
 
-  private ArrayList<item> getData() {
-    ArrayList ret = new ArrayList<item>();
+  private ArrayList<ScriptedData> getData() {
+    ArrayList ret = new ArrayList<ScriptedData>();
 
-    /*url list 불러오는 함수*/
-    //ret = callurl();
+    /*url list 불러오는 함수
+     *ret = callurl();
+     */
 
-    // imsi test code //
-    ret.add(new item("fin_time: " +fin_time, ""+ duration));
-    ret.add(new item(cur_time +"", "test time...2"));
-    ret.add(new item("test title...3", "test time...3"));
-    ret.add(new item("test title...4", "test time...4"));
-    ret.add(new item("test title...5", "test time...5"));
-    ret.add(new item("test title...6", "test time...6"));
-    ret.add(new item("test title...7", "test time...7"));
-    ret.add(new item("test title...8", "test time...8"));
-    ret.add(new item("test title...9", "test time...9"));
-    ret.add(new item("test title...10", "test time...10"));
-    ret.add(new item("test title...11", "test time...11"));
-    ret.add(new item("test title...12", "test time...12"));
+    // temp test code
+    ret.add(new ScriptedData("finTime: " + finTime, ""+ duration));
+    ret.add(new ScriptedData(curTime +"", "test time...2"));
+    ret.add(new ScriptedData("test title...3", "test time...3"));
+    ret.add(new ScriptedData("test title...4", "test time...4"));
+    ret.add(new ScriptedData("test title...5", "test time...5"));
+    ret.add(new ScriptedData("test title...6", "test time...6"));
+    ret.add(new ScriptedData("test title...7", "test time...7"));
+    ret.add(new ScriptedData("test title...8", "test time...8"));
+    ret.add(new ScriptedData("test title...9", "test time...9"));
+    ret.add(new ScriptedData("test title...10", "test time...10"));
+    ret.add(new ScriptedData("test title...11", "test time...11"));
+    ret.add(new ScriptedData("test title...12", "test time...12"));
     return ret;
   }
 
-  private ArrayList<item> callurl(){
-    ArrayList ret = new ArrayList<item>();
+  private ArrayList<ScriptedData> callurl() {
+//    DataBaseOpenHelper test = new DataBaseOpenHelper(/*what????*/);
+    ArrayList ret = new ArrayList<ScriptedData>();
+    ArrayList<ScriptedURL> wholeList = new ArrayList<ScriptedURL>();
 
-    /*word_count 기반으로 시간 계산하는 함수*/
-    // cal_time();
+//    wholeList = test.getUrlList();
+
+    /*word_count 기반으로 시간 계산하는 함수
+     * cal_time();
+     */
 
     return ret;
   }
 
-  private String cal_time(){
+  private String cal_time() {
     String ret = "";
 
     return ret;

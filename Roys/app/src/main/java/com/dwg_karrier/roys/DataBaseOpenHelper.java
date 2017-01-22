@@ -15,10 +15,9 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   public DataBaseOpenHelper(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
   }
+
   public void onCreate(SQLiteDatabase db) {
-
     db.execSQL(DataBases.CreateDB._CREATE);
-
   }
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     onCreate(db);
