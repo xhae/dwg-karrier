@@ -52,16 +52,17 @@ public class MainActivity extends AppCompatActivity {
     Button btnFeedlyAccount = (Button) findViewById(R.id.FeedlyAccountBtn);
     btnFeedlyAccount.setOnClickListener(new Button.OnClickListener() {
       public void onClick(View v) {
-        String url = "https://cloud.feedly.com/v3/streams/contents?streamId=user/" + ID + "/category/global.all";
-        new GetPageList().execute(url);
+        final String URL = "https://cloud.feedly.com/v3/streams/contents?streamId=user/" + ID + "/category/global.all";
+        new GetPageList().execute(URL);
       }
     });
   }
 
   private class GetPageList extends AsyncTask<String, Void, String> {
-    /** the constructor gets the DB as a parameter */
+    /*
+     * TODO(leesera): the constructor gets the DB as a parameter
+     */
     public GetPageList() {
-
     }
 
     @Override
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
       try {
         URL url = new URL(params[0]);
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        urlConnection.setRequestProperty("Authorization", "OAuth " + ACCESS_TOKEN);
 
         InputStream stream = new BufferedInputStream(urlConnection.getInputStream());
         String result = convertStreamToString(stream);
@@ -76,9 +78,13 @@ public class MainActivity extends AppCompatActivity {
         JSONObject obj = new JSONObject(result);
         JSONArray arr = obj.getJSONArray("items");
         int len = arr.length();
+
         for (int i = 0; i < len; i++) {
-          /** the url of script page should be saved at DB */
-          //arr.getJSONObject(i).getString("originId");
+          /*
+           * TODO(leesera): the url of script page should be saved at DB
+           * like arr.getJSONObject(i).getString("originId");
+           */
+          //
         }
 
         urlConnection.disconnect();
