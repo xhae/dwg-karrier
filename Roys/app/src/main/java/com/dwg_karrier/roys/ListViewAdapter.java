@@ -40,7 +40,8 @@ public class ListViewAdapter extends BaseAdapter {
     TextView title = (TextView)convertView.findViewById(R.id.TitleView);
     title.setText("Title: "+scriptedData.getTitle());
     TextView expectedTime = (TextView)convertView.findViewById(R.id.TimeView);
-    expectedTime.setText("Time: "+scriptedData.getExpectedTime()+"min");
+    expectedTime.setText("Time: " + (int)scriptedData.getExpectedTime()/60+"hour"
+        + Double.parseDouble(String.format("%.2f",scriptedData.getExpectedTime()%60)) + "min");
 
     return convertView;
   }

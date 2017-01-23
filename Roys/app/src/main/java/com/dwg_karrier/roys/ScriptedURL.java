@@ -1,8 +1,19 @@
 package com.dwg_karrier.roys;
 
 public class ScriptedURL {
-  String url;
-  boolean isRead;
+  private String url;
+  private boolean isRead;
+  private int wordCount;
+
+  public String getUrl() {
+    return url;
+  }
+  public boolean getIsRead() {
+    return isRead;
+  }
+  public int getWordCount() {
+    return wordCount;
+  }
 
   ScriptedURL(String url, boolean isRead) {
     this.url = url;
@@ -22,5 +33,15 @@ public class ScriptedURL {
   ScriptedURL(String url) {
     this.url = url;
     this.isRead = false;
+  }
+
+  ScriptedURL (String url, int isRead, int wordCount){
+    this.url = url;
+    if(isRead == 1){
+      this.isRead = true;
+    }else {
+      this.isRead = false;
+    }
+    this.wordCount = wordCount;
   }
 }

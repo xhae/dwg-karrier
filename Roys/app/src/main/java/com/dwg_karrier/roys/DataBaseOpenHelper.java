@@ -59,6 +59,8 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     return resultList;
   }
 
+  //public ArrayList<ScriptedURL> getTestURL(){};
+
   public void setIsRead(String url, int status) {
     SQLiteDatabase dataBase = getWritableDatabase();
 

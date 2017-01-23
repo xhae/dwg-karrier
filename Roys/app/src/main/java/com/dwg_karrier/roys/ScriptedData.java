@@ -2,17 +2,22 @@ package com.dwg_karrier.roys;
 
 public class ScriptedData {
   private String title;
-  private String expectedTime;
+  private double expectedTime;
+  private String content;
 
   public String getTitle() {
     return title;
   }
-  public String getExpectedTime() {
+  public double getExpectedTime() {
     return expectedTime;
   }
+  public String getContent() {
+    return content;
+  }
 
-  public ScriptedData(String title, String expectedTime) {
+  public ScriptedData(String title, double expectedTime, String content) {
     this.title = title;
     this.expectedTime = expectedTime;
+    this.content = content;
   }
 }

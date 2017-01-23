@@ -32,7 +32,7 @@ public class ContentView extends AppCompatActivity {
     // get url
     try {
       // yet, write exact pageUrl
-      String pageUrl = "https://mercury.postlight.com/parser?url=http://www.bloter.net/archives/265787";
+      String pageUrl = "https://mercury.postlight.com/parser?url=https://blog.google/products/google-vr/showcase-your-art-new-ways-tilt-brush-toolkit/";
       MyAsyncTask myAsyncTask = new MyAsyncTask();
       myAsyncTask.execute(pageUrl);
     } catch (Exception e) {
@@ -68,7 +68,6 @@ public class ContentView extends AppCompatActivity {
       try {
         URL url = new URL(strings[0]);
         HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-        conn.setDoOutput(true);
         conn.setRequestProperty("Content-Type", "application/json");
         conn.setRequestProperty("x-api-key", "vr2E65ffhRAZlJTvwcrmq72zPo2wcSZuuLtQ4ITc");
         // if HTML responseCode is 200, then it's okay
