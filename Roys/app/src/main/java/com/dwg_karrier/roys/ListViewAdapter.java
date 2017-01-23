@@ -9,9 +9,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-
 public class ListViewAdapter extends BaseAdapter {
-
   private LayoutInflater inflater;
   private ArrayList<ScriptedData> data;
   private int layout;
@@ -21,6 +19,7 @@ public class ListViewAdapter extends BaseAdapter {
     this.data  = data;
     this.layout = layout;
   }
+
   @Override
   public int getCount() {
     return data.size();
@@ -34,7 +33,6 @@ public class ListViewAdapter extends BaseAdapter {
 
   @Override
   public View getView (int position, View convertView, ViewGroup parent) {
-
     if (convertView == null) {
       convertView = inflater.inflate(layout,parent, false);
     }

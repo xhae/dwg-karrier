@@ -47,8 +47,9 @@ public class ListActivity extends AppCompatActivity {
   private ArrayList<ScriptedData> getData() {
     ArrayList ret = new ArrayList<ScriptedData>();
 
-    /*url list 불러오는 함수
-     *ret = callurl();
+    /*
+     * url list 불러오는 함수
+     * ret = callURL();
      */
 
     // temp test code
@@ -67,23 +68,20 @@ public class ListActivity extends AppCompatActivity {
     return ret;
   }
 
-  private ArrayList<ScriptedData> callurl() {
-//    DataBaseOpenHelper test = new DataBaseOpenHelper(/*what????*/);
+  private ArrayList<ScriptedData> callURL() {
+//  DataBaseOpenHelper test = new DataBaseOpenHelper(/*what????*/);
     ArrayList ret = new ArrayList<ScriptedData>();
     ArrayList<ScriptedURL> wholeList = new ArrayList<ScriptedURL>();
 
-//    wholeList = test.getUrlList();
-
-    /*word_count 기반으로 시간 계산하는 함수
-     * cal_time();
+    /*
+     * word_count 기반으로 시간 계산하는 함수
+     * calTime();
      */
 
     return ret;
   }
 
-  private String cal_time() {
-    String ret = "";
-
-    return ret;
+  private String calTime() {
+    return "";
   }
 }

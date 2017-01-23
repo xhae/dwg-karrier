@@ -12,7 +12,7 @@ public class ScriptedURL {
   ScriptedURL(String url, int isRead) {
     this.url = url;
 
-    if (isRead==1) {
+    if (isRead == 1) {
       this.isRead = true;
     } else {
       this.isRead = false;
