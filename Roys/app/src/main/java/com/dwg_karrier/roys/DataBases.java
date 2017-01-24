@@ -9,10 +9,10 @@ public final class DataBases {
     public static final String WORDCOUNT = "wordCount";
     public static final String _TABLENAME = "page";
     public static final String _CREATE =
-        "create table "+_TABLENAME+"("
-            +_ID+" integer primary key autoincrement, "
-            +READ+" integer , "
-            +URL+" text not null , "
-            +WORDCOUNT+" integer );";
+        "create table " + _TABLENAME + "("
+            + _ID + " integer primary key autoincrement, "
+            + READ + " integer , "
+            + URL + " text not null , "
+            + WORDCOUNT + " integer );";
   }
 }

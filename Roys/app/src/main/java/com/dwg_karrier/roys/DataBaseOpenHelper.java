@@ -34,7 +34,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     return result;
   }
 
-  public int getReadedPageCount() {
+  public int getReadPageCount() {
     SQLiteDatabase dataBase = getReadableDatabase();
     int result = 0;
 

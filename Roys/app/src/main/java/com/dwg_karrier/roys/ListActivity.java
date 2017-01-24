@@ -59,6 +59,7 @@ public class ListActivity extends AppCompatActivity {
     ArrayList ret = new ArrayList<ScriptedData>();
     ArrayList<ScriptedURL> wholeList = new ArrayList<ScriptedURL>(); // readable DB call method error...
     double tempTime;
+    int wordsperMin = 180;
 
     // temp test code
     wholeList.add(new ScriptedURL("temp url1", 1, 130));
@@ -68,7 +69,7 @@ public class ListActivity extends AppCompatActivity {
     wholeList.add(new ScriptedURL("temp url5", 1, 23213));
 
     for (ScriptedURL temp : wholeList) {
-      tempTime = (double)temp.getWordCount() / 180;
+      tempTime = (double)temp.getWordCount() / wordsperMin;
       Log.d("test tempTime", ""+tempTime+ "wordCount"+temp.getWordCount());
       ret.add(new ScriptedData("", tempTime, ""));
     }

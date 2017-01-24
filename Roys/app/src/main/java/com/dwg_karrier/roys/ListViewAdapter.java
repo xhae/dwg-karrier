@@ -33,15 +33,17 @@ public class ListViewAdapter extends BaseAdapter {
 
   @Override
   public View getView (int position, View convertView, ViewGroup parent) {
+    int minute = 60;
+
     if (convertView == null) {
       convertView = inflater.inflate(layout,parent, false);
     }
     ScriptedData scriptedData = data.get(position);
     TextView title = (TextView)convertView.findViewById(R.id.TitleView);
-    title.setText("Title: "+scriptedData.getTitle());
+    title.setText("Title: " + scriptedData.getTitle());
     TextView expectedTime = (TextView)convertView.findViewById(R.id.TimeView);
-    expectedTime.setText("Time: " + (int)scriptedData.getExpectedTime()/60+"hour"
-        + Double.parseDouble(String.format("%.2f",scriptedData.getExpectedTime()%60)) + "min");
+    expectedTime.setText("Time: " + (int)scriptedData.getExpectedTime() / minute + "hour"
+        + Double.parseDouble(String.format("%.2f", scriptedData.getExpectedTime() % minute)) + "min");
 
     return convertView;
   }
