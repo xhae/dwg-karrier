@@ -26,7 +26,7 @@ public class ContentView extends AppCompatActivity {
     setContentView(R.layout.content);
 
     final Intent intent = new Intent(this.getIntent());
-    final Date finTime = (Date)intent.getSerializableExtra("finTime");
+    final Date finTime = (Date) intent.getSerializableExtra("finTime");
     final Date curTime = new Date(System.currentTimeMillis());
 
     // get url
@@ -56,7 +56,7 @@ public class ContentView extends AppCompatActivity {
     @Override
     protected void onPreExecute() {
       super.onPreExecute();
-      ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+      ProgressBar progressBar = (ProgressBar)findViewById(R.id.progressBar);
       progressBar.setVisibility(View.VISIBLE);
     }
 

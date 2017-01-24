@@ -35,9 +35,9 @@ public class ScriptedURL {
     this.isRead = false;
   }
 
-  ScriptedURL (String url, int isRead, int wordCount){
+  ScriptedURL (String url, int isRead, int wordCount) {
     this.url = url;
-    if(isRead == 1){
+    if(isRead == 1) {
       this.isRead = true;
     }else {
       this.isRead = false;

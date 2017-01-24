@@ -15,8 +15,8 @@ public class ListViewAdapter extends BaseAdapter {
   private int layout;
 
   public ListViewAdapter(Context contest, int layout, ArrayList<ScriptedData> data) {
-    this.inflater = (LayoutInflater)contest.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    this.data  = data;
+    this.inflater = (LayoutInflater) contest.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    this.data = data;
     this.layout = layout;
   }
 
@@ -39,10 +39,10 @@ public class ListViewAdapter extends BaseAdapter {
       convertView = inflater.inflate(layout,parent, false);
     }
     ScriptedData scriptedData = data.get(position);
-    TextView title = (TextView)convertView.findViewById(R.id.TitleView);
+    TextView title = (TextView) convertView.findViewById(R.id.TitleView);
     title.setText("Title: " + scriptedData.getTitle());
-    TextView expectedTime = (TextView)convertView.findViewById(R.id.TimeView);
-    expectedTime.setText("Time: " + (int)scriptedData.getExpectedTime() / minute + "hour"
+    TextView expectedTime = (TextView) convertView.findViewById(R.id.TimeView);
+    expectedTime.setText("Time: " + (int) scriptedData.getExpectedTime() / minute + "hour"
         + Double.parseDouble(String.format("%.2f", scriptedData.getExpectedTime() % minute)) + "min");
 
     return convertView;

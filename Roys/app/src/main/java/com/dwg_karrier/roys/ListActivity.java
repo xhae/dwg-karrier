@@ -28,7 +28,7 @@ public class ListActivity extends AppCompatActivity {
     curTime = (Date) intent.getSerializableExtra("curTime");
 
     duration = (finTime.getTime() - curTime.getTime()) / minute;
-    data = getData();
+    data = callUrl();
 
     lv = (ListView) findViewById(R.id.listView);
     lv.setAdapter(new ListViewAdapter(this, R.layout.item, data));
@@ -45,17 +45,8 @@ public class ListActivity extends AppCompatActivity {
     });
   }
 
-  private ArrayList<ScriptedData> getData() {
-    ArrayList ret = new ArrayList<ScriptedData>();
-
-    // url list 불러오는 함수
-    ret = callURL();
-
-    return ret;
-  }
-
-  private ArrayList<ScriptedData> callURL() {
-    DataBaseOpenHelper test = new DataBaseOpenHelper(null);
+  private ArrayList<ScriptedData> callUrl() {
+    DataBaseOpenHelper test = new DataBaseOpenHelper(this);
     ArrayList ret = new ArrayList<ScriptedData>();
     ArrayList<ScriptedURL> wholeList = new ArrayList<ScriptedURL>(); // readable DB call method error...
     double tempTime;
@@ -69,8 +60,8 @@ public class ListActivity extends AppCompatActivity {
     wholeList.add(new ScriptedURL("temp url5", 1, 23213));
 
     for (ScriptedURL temp : wholeList) {
-      tempTime = (double)temp.getWordCount() / wordsperMin;
-      Log.d("test tempTime", ""+tempTime+ "wordCount"+temp.getWordCount());
+      tempTime = (double) temp.getWordCount() / wordsperMin;
+      Log.d("test tempTime", "" + tempTime +  "wordCount" + temp.getWordCount());
       ret.add(new ScriptedData("", tempTime, ""));
     }
 

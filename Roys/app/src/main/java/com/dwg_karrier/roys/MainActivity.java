@@ -19,14 +19,14 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    Button b = (Button)findViewById(R.id.button);
-    final EditText editText = (EditText)findViewById(R.id.editText);
+    Button b = (Button) findViewById(R.id.button);
+    final EditText editText = (EditText) findViewById(R.id.editText);
 
     b.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         if (editText.getText().toString().isEmpty()) {
-          Toast toast = Toast.makeText(getApplicationContext(),"Input time!", Toast.LENGTH_LONG);
+          Toast toast = Toast.makeText(getApplicationContext(), "Input time!", Toast.LENGTH_LONG);
           toast.setGravity(Gravity.BOTTOM, 0, 0);
           toast.show();
           return;
