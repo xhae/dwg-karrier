@@ -9,10 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    
+
     Button btnFeedlyAccount = (Button) findViewById(R.id.FeedlyAccountBtn);
     btnFeedlyAccount.setOnClickListener(new Button.OnClickListener() {
       public void onClick(View v) {
@@ -66,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         new GetPageList().execute(URL);
       }
     });
-    
+
     Button b = (Button) findViewById(R.id.button);
     final EditText editText = (EditText) findViewById(R.id.editText);
 
@@ -91,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("finTime", d);
         intent.putExtra("curTime", curTime);
         startActivity(intent);
+      }
+    });
   }
 
   private class GetPageList extends AsyncTask<String, Void, String> {

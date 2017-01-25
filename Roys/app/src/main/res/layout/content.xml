@@ -18,5 +18,5 @@
   <TextView
       android:text="TextView"
       android:layout_width="fill_parent"
-      android:layout_height="460dp" android:id="@+id/textView" android:layout_weight="0.22"/>
+      android:layout_height="460dp" android:id="@+id/contentView" android:layout_weight="0.22"/>
 </LinearLayout>

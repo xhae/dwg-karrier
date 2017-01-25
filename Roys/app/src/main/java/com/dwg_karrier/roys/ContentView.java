@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,13 +30,24 @@ public class ContentView extends AppCompatActivity {
     final Date finTime = (Date) intent.getSerializableExtra("finTime");
     final Date curTime = new Date(System.currentTimeMillis());
 
-    // get url
     try {
+      /*
+       * TODO
+       * bring user-clicked URL
+       * merge with soyee's code
+       */
       // yet, write exact pageUrl
-      String pageUrl = "https://mercury.postlight.com/parser?url=https://blog.google/products/google-vr/showcase-your-art-new-ways-tilt-brush-toolkit/";
-      MyAsyncTask myAsyncTask = new MyAsyncTask();
-      myAsyncTask.execute(pageUrl);
+      String pageUrl = "http://www.bloter.net/archives/265787";
+      Crawler crawler = new Crawler(pageUrl);
+      // show title and content in one page
+      // It's better to scroll down in concatenated version
+      String title = crawler.getTitle();
+      String content = crawler.getContent();
+      TextView contentView = (TextView) findViewById(R.id.contentView);
+      contentView.setText(title + "\n\n" + content);
+      contentView.setMovementMethod(new ScrollingMovementMethod());
     } catch (Exception e) {
+      Log.e("Error:", e.getMessage(), e);
       e.printStackTrace();
     }
 
@@ -50,63 +62,5 @@ public class ContentView extends AppCompatActivity {
         finish();
       }
     });
-  }
-  public class MyAsyncTask extends AsyncTask<String, Void, String> {
-
-    @Override
-    protected void onPreExecute() {
-      super.onPreExecute();
-      ProgressBar progressBar = (ProgressBar)findViewById(R.id.progressBar);
-      progressBar.setVisibility(View.VISIBLE);
-    }
-
-    // execute in background
-    @Override
-    protected String doInBackground(String... strings) {
-      String contents = "Why this happens";
-      StringBuilder stringBuilder = new StringBuilder();
-      try {
-        URL url = new URL(strings[0]);
-        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-        conn.setRequestProperty("Content-Type", "application/json");
-        conn.setRequestProperty("x-api-key", "vr2E65ffhRAZlJTvwcrmq72zPo2wcSZuuLtQ4ITc");
-        // if HTML responseCode is 200, then it's okay
-        if (conn.getResponseCode() == conn.HTTP_OK) {
-          BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-          String line;
-          while ((line = br.readLine()) != null) {
-            stringBuilder.append(line);
-          }
-          br.close();
-        }
-        conn.disconnect();
-      } catch (Exception e) {
-        Log.e("Error", e.getMessage(), e);
-        return null;
-      }
-
-      try {
-        String jsonStr = stringBuilder.toString();
-        JSONObject jsonObject = new JSONObject(jsonStr);
-        contents = jsonObject.getString("content");
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-      return contents;
-    }
-
-    // after execution
-    @Override
-    protected void onPostExecute(String response) {
-      super.onPostExecute(response);
-      if (response == null) {
-        response = "No contents";
-      }
-      ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
-      progressBar.setVisibility(View.GONE);
-      Log.i("INFO", response);
-      TextView responseView = (TextView) findViewById(R.id.textView);
-      responseView.setText(response);
-    }
   }
 }
