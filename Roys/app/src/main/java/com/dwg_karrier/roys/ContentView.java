@@ -12,10 +12,10 @@ public class ContentView extends AppCompatActivity {
     setContentView(R.layout.content);
     try {
       /*
-      * TODO
-      * bring user-clicked URL
-      * merge with soyee's code
-      */
+       * TODO
+       * bring user-clicked URL
+       * merge with soyee's code
+       */
       // yet, write exact pageUrl
       String pageUrl = "http://www.bloter.net/archives/265787";
       Crawler crawler = new Crawler(pageUrl);
