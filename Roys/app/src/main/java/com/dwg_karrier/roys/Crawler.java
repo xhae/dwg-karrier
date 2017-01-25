@@ -13,20 +13,38 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/* Add on to listActivity
-* Use getTitle(), getContent(), getWordCount() */
-
+/**
+ * @author Ji hyung Moon <mjihyung@gmail.com>
+ * @version 1.0
+ */
 public class Crawler {
   JSONObject jsonObject = null;
+  private String mercuryUrlTemplate = "https://mercury.postlight.com/parser?url=";
 
+  /**
+   * Initialize
+   *
+   * <p> Use {@link #getJsonResponse(String strUrl)} to get page information
+   */
   public Crawler(String strUrl) {
     jsonObject = getJsonResponse(strUrl);
   }
 
-  private JSONObject getJsonResponse(String pageUrl) {
+  /**
+   * Get page information via Mercury-API
+   *
+   * <p> Format of page information is json.
+   *
+   * <p> Json contains title, content, date_published, lead_image_url, dek, url, domain, excerpt,
+   * word_count, direction, total_pages, rendered_pages, next_page_url
+   *
+   * @param strUrl exact url of recommended page
+   * @return JsonObject contains page information
+   */
+  private JSONObject getJsonResponse(String strUrl) {
     try {
       MyAsyncTask myAsyncTask = new MyAsyncTask();
-      jsonObject = myAsyncTask.execute(pageUrl).get();
+      jsonObject = myAsyncTask.execute(strUrl).get();
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -34,24 +52,28 @@ public class Crawler {
   }
 
   public String getTitle() {
-    if (this.jsonObject == null) {
-      return null;
-    }
     String title;
     try {
       title = (String) this.jsonObject.get("title");
     } catch (Exception e) {
       Log.e("getTitle_error:", e.getMessage(), e);
       e.printStackTrace();
-      return null;
+      title = null;
     }
     return title;
   }
 
+  /**
+   * Returns only text content.
+   *
+   * <p> Content is consisted of image, image caption, and main story. This method shows image
+   * caption and main story which is text.
+   *
+   * <p> Need to be upgraded to show image
+   *
+   * @return text format of content
+   */
   public String getContent() {
-    if (this.jsonObject == null) {
-      return null;
-    }
     String content;
     try {
       content = (String) this.jsonObject.get("content");
@@ -59,32 +81,39 @@ public class Crawler {
       content = jsoupDoc.text();
     } catch (Exception e) {
       Log.e("getContent_Error:", e.getMessage(), e);
-      return null;
+      content = null;
     }
     return content;
   }
 
   public Integer getWordCount() {
-    if (this.jsonObject == null) {
-      return null;
-    }
     Integer wordCount = 0;
     try {
       wordCount = (Integer) this.jsonObject.get("word_count");
     } catch (Exception e) {
       Log.e("getWordCount_Error:", e.getMessage(), e);
-      return null;
+      wordCount = null;
     }
     return wordCount;
   }
 
+  /**
+   * Makes possible to use {@link #getJsonResponse(String strUrl)}
+   *
+   * <p> Sending request and receiving response via API is impossible in main Thread.
+   *
+   * <p> AsyncTask runs in the background of main Thread. AsyncTask = Thread + Handler
+   *
+   * @returns json format response from Mercury-API (detailed response is described in {@link
+   *     #getJsonResponse(String strUrl)} document.
+   */
   public class MyAsyncTask extends AsyncTask<String, Void, JSONObject> {
     @Override
     protected JSONObject doInBackground(String... strings) {
-      JSONObject json = null;
       StringBuilder stringBuilder = new StringBuilder();
       try {
-        String strUrl = strings[0];
+        String pageUrl = strings[0];
+        String strUrl = mercuryUrlTemplate + pageUrl;
         URL url = new URL(strUrl);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestProperty("Content-Type", "application/json");
@@ -102,15 +131,11 @@ public class Crawler {
         Log.e("Error", e.getMessage(), e);
         return null;
       }
+      JSONObject json = null;
       try {
         String jsonStr = stringBuilder.toString();
         JSONParser jsonParser = new JSONParser();
-        try {
-          json = (JSONObject) jsonParser.parse(jsonStr);
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-        return json;
+        json = (JSONObject) jsonParser.parse(jsonStr);
       } catch (Exception e) {
         e.printStackTrace();
       }
