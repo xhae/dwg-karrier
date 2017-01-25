@@ -41,5 +41,11 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content" android:layout_alignBottom="@+id/editText"
       android:layout_toEndOf="@+id/editText" android:id="@+id/textView3" android:textSize="18sp"/>
-
+  <Button
+      android:text="feedly account"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/FeedlyAccountBtn"
+      style="@style/Widget.AppCompat.Button.Colored" android:layout_alignParentTop="true"
+      android:layout_alignParentEnd="true"/>
 </RelativeLayout>
