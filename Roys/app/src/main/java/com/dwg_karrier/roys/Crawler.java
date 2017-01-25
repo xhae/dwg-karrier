@@ -19,15 +19,15 @@ import java.net.URL;
  */
 public class Crawler {
   JSONObject jsonObject = null;
-  private String mercuryUrlTemplate = "https://mercury.postlight.com/parser?url=";
+  String mercuryUrlTemplate = "https://mercury.postlight.com/parser?url=";
 
   /**
    * Initialize
    *
-   * <p> Use {@link #getJsonResponse(String strUrl)} to get page information
+   * <p> Use {@link #getJsonResponse(String pageUrl)} to get page information
    */
-  public Crawler(String strUrl) {
-    jsonObject = getJsonResponse(strUrl);
+  public Crawler(String pageUrl) {
+    jsonObject = getJsonResponse(pageUrl);
   }
 
   /**
@@ -38,13 +38,13 @@ public class Crawler {
    * <p> Json contains title, content, date_published, lead_image_url, dek, url, domain, excerpt,
    * word_count, direction, total_pages, rendered_pages, next_page_url
    *
-   * @param strUrl exact url of recommended page
+   * @param pageUrl exact url of recommended page
    * @return JsonObject contains page information
    */
-  private JSONObject getJsonResponse(String strUrl) {
+  private JSONObject getJsonResponse(String pageUrl) {
     try {
       MyAsyncTask myAsyncTask = new MyAsyncTask();
-      jsonObject = myAsyncTask.execute(strUrl).get();
+      jsonObject = myAsyncTask.execute(pageUrl).get();
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -98,7 +98,7 @@ public class Crawler {
   }
 
   /**
-   * Makes possible to use {@link #getJsonResponse(String strUrl)}
+   * Makes possible to use {@link #getJsonResponse(String pageUrl)}
    *
    * <p> Sending request and receiving response via API is impossible in main Thread.
    *
