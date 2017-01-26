@@ -36,7 +36,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     return result;
   }
 
-  public int getReadedPageCount() {
+  public int getReadPageCount() {
     SQLiteDatabase dataBase = getReadableDatabase();
     int result = 0;
 
@@ -72,6 +72,12 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     SQLiteDatabase dataBase = getWritableDatabase();
 
     dataBase.execSQL("UPDATE PAGE SET wordCount=" + wordCount + " WHERE url='" + url + "';");
+    dataBase.close();
+  }
+
+  public void insertScriptedData(String url) {
+    SQLiteDatabase dataBase = getWritableDatabase();
+    dataBase.execSQL("INSERT INTO PAGE (URL) VALUES ('" + url + "');");
     dataBase.close();
   }
 }

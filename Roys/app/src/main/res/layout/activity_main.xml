@@ -14,5 +14,31 @@
   <TextView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="Hello World!"/>
+      android:onClick="onClick"
+      android:text="Input Sparetime" android:textSize="36sp"
+      android:layout_marginBottom="33dp" android:layout_above="@+id/editText"
+      android:layout_centerHorizontal="true"/>
+  <Button
+      android:text="OK"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content" android:layout_below="@+id/editText"
+      android:layout_centerHorizontal="true" android:layout_marginTop="16dp"
+      android:id="@+id/button"/>
+  <EditText
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:inputType="number"
+      android:ems="10"
+      android:id="@+id/editText"
+      android:textSize="18sp"
+      android:textAlignment="center"
+      android:hint="How long do you have?"
+      android:textColorHint="@android:color/darker_gray"
+      android:layout_centerVertical="true" android:layout_centerHorizontal="true"
+      android:backgroundTint="?android:attr/colorControlHighlight"/>
+  <TextView
+      android:text="min"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content" android:layout_alignBottom="@+id/editText"
+      android:layout_toEndOf="@+id/editText" android:id="@+id/textView3" android:textSize="18sp"/>
 </RelativeLayout>
