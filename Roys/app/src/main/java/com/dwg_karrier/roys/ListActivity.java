@@ -50,7 +50,7 @@ public class ListActivity extends AppCompatActivity {
     ArrayList ret = new ArrayList<ScriptedData>();
     ArrayList<ScriptedURL> wholeList = new ArrayList<ScriptedURL>(); // readable DB call method error...
     double tempTime;
-    int wordsperMin = 180;
+    final int wordsperMin = 180;
 
     // temp test code
     wholeList.add(new ScriptedURL("temp url1", 1, 130));
