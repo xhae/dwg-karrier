@@ -18,6 +18,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   public void onCreate(SQLiteDatabase db) {
     db.execSQL(DataBases.CreateDB._CREATE);
   }
+
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     onCreate(db);
   }
@@ -52,7 +53,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
 
     Cursor cursor = dataBase.rawQuery("SELECT * from page ", null);
     while (cursor.moveToNext()) {
-      ScriptedURL scriptecItem = new ScriptedURL(cursor.getString(2),cursor.getInt(1));
+      ScriptedURL scriptecItem = new ScriptedURL(cursor.getString(2), cursor.getInt(1));
       resultList.add(scriptecItem);
     }
 

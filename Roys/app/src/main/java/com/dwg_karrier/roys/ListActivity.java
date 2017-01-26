@@ -61,7 +61,7 @@ public class ListActivity extends AppCompatActivity {
 
     for (ScriptedURL temp : wholeList) {
       tempTime = (double) temp.getWordCount() / wordsperMin;
-      Log.d("test tempTime", "" + tempTime +  "wordCount" + temp.getWordCount());
+      Log.d("test tempTime", "" + tempTime + "wordCount" + temp.getWordCount());
       ret.add(new ScriptedData("", tempTime, ""));
     }
 

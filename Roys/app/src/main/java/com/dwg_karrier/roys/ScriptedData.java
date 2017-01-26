@@ -5,19 +5,21 @@ public class ScriptedData {
   private double expectedTime;
   private String content;
 
-  public String getTitle() {
-    return title;
-  }
-  public double getExpectedTime() {
-    return expectedTime;
-  }
-  public String getContent() {
-    return content;
-  }
-
   public ScriptedData(String title, double expectedTime, String content) {
     this.title = title;
     this.expectedTime = expectedTime;
     this.content = content;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public double getExpectedTime() {
+    return expectedTime;
+  }
+
+  public String getContent() {
+    return content;
   }
 }

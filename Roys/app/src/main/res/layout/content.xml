@@ -3,20 +3,17 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent" android:weightSum="1">
-
   <Button
       android:text="Finish Reading"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content" android:id="@+id/button4" android:layout_weight="0.22"/>
-  <ProgressBar
-      android:id="@+id/progressBar"
-      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:indeterminate="true"
-      android:layout_centerHorizontal="true"
-      android:visibility="gone"/>
+      android:id="@+id/button4" android:layout_weight="0.005"/>
   <TextView
-      android:text="TextView"
+      android:text="Content"
+      android:scrollbars="vertical"
       android:layout_width="fill_parent"
-      android:layout_height="460dp" android:id="@+id/contentView" android:layout_weight="0.22"/>
+      android:layout_height="fill_parent"
+      android:textSize="20sp"
+      android:id="@+id/contentView"
+  />
 </LinearLayout>

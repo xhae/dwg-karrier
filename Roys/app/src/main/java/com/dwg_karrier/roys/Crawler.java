@@ -105,7 +105,7 @@ public class Crawler {
    * <p> AsyncTask runs in the background of main Thread. AsyncTask = Thread + Handler
    *
    * @returns json format response from Mercury-API (detailed response is described in {@link
-   *     #getJsonResponse(String strUrl)} document.
+   * #getJsonResponse(String strUrl)} document.
    */
   public class MyAsyncTask extends AsyncTask<String, Void, JSONObject> {
     @Override
