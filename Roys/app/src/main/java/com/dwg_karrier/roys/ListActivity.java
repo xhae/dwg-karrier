@@ -39,6 +39,7 @@ public class ListActivity extends AppCompatActivity {
         Intent intent1 = new Intent(ListActivity.this, ContentView.class);
         intent1.putExtra("finTime", finTime);
         intent1.putExtra("curTime", curTime);
+        // TODO: put selected ScriptedData to intent. data[position]
         startActivity(intent1);
         finish();
       }
@@ -47,8 +48,9 @@ public class ListActivity extends AppCompatActivity {
 
   private ArrayList<ScriptedData> callUrl() {
     DataBaseOpenHelper test = new DataBaseOpenHelper(this);
+    ArrayList<ScriptedURL> wholeList = new ArrayList<ScriptedURL>();
+    // intend: wholeList = test.getURLList();
     ArrayList ret = new ArrayList<ScriptedData>();
-    ArrayList<ScriptedURL> wholeList = new ArrayList<ScriptedURL>(); // readable DB call method error...
     double tempTime;
     final int wordsperMin = 180;
 
