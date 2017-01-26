@@ -3,7 +3,7 @@ package com.dwg_karrier.roys;
 import android.provider.BaseColumns;
 
 public final class DataBases {
-  public static final class CreateDB implements BaseColumns{
+  public static final class CreateDB implements BaseColumns {
     public static final String READ = "read";
     public static final String URL = "url";
     public static final String WORDCOUNT = "wordCount";

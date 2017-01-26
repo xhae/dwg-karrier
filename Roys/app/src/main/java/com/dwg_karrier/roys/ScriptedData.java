@@ -8,14 +8,15 @@ public class ScriptedData {
   private String title;
   private String spend_time;
 
-  public String getTitle(){
+  public String getTitle() {
     return title;
   }
-  public String getSpend_time(){
+
+  public String getSpend_time() {
     return spend_time;
   }
 
-  public ScriptedData(String title, String spend_time){
+  public ScriptedData(String title, String spend_time) {
     this.title = title;
     this.spend_time = spend_time;
   }
