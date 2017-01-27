@@ -1,10 +1,14 @@
 package com.dwg_karrier.roys;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,6 +21,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
   static final String ACCESS_TOKEN = "A06EprS0187tNdGMJ1XPTVQa1eE8SeGLXZeK3GZy2UwZ8qzOGSqZlPmXNcYul0zueeQRLYwN1nWbFszj6PyoNOkCGSbUp9zfJ3eLROo3bJWsUQktkXPfbFruJn9TGFQQ5r16aLhP7f-VXMFNxMtlrJw21eabhWzhzO-9r0OkXBesU_0Kscpb4SaRPW4TpYpfGiusnAKhaWmeNYdu5VaCGMdFpoch:feedlydev";
@@ -54,6 +60,33 @@ public class MainActivity extends AppCompatActivity {
       public void onClick(View v) {
         final String URL = "https://cloud.feedly.com/v3/streams/contents?streamId=user/" + ID + "/category/global.all";
         new GetPageList().execute(URL);
+      }
+    });
+
+    Button b = (Button) findViewById(R.id.button);
+    final EditText editText = (EditText) findViewById(R.id.editText);
+
+    b.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (editText.getText().toString().isEmpty()) {
+          Toast toast = Toast.makeText(getApplicationContext(), "Input time!", Toast.LENGTH_LONG);
+          toast.setGravity(Gravity.BOTTOM, 0, 0);
+          toast.show();
+          return;
+        }
+
+        Date curTime = new Date(System.currentTimeMillis());
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(curTime);
+        String inputTime = String.valueOf(editText.getText());
+        cal.add(Calendar.MINUTE, Integer.parseInt(inputTime));
+        Date d = new Date(cal.getTimeInMillis());
+
+        Intent intent = new Intent(MainActivity.this, ListActivity.class);
+        intent.putExtra("finTime", d);
+        intent.putExtra("curTime", curTime);
+        startActivity(intent);
       }
     });
   }
