@@ -3,11 +3,15 @@ package com.dwg_karrier.roys;
 public class ScriptedURL {
   private String url;
   private boolean isRead;
+  private String title;
+  private String content;
   private int wordCount;
+  private Crawler crawler;
 
   ScriptedURL(String url, boolean isRead) {
     this.url = url;
     this.isRead = isRead;
+    this.crawler = new Crawler(url);
   }
 
   ScriptedURL(String url, int isRead) {
@@ -17,11 +21,13 @@ public class ScriptedURL {
     } else {
       this.isRead = false;
     }
+    this.crawler = new Crawler(url);
   }
 
   ScriptedURL(String url) {
     this.url = url;
     this.isRead = false;
+    this.crawler = new Crawler(url);
   }
 
   ScriptedURL(String url, int isRead, int wordCount) {
@@ -32,6 +38,7 @@ public class ScriptedURL {
       this.isRead = false;
     }
     this.wordCount = wordCount;
+    this.crawler = new Crawler(url);
   }
 
   public String getUrl() {
@@ -42,7 +49,18 @@ public class ScriptedURL {
     return isRead;
   }
 
+  public String getTitle() {
+    title = crawler.getTitle();
+    return title;
+  }
+
+  public String getContent() {
+    content = crawler.getContent();
+    return content;
+  }
+
   public int getWordCount() {
+    wordCount = crawler.getWordCount();
     return wordCount;
   }
 }

@@ -1,28 +1,35 @@
 package com.dwg_karrier.roys;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.webkit.WebView;
 
 public class ContentView extends AppCompatActivity {
+  private final String imgSizeCtrl = "<style>img{display: inline; height: auto; max-width: 100%;}</style>\n"; // fit image to the size of viewer
+  String title;
+  String content;
+
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.content);
+
+    Intent intent1 = new Intent(this.getIntent());
+    title = intent1.getStringExtra("title");
+    content = intent1.getStringExtra("content");
     try {
-      /*
-       * TODO
-       * bring user-clicked URL
-       * merge with soyee's code
-       */
-      // yet, write exact pageUrl
-      String pageUrl = "http://www.bloter.net/archives/265787";
-      Crawler crawler = new Crawler(pageUrl);
-      // show title and content in one page
-      // It's better to scroll down in concatenated version
-      String title = crawler.getTitle();
-      String content = crawler.getContent();
-      String imgSizeCtrl = "<style>img{display: inline; height: auto; max-width: 100%;}</style>\n"; // fit image to the size of viewer
+//      /*
+//       * TODO
+//       * bring user-clicked URL from DB
+//       */
+//      // yet, write exact pageUrl
+//      String pageUrl = "http://www.bloter.net/archives/265787";
+//      Crawler crawler = new Crawler(pageUrl);
+//      // show title and content in one page
+//      // It's better to scroll down in concatenated version
+//      String title = crawler.getTitle();
+//      String content = crawler.getContent();
       String view = title + "\n\n" + imgSizeCtrl + content;
 
       WebView wv = (WebView) findViewById(R.id.contentView);
