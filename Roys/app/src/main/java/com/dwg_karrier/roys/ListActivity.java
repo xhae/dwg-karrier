@@ -47,19 +47,17 @@ public class ListActivity extends AppCompatActivity {
   }
 
   private ArrayList<ScriptedData> callUrl() {
-    DataBaseOpenHelper test = new DataBaseOpenHelper(this);
+    DataBaseOpenHelper dbHelper = new DataBaseOpenHelper(this);
     ArrayList<ScriptedURL> wholeList = new ArrayList<ScriptedURL>();
     // intend: wholeList = test.getURLList();
     ArrayList ret = new ArrayList<ScriptedData>();
     double tempTime;
     final int wordsperMin = 180;
+    ArrayList<ScriptedURL> scriptedUrls = dbHelper.getUrlList();
 
-    // temp test code
-    wholeList.add(new ScriptedURL("temp url1", 1, 130));
-    wholeList.add(new ScriptedURL("temp url2", 1, 13));
-    wholeList.add(new ScriptedURL("temp url3", 1, 1123));
-    wholeList.add(new ScriptedURL("temp url4", 1, 13921));
-    wholeList.add(new ScriptedURL("temp url5", 1, 23213));
+    for (int i = 0; i < scriptedUrls.size(); i++) {
+      wholeList.add(scriptedUrls.get(i));
+    }
 
     for (ScriptedURL temp : wholeList) {
       tempTime = (double) temp.getWordCount() / wordsperMin;
