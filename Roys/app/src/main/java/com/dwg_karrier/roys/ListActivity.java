@@ -50,18 +50,6 @@ public class ListActivity extends AppCompatActivity {
         finish();
       }
     });
-
-//    lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//      @Override
-//      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        Intent intent1 = new Intent(ListActivity.this, ContentView.class);
-//        intent1.putExtra("finTime", finTime);
-//        intent1.putExtra("curTime", curTime);
-//        // TODO: put selected ScriptedData to intent. data[position]
-//        startActivity(intent1);
-//        finish();
-//      }
-//    });
   }
 
   private ArrayList<ScriptedData> callUrl() {
@@ -78,11 +66,11 @@ public class ListActivity extends AppCompatActivity {
     String tempUrl3 = "http://www.bloter.net/archives/265786";
     String tempUrl4 = "http://www.bloter.net/archives/267575";
     String tempUrl5 = "http://www.bloter.net/archives/254316";
-    wholeList.add(new ScriptedURL(tempUrl1, 1, 57));
-    wholeList.add(new ScriptedURL(tempUrl2, 1, 105));
-    wholeList.add(new ScriptedURL(tempUrl3, 1, 150));
-    wholeList.add(new ScriptedURL(tempUrl4, 1, 206));
-    wholeList.add(new ScriptedURL(tempUrl5, 1, 252));
+    wholeList.add(new ScriptedURL(tempUrl1, 1));
+    wholeList.add(new ScriptedURL(tempUrl2, 1));
+    wholeList.add(new ScriptedURL(tempUrl3, 1));
+    wholeList.add(new ScriptedURL(tempUrl4, 1));
+    wholeList.add(new ScriptedURL(tempUrl5, 1));
 
     for (ScriptedURL temp : wholeList) {
       tempTime = (double) temp.getWordCount() / wordsperMin;
@@ -91,7 +79,6 @@ public class ListActivity extends AppCompatActivity {
       String content = temp.getContent();
       ret.add(new ScriptedData(title, tempTime, content));
     }
-
     return ret;
   }
 }

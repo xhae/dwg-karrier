@@ -19,17 +19,6 @@ public class ContentView extends AppCompatActivity {
     title = intent1.getStringExtra("title");
     content = intent1.getStringExtra("content");
     try {
-//      /*
-//       * TODO
-//       * bring user-clicked URL from DB
-//       */
-//      // yet, write exact pageUrl
-//      String pageUrl = "http://www.bloter.net/archives/265787";
-//      Crawler crawler = new Crawler(pageUrl);
-//      // show title and content in one page
-//      // It's better to scroll down in concatenated version
-//      String title = crawler.getTitle();
-//      String content = crawler.getContent();
       String view = title + "\n\n" + imgSizeCtrl + content;
 
       WebView wv = (WebView) findViewById(R.id.contentView);

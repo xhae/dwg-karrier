@@ -19,7 +19,6 @@
       </intent-filter>
     </activity>
     <activity android:name=".ListActivity"/>
-              <!--android:exported="true"/>-->
     <activity android:name=".ContentView"
               android:exported="true"/>
   </application>

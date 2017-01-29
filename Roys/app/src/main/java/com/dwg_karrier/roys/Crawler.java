@@ -88,13 +88,14 @@ public class Crawler {
     return content;
   }
 
-  public Integer getWordCount() {
-    Integer wordCount = 0;
+  public int getWordCount() {
+    int wordCount;
     try {
-      wordCount = (Integer) this.jsonObject.get("word_count");
+      long longWordCount = (long) this.jsonObject.get("word_count");
+      wordCount = (int) longWordCount;
     } catch (Exception e) {
       Log.e("getWordCount_Error:", e.getMessage(), e);
-      wordCount = null;
+      wordCount = 0;
     }
     return wordCount;
   }
@@ -130,7 +131,7 @@ public class Crawler {
    * <p> AsyncTask runs in the background of main Thread. AsyncTask = Thread + Handler
    *
    * @returns json format response from Mercury-API (detailed response is described in {@link
-   * #getJsonResponse(String strUrl)} document.
+   *     #getJsonResponse(String strUrl)} document.
    */
   public class MyAsyncTask extends AsyncTask<String, Void, JSONObject> {
     @Override
