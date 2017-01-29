@@ -31,7 +31,18 @@ public class ScriptedURL {
     } else {
       this.isRead = false;
     }
+    this.wordCount = wordCount;
+  }
 
-    this.wordCount = 0;
+  public String getUrl() {
+    return url;
+  }
+
+  public boolean getIsRead() {
+    return isRead;
+  }
+
+  public int getWordCount() {
+    return wordCount;
   }
 }

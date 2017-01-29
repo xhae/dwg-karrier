@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 
 public class DataBaseOpenHelper extends SQLiteOpenHelper {
-
   public static final int DATABASE_VERSION = 1;
   public static final String DATABASE_NAME = "FeedReader.db";
 
@@ -17,9 +16,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   }
 
   public void onCreate(SQLiteDatabase db) {
-
     db.execSQL(DataBases.CreateDB._CREATE);
-
   }
 
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -83,3 +80,4 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     dataBase.close();
   }
 }
+

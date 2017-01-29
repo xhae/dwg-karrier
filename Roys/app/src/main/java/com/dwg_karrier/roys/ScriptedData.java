@@ -1,23 +1,25 @@
 package com.dwg_karrier.roys;
 
-/**
- * Created by userpc on 2017-01-16.
- */
-
 public class ScriptedData {
   private String title;
-  private String spend_time;
+  private double expectedTime;
+  private String content;
+
+  public ScriptedData(String title, double expectedTime, String content) {
+    this.title = title;
+    this.expectedTime = expectedTime;
+    this.content = content;
+  }
 
   public String getTitle() {
     return title;
   }
 
-  public String getSpend_time() {
-    return spend_time;
+  public double getExpectedTime() {
+    return expectedTime;
   }
 
-  public ScriptedData(String title, String spend_time) {
-    this.title = title;
-    this.spend_time = spend_time;
+  public String getContent() {
+    return content;
   }
 }
