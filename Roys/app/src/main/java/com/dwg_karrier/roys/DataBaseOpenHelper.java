@@ -47,14 +47,27 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     return result;
   }
 
-  public ArrayList<ScriptedURL> getUrlList() {
+  public ArrayList<ScriptedURL> getAllUrlList() {
     SQLiteDatabase dataBase = getReadableDatabase();
     ArrayList<ScriptedURL> resultList = new ArrayList<ScriptedURL>();
 
     Cursor cursor = dataBase.rawQuery("SELECT * from page ", null);
     while (cursor.moveToNext()) {
-      ScriptedURL scriptecItem = new ScriptedURL(cursor.getString(2), cursor.getInt(1));
-      resultList.add(scriptecItem);
+      ScriptedURL scriptedItem = new ScriptedURL(cursor.getString(2), cursor.getInt(1), cursor.getInt(3));
+      resultList.add(scriptedItem);
+    }
+
+    return resultList;
+  }
+
+  public ArrayList<ScriptedURL> getUnreadUrlList() {
+    SQLiteDatabase dataBase = getReadableDatabase();
+    ArrayList<ScriptedURL> resultList = new ArrayList<ScriptedURL>();
+
+    Cursor cursor = dataBase.rawQuery("SELECT * from page where read = 0", null);
+    while (cursor.moveToNext()) {
+      ScriptedURL scriptedItem = new ScriptedURL(cursor.getString(2), cursor.getInt(1), cursor.getInt(3));
+      resultList.add(scriptedItem);
     }
 
     return resultList;
