@@ -73,4 +73,11 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     dataBase.execSQL("UPDATE PAGE SET wordCount=" + wordCount + " WHERE url='" + url + "';");
     dataBase.close();
   }
+
+  public void insertScriptedData(String url) {
+    SQLiteDatabase dataBase = getWritableDatabase();
+    dataBase.execSQL("INSERT INTO PAGE (URL) VALUES ('" + url + "');");
+    dataBase.close();
+  }
 }
+
