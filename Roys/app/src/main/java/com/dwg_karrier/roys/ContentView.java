@@ -15,9 +15,9 @@ public class ContentView extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.content);
 
-    Intent intent1 = new Intent(this.getIntent());
-    title = intent1.getStringExtra("title");
-    content = intent1.getStringExtra("content");
+    Intent getPageInfo = new Intent(this.getIntent());
+    title = getPageInfo.getStringExtra("title");
+    content = getPageInfo.getStringExtra("content");
     try {
       String view = title + "\n\n" + imgSizeCtrl + content;
 

@@ -23,30 +23,29 @@ public class ListActivity extends AppCompatActivity {
     setContentView(R.layout.list);
 
     final int minute = 60000;
-    Intent intent = new Intent(this.getIntent());
-    finTime = (Date) intent.getSerializableExtra("finTime");
-    curTime = (Date) intent.getSerializableExtra("curTime");
+    Intent getTimeInfo = new Intent(this.getIntent());
+    finTime = (Date) getTimeInfo.getSerializableExtra("finTime");
+    curTime = (Date) getTimeInfo.getSerializableExtra("curTime");
 
     duration = (finTime.getTime() - curTime.getTime()) / minute;
     data = callUrl();
-    ListViewAdapter adapter = new ListViewAdapter(this, R.layout.item, data);
     lv = (ListView) findViewById(R.id.listView);
-    lv.setAdapter(adapter);
+    lv.setAdapter(new ListViewAdapter(this, R.layout.item, data));
 
     lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent1 = new Intent(ListActivity.this, ContentView.class);
-        intent1.putExtra("finTime", finTime);
-        intent1.putExtra("curTime", curTime);
+        Intent openSelectedPage = new Intent(ListActivity.this, ContentView.class);
+        openSelectedPage.putExtra("finTime", finTime);
+        openSelectedPage.putExtra("curTime", curTime);
 
         ScriptedData pageInfo = data.get(position);
         String title = pageInfo.getTitle();
         String content = pageInfo.getContent();
 
-        intent1.putExtra("title", title);
-        intent1.putExtra("content", content);
-        startActivity(intent1);
+        openSelectedPage.putExtra("title", title);
+        openSelectedPage.putExtra("content", content);
+        startActivity(openSelectedPage);
         finish();
       }
     });
