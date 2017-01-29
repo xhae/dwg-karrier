@@ -48,23 +48,20 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   }
 
   public ArrayList<ScriptedURL> getAllUrlList() {
-    SQLiteDatabase dataBase = getReadableDatabase();
-    ArrayList<ScriptedURL> resultList = new ArrayList<ScriptedURL>();
-
-    Cursor cursor = dataBase.rawQuery("SELECT * from page ", null);
-    while (cursor.moveToNext()) {
-      ScriptedURL scriptedItem = new ScriptedURL(cursor.getString(2), cursor.getInt(1), cursor.getInt(3));
-      resultList.add(scriptedItem);
-    }
-
-    return resultList;
+    String getUrlListQuery = "SELECT * from page";
+    return getUrlListFromQuery(getUrlListQuery);
   }
 
   public ArrayList<ScriptedURL> getUnreadUrlList() {
+    String unreadQuery = "SELECT * from page where read = 0";
+    return getUrlListFromQuery(unreadQuery);
+  }
+
+  private ArrayList<ScriptedURL> getUrlListFromQuery(String query) {
     SQLiteDatabase dataBase = getReadableDatabase();
     ArrayList<ScriptedURL> resultList = new ArrayList<ScriptedURL>();
 
-    Cursor cursor = dataBase.rawQuery("SELECT * from page where read = 0", null);
+    Cursor cursor = dataBase.rawQuery(query, null);
     while (cursor.moveToNext()) {
       ScriptedURL scriptedItem = new ScriptedURL(cursor.getString(2), cursor.getInt(1), cursor.getInt(3));
       resultList.add(scriptedItem);
@@ -97,4 +94,3 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     }
   }
 }
-
