@@ -76,8 +76,12 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
 
   public void insertScriptedData(String url) {
     SQLiteDatabase dataBase = getWritableDatabase();
-    dataBase.execSQL("INSERT INTO PAGE (URL) VALUES ('" + url + "');");
-    dataBase.close();
+    try {
+      dataBase.execSQL("INSERT INTO PAGE (URL) VALUES ('" + url + "');");
+      dataBase.close();
+    } catch (Exception exception) {
+      dataBase.close();
+    }
   }
 }
 

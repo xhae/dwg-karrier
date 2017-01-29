@@ -13,6 +13,7 @@ public final class DataBases {
             + _ID + " integer primary key autoincrement, "
             + READ + " integer , "
             + URL + " text not null , "
-            + WORDCOUNT + " integer );";
+            + WORDCOUNT + " integer, "
+            + "unique(" + URL + ")" + ");";
   }
 }
