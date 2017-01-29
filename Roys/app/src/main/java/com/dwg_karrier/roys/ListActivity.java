@@ -18,6 +18,7 @@ public class ListActivity extends AppCompatActivity {
   Date curTime; // current time
   double duration; // time duration between current_time and finish time
 
+  @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.list);
