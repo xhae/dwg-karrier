@@ -43,7 +43,7 @@ public class ContentView extends AppCompatActivity {
       e.printStackTrace();
     }
 
-    Button b = (Button) findViewById(R.id.button4);
+    Button b = (Button) findViewById(R.id.finishReading);
     b.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
