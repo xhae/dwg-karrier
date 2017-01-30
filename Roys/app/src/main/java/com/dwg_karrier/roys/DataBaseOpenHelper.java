@@ -10,6 +10,9 @@ import java.util.ArrayList;
 public class DataBaseOpenHelper extends SQLiteOpenHelper {
   public static final int DATABASE_VERSION = 1;
   public static final String DATABASE_NAME = "FeedReader.db";
+  public final int readColumn = 1;
+  public final int urlColumn = 2;
+  public final int wordCountColumn = 3;
 
   public DataBaseOpenHelper(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -63,7 +66,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
 
     Cursor cursor = dataBase.rawQuery(query, null);
     while (cursor.moveToNext()) {
-      ScriptedURL scriptedItem = new ScriptedURL(cursor.getString(2), cursor.getInt(1), cursor.getInt(3));
+      ScriptedURL scriptedItem = new ScriptedURL(cursor.getString(urlColumn), cursor.getInt(readColumn), cursor.getInt(wordCountColumn));
       resultList.add(scriptedItem);
     }
 
