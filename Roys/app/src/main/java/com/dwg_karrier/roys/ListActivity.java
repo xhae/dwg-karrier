@@ -1,5 +1,6 @@
 package com.dwg_karrier.roys;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ListActivity extends AppCompatActivity {
+  public static Activity activity;
   ListView lv;
   ArrayList<ScriptedData> data;
   Date finTime; // expected finish time
@@ -21,6 +23,7 @@ public class ListActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.list);
+    activity = ListActivity.this;
 
     final int minute = 60000;
     final Intent intent = new Intent(this.getIntent());
@@ -41,7 +44,6 @@ public class ListActivity extends AppCompatActivity {
         intent1.putExtra("curTime", curTime);
         // TODO: put selected ScriptedData to intent. data[position]
         startActivity(intent1);
-        finish();
       }
     });
   }
@@ -55,16 +57,16 @@ public class ListActivity extends AppCompatActivity {
     final int wordsperMin = 180;
 
     // temp test code
-    wholeList.add(new ScriptedURL("temp url1", 1, 130));
-    wholeList.add(new ScriptedURL("temp url2", 1, 13));
-    wholeList.add(new ScriptedURL("temp url3", 1, 1123));
+    wholeList.add(new ScriptedURL(finTime+"", 1, 130));
+    wholeList.add(new ScriptedURL(curTime+"", 1, 13));
+    wholeList.add(new ScriptedURL(duration+"", 1, 1123));
     wholeList.add(new ScriptedURL("temp url4", 1, 13921));
     wholeList.add(new ScriptedURL("temp url5", 1, 23213));
 
     for (ScriptedURL temp : wholeList) {
       tempTime = (double) temp.getWordCount() / wordsperMin;
       Log.d("test tempTime", "" + tempTime + "wordCount" + temp.getWordCount());
-      ret.add(new ScriptedData("", tempTime, ""));
+      ret.add(new ScriptedData(duration+"", tempTime, ""));
     }
 
     return ret;
