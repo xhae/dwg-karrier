@@ -86,11 +86,16 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
 
   public void insertScriptedData(String url) {
     SQLiteDatabase dataBase = getWritableDatabase();
-    try {
-      dataBase.execSQL("INSERT INTO PAGE (URL) VALUES ('" + url + "');");
-      dataBase.close();
-    } catch (Exception exception) {
-      dataBase.close();
+    dataBase.execSQL("INSERT INTO PAGE (URL) VALUES ('" + url + "');");
+    dataBase.close();
+  }
+
+  public void insertScriptedDataWithCheckDuplication(String url) {
+    SQLiteDatabase dataBase = getReadableDatabase();
+    Cursor cursor = dataBase.rawQuery("SELECT * FROM PAGE WHERE URL = ('" + url + "') " , null);
+    if (cursor.getCount() == 0) {
+      insertScriptedData(url);
     }
+    dataBase.close();
   }
 }
