@@ -29,7 +29,10 @@ public class ListActivity extends AppCompatActivity {
     curTime = (Date) getTimeInfo.getSerializableExtra("curTime");
 
     duration = (finTime.getTime() - curTime.getTime()) / minute;
-    data = callUrl();
+    /*
+     * TODO: get Url from DB
+     */
+    data = callUrl(); // get Url from test DB
     lv = (ListView) findViewById(R.id.listView);
     lv.setAdapter(new ListViewAdapter(this, R.layout.item, data));
 
@@ -43,9 +46,11 @@ public class ListActivity extends AppCompatActivity {
         ScriptedData pageInfo = data.get(position);
         String title = pageInfo.getTitle();
         String content = pageInfo.getContent();
+        String url = pageInfo.getUrl();
 
         openSelectedPage.putExtra("title", title);
         openSelectedPage.putExtra("content", content);
+        openSelectedPage.putExtra("url", url);
         startActivity(openSelectedPage);
         finish();
       }
@@ -66,18 +71,19 @@ public class ListActivity extends AppCompatActivity {
     String tempUrl3 = "http://www.bloter.net/archives/265786";
     String tempUrl4 = "http://www.bloter.net/archives/267575";
     String tempUrl5 = "http://www.bloter.net/archives/254316";
-    wholeList.add(new ScriptedURL(tempUrl1, 1));
-    wholeList.add(new ScriptedURL(tempUrl2, 1));
-    wholeList.add(new ScriptedURL(tempUrl3, 1));
-    wholeList.add(new ScriptedURL(tempUrl4, 1));
-    wholeList.add(new ScriptedURL(tempUrl5, 1));
+    wholeList.add(new ScriptedURL(tempUrl1, 0));
+    wholeList.add(new ScriptedURL(tempUrl2, 0));
+    wholeList.add(new ScriptedURL(tempUrl3, 0));
+    wholeList.add(new ScriptedURL(tempUrl4, 0));
+    wholeList.add(new ScriptedURL(tempUrl5, 0));
 
     for (ScriptedURL temp : wholeList) {
       tempTime = (double) temp.getWordCount() / wordsperMin;
       Log.d("test tempTime", "" + tempTime + "wordCount" + temp.getWordCount());
       String title = temp.getTitle();
       String content = temp.getContent();
-      ret.add(new ScriptedData(title, tempTime, content));
+      String url = temp.getUrl();
+      ret.add(new ScriptedData(url, title, tempTime, content));
     }
     return ret;
   }

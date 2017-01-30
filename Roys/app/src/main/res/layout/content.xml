@@ -7,7 +7,7 @@
       android:text="Finish Reading"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:id="@+id/button4" android:layout_weight="0.005"/>
+      android:id="@+id/buttonFinish" android:layout_weight="0.005"/>
   <WebView
       android:text="Content"
       android:scrollbars="vertical"
