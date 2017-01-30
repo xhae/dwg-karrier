@@ -48,21 +48,16 @@ public class ListActivity extends AppCompatActivity {
 
   private ArrayList<ScriptedData> callUrl() {
     DataBaseOpenHelper dbHelper = new DataBaseOpenHelper(this);
-    ArrayList<ScriptedURL> wholeList = new ArrayList<ScriptedURL>();
-    // intend: wholeList = test.getURLList();
     ArrayList ret = new ArrayList<ScriptedData>();
     double tempTime;
     final int wordsperMin = 180;
-    ArrayList<ScriptedURL> scriptedUrls = dbHelper.getUrlList();
+    ArrayList<ScriptedURL> wholeList = dbHelper.getUrlList();
 
-    for (int i = 0; i < scriptedUrls.size(); i++) {
-      wholeList.add(scriptedUrls.get(i));
-    }
 
     for (ScriptedURL temp : wholeList) {
       tempTime = (double) temp.getWordCount() / wordsperMin;
       Log.d("test tempTime", "" + tempTime + "wordCount" + temp.getWordCount());
-      ret.add(new ScriptedData("", tempTime, ""));
+      ret.add(new ScriptedData("asdf", tempTime, "ada"));
     }
 
     return ret;
