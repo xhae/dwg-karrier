@@ -87,6 +87,13 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     dataBase.close();
   }
 
+  //for test
+  public void deleteAllPage() {
+    SQLiteDatabase dataBase = getWritableDatabase();
+    //dataBase.execSQL("delete from page;");
+    dataBase.close();
+  }
+
   public void insertScriptedData(String url) {
     SQLiteDatabase dataBase = getWritableDatabase();
     dataBase.execSQL("INSERT INTO PAGE (URL) VALUES ('" + url + "');");
