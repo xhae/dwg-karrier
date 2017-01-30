@@ -48,13 +48,11 @@ public class ScriptedURL {
   }
 
   public String getTitle() {
-    String title = crawler.getTitle();
-    return title;
+    return crawler.getTitle();
   }
 
   public String getContent() {
-    String content = crawler.getContent();
-    return content;
+    return crawler.getContent();
   }
 
   public int getWordCount() {
