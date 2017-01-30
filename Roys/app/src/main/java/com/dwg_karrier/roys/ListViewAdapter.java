@@ -26,17 +26,21 @@ public class ListViewAdapter extends BaseAdapter {
   }
 
   @Override
-  public String getItem(int position) {return data.get(position).getTitle();}
+  public String getItem(int position) {
+    return data.get(position).getTitle();
+  }
 
   @Override
-  public long getItemId(int position) {return position;}
+  public long getItemId(int position) {
+    return position;
+  }
 
   @Override
-  public View getView (int position, View convertView, ViewGroup parent) {
+  public View getView(int position, View convertView, ViewGroup parent) {
     int minute = 60;
 
     if (convertView == null) {
-      convertView = inflater.inflate(layout,parent, false);
+      convertView = inflater.inflate(layout, parent, false);
     }
     ScriptedData scriptedData = data.get(position);
     TextView title = (TextView) convertView.findViewById(R.id.TitleView);

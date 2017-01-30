@@ -5,16 +5,6 @@ public class ScriptedURL {
   private boolean isRead;
   private int wordCount;
 
-  public String getUrl() {
-    return url;
-  }
-  public boolean getIsRead() {
-    return isRead;
-  }
-  public int getWordCount() {
-    return wordCount;
-  }
-
   ScriptedURL(String url, boolean isRead) {
     this.url = url;
     this.isRead = isRead;
@@ -22,7 +12,6 @@ public class ScriptedURL {
 
   ScriptedURL(String url, int isRead) {
     this.url = url;
-
     if (isRead == 1) {
       this.isRead = true;
     } else {
@@ -35,13 +24,25 @@ public class ScriptedURL {
     this.isRead = false;
   }
 
-  ScriptedURL (String url, int isRead, int wordCount) {
+  ScriptedURL(String url, int isRead, int wordCount) {
     this.url = url;
-    if(isRead == 1) {
+    if (isRead == 1) {
       this.isRead = true;
-    }else {
+    } else {
       this.isRead = false;
     }
     this.wordCount = wordCount;
+  }
+
+  public String getUrl() {
+    return url;
+  }
+
+  public boolean getIsRead() {
+    return isRead;
+  }
+
+  public int getWordCount() {
+    return wordCount;
   }
 }

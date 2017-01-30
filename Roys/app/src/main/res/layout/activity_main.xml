@@ -47,5 +47,7 @@
       android:layout_height="wrap_content"
       android:id="@+id/FeedlyAccountBtn"
       style="@style/Widget.AppCompat.Button.Colored" android:layout_alignParentTop="true"
-      android:layout_alignParentEnd="true"/>
+      android:layout_alignParentEnd="true"
+      android:layout_below="@+id/textView3"
+      android:layout_marginTop="18dp"/>
 </RelativeLayout>
