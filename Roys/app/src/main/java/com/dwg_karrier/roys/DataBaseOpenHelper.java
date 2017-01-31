@@ -95,12 +95,4 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     dataBase.close();
   }
 
-  public void insertScriptedDataWithCheckDuplication(String url) {
-    SQLiteDatabase dataBase = getReadableDatabase();
-    Cursor cursor = dataBase.rawQuery("SELECT * FROM PAGE WHERE URL = ('" + url + "') " , null);
-    if (cursor.getCount() == 0) {
-      insertScriptedData(url);
-    }
-    dataBase.close();
-  }
 }

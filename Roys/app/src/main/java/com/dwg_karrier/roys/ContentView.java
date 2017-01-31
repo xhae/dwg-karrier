@@ -62,6 +62,14 @@ public class ContentView extends AppCompatActivity {
             "You finished reading in " + String.valueOf(readTime) + "sec", Toast.LENGTH_LONG);
         checkInfo.setGravity(Gravity.BOTTOM, 0, 0);
         checkInfo.show();
+        
+        ListActivity finActivity = (ListActivity) ListActivity.saveActivity;
+        finActivity.finish();
+        Intent intent1 = new Intent(ContentView.this, ListActivity.class);
+        intent1.putExtra("finTime", finTime);
+        intent1.putExtra("curTime", curTime);
+        startActivity(intent1);
+        finish();
       }
     });
   }

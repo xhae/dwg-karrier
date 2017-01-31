@@ -1,5 +1,6 @@
 package com.dwg_karrier.roys;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ListActivity extends AppCompatActivity {
+  public static Activity saveActivity;
   ListView lv;
   ArrayList<ScriptedData> data;
   Date finTime; // expected finish time
@@ -22,6 +24,7 @@ public class ListActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.list);
+    saveActivity = ListActivity.this;
 
     final int minute = 60000;
     Intent getTimeInfo = new Intent(this.getIntent());
@@ -39,6 +42,7 @@ public class ListActivity extends AppCompatActivity {
     lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
         Intent openSelectedPage = new Intent(ListActivity.this, ContentView.class);
         openSelectedPage.putExtra("finTime", finTime);
         openSelectedPage.putExtra("curTime", curTime);
