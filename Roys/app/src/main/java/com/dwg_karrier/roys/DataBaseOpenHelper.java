@@ -1,5 +1,7 @@
 package com.dwg_karrier.roys;
 
+import static org.jsoup.Connection.Method.HEAD;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -93,4 +95,12 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     dataBase.close();
   }
 
+  public void insertScriptedDataWithCheckDuplication(String url) {
+    SQLiteDatabase dataBase = getReadableDatabase();
+    Cursor cursor = dataBase.rawQuery("SELECT * FROM PAGE WHERE URL = ('" + url + "') " , null);
+    if (cursor.getCount() == 0) {
+      insertScriptedData(url);
+    }
+    dataBase.close();
+  }
 }
