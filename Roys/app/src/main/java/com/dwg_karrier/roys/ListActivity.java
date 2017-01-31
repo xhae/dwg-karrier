@@ -20,30 +20,43 @@ public class ListActivity extends AppCompatActivity {
   Date curTime; // current time
   double duration; // time duration between current_time and finish time
 
+  @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.list);
     saveActivity = ListActivity.this;
 
     final int minute = 60000;
-    final Intent intent = new Intent(this.getIntent());
-    finTime = (Date) intent.getSerializableExtra("finTime");
-    curTime = (Date) intent.getSerializableExtra("curTime");
+    Intent getTimeInfo = new Intent(this.getIntent());
+    finTime = (Date) getTimeInfo.getSerializableExtra("finTime");
+    curTime = (Date) getTimeInfo.getSerializableExtra("curTime");
 
     duration = (finTime.getTime() - curTime.getTime()) / minute;
-    data = callUrl();
-
+    /*
+     * TODO: get Url from DB
+     */
+    data = callUrl(); // get Url from test DB
     lv = (ListView) findViewById(R.id.listView);
     lv.setAdapter(new ListViewAdapter(this, R.layout.item, data));
 
     lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent1 = new Intent(ListActivity.this, ContentView.class);
-        intent1.putExtra("finTime", finTime);
-        intent1.putExtra("curTime", curTime);
-        // TODO: put selected ScriptedData to intent. data[position]
-        startActivity(intent1);
+
+        Intent openSelectedPage = new Intent(ListActivity.this, ContentView.class);
+        openSelectedPage.putExtra("finTime", finTime);
+        openSelectedPage.putExtra("curTime", curTime);
+
+        ScriptedData pageInfo = data.get(position);
+        String title = pageInfo.getTitle();
+        String content = pageInfo.getContent();
+        String url = pageInfo.getUrl();
+
+        openSelectedPage.putExtra("title", title);
+        openSelectedPage.putExtra("content", content);
+        openSelectedPage.putExtra("url", url);
+        startActivity(openSelectedPage);
+        finish();
       }
     });
   }
@@ -57,18 +70,25 @@ public class ListActivity extends AppCompatActivity {
     final int wordsperMin = 180;
 
     // temp test code
-    wholeList.add(new ScriptedURL(finTime + "", 1, 130));
-    wholeList.add(new ScriptedURL(curTime + "", 1, 13));
-    wholeList.add(new ScriptedURL(duration + "", 1, 1123));
-    wholeList.add(new ScriptedURL("temp url4", 1, 13921));
-    wholeList.add(new ScriptedURL("temp url5", 1, 23213));
+    String tempUrl1 = "http://www.bloter.net/archives/265787";
+    String tempUrl2 = "http://www.bloter.net/archives/256595";
+    String tempUrl3 = "http://www.bloter.net/archives/265786";
+    String tempUrl4 = "http://www.bloter.net/archives/267575";
+    String tempUrl5 = "http://www.bloter.net/archives/254316";
+    wholeList.add(new ScriptedURL(tempUrl1, 0));
+    wholeList.add(new ScriptedURL(tempUrl2, 0));
+    wholeList.add(new ScriptedURL(tempUrl3, 0));
+    wholeList.add(new ScriptedURL(tempUrl4, 0));
+    wholeList.add(new ScriptedURL(tempUrl5, 0));
 
     for (ScriptedURL temp : wholeList) {
       tempTime = (double) temp.getWordCount() / wordsperMin;
       Log.d("test tempTime", "" + tempTime + "wordCount" + temp.getWordCount());
-      ret.add(new ScriptedData(duration + "", tempTime, ""));
+      String title = temp.getTitle();
+      String content = temp.getContent();
+      String url = temp.getUrl();
+      ret.add(new ScriptedData(url, title, tempTime, content));
     }
-
     return ret;
   }
 }
