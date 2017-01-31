@@ -91,8 +91,6 @@ public class Crawler {
   public int getWordCount() {
     int wordCount;
     try {
-//      long longWordCount = (long) this.jsonObject.get("word_count");
-//      wordCount = (int) longWordCount;
       wordCount = ((Long) this.jsonObject.get("word_count")).intValue();
     } catch (Exception e) {
       Log.e("getWordCount_Error:", e.getMessage(), e);

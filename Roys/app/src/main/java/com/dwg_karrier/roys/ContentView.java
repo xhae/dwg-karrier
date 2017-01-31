@@ -15,8 +15,8 @@ public class ContentView extends AppCompatActivity {
   String title;
   String content;
   String url;
-  long StartTime;
-  long EndTime;
+  long startTime;
+  long endTime;
   /*
    * TODO(Juung): get CurTime and finTime so that could use them to calculate rest of the time --> use in next recommendation
    * TODO: think about 'go-back' action (should go back to the first page or the second?)
@@ -43,7 +43,7 @@ public class ContentView extends AppCompatActivity {
     final String encoding = "UTF-8";
     wv.loadDataWithBaseURL("", view, mimeType, encoding, "");
 
-    StartTime = System.currentTimeMillis();
+    startTime = System.currentTimeMillis();
 
     Button finishReading = (Button) findViewById(R.id.buttonFinish);
     url = getPageInfo.getStringExtra("url");
@@ -51,12 +51,12 @@ public class ContentView extends AppCompatActivity {
 
       @Override
       public void onClick(View v) {
-        EndTime = System.currentTimeMillis();
+        endTime = System.currentTimeMillis();
         DataBaseOpenHelper dbHelper = new DataBaseOpenHelper(ContentView.this);
         dbHelper.setIsRead(url, 1);
 
         // Temporal check for DB and read time
-        long readTime = (EndTime - StartTime) / 1000;
+        long readTime = (endTime - startTime) / 1000;
         Log.d("readTime", String.valueOf(readTime));
         Toast checkInfo = Toast.makeText(getApplicationContext(), "Congratulations!" + "\n" +
             "You finished reading in " + String.valueOf(readTime) + "sec", Toast.LENGTH_LONG);
