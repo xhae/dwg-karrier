@@ -47,8 +47,8 @@ public class ContentView extends AppCompatActivity {
     b.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        ListActivity LA = (ListActivity) ListActivity.activity;
-        LA.finish();
+        ListActivity finActivity = (ListActivity) ListActivity.saveActivity;
+        finActivity.finish();
         Intent intent1 = new Intent(ContentView.this, ListActivity.class);
         intent1.putExtra("finTime", finTime);
         intent1.putExtra("curTime", curTime);

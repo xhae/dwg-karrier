@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ListActivity extends AppCompatActivity {
-  public static Activity activity;
+  public static Activity saveActivity;
   ListView lv;
   ArrayList<ScriptedData> data;
   Date finTime; // expected finish time
@@ -23,7 +23,7 @@ public class ListActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.list);
-    activity = ListActivity.this;
+    saveActivity = ListActivity.this;
 
     final int minute = 60000;
     final Intent intent = new Intent(this.getIntent());
