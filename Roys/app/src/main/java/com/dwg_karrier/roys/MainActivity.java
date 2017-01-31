@@ -123,19 +123,13 @@ public class MainActivity extends AppCompatActivity {
 
         //For Test
         //dataBaseOpenHelper.deleteAllPage();
-
+        //dataBaseOpenHelper.getTableAsString();
+        
         for (int i = 0; i < len; i++) {
           dataBaseOpenHelper.insertScriptedDataWithCheckDuplication(arr.getJSONObject(i).getString("originId"));
         }
 
         urlConnection.disconnect();
-
-        /* Not working now
-         * Toast toast = Toast.makeText(mainContext,
-         *    "End", Toast.LENGTH_LONG);
-         * toast.setGravity(Gravity.CENTER, 0, 0);
-         * toast.show();
-         */
 
       } catch (IOException | JSONException e) {
         e.printStackTrace();
@@ -145,8 +139,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPostExecute(String result) {
-
+      Toast toast = Toast.makeText(mainContext,
+          "Bring the pages from your feedly account", Toast.LENGTH_LONG);
+      toast.setGravity(Gravity.CENTER, 0, 0);
+      toast.show();
     }
   }
-
 }

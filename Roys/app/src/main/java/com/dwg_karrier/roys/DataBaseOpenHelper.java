@@ -90,7 +90,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   //for test
   public void deleteAllPage() {
     SQLiteDatabase dataBase = getWritableDatabase();
-    //dataBase.execSQL("delete from page;");
+    dataBase.execSQL("delete from page;");
     dataBase.close();
   }
 
@@ -100,9 +100,30 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     dataBase.close();
   }
 
+  //For test
+  public void getTableAsString() {
+    SQLiteDatabase db = getReadableDatabase();
+    String tableName = "page";
+
+    String tableString = String.format("Table %s:\n", tableName);
+    Cursor allRows  = db.rawQuery("SELECT * FROM " + tableName, null);
+    if (allRows.moveToFirst() ){
+      String[] columnNames = allRows.getColumnNames();
+      do {
+        for (String name: columnNames) {
+          tableString += String.format("%s: %s\n", name,
+              allRows.getString(allRows.getColumnIndex(name)));
+        }
+        tableString += "\n";
+
+      } while (allRows.moveToNext());
+    }
+  }
+
   public void insertScriptedDataWithCheckDuplication(String url) {
     SQLiteDatabase dataBase = getReadableDatabase();
     Cursor cursor = dataBase.rawQuery("SELECT * FROM PAGE WHERE URL = ('" + url + "') " , null);
+
     if (cursor.getCount() == 0) {
       insertScriptedData(url);
     }
