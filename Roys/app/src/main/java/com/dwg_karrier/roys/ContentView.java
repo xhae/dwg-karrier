@@ -18,7 +18,6 @@ public class ContentView extends AppCompatActivity {
   Date curTime;
   long startTime;
   long endTime;
-
   /*
    * TODO(Juung): get CurTime and finTime so that could use them to calculate rest of the time --> use in next recommendation
    * TODO: think about 'go-back' action (should go back to the first page or the second?)
