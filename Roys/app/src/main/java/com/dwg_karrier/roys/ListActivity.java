@@ -51,13 +51,13 @@ public class ListActivity extends AppCompatActivity {
     ArrayList ret = new ArrayList<ScriptedData>();
     double tempTime;
     final int wordsperMin = 180;
-    ArrayList<ScriptedURL> wholeList = dbHelper.getUrlList();
+    ArrayList<ScriptedURL> wholeList = dbHelper.getUnreadUrlList();
 
 
     for (ScriptedURL temp : wholeList) {
       tempTime = (double) temp.getWordCount() / wordsperMin;
       Log.d("test tempTime", "" + tempTime + "wordCount" + temp.getWordCount());
-      ret.add(new ScriptedData("", tempTime, ""));
+      ret.add(new ScriptedData("asdf", tempTime, "ada"));
     }
 
     return ret;
