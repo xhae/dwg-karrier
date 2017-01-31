@@ -62,24 +62,13 @@ public class ListActivity extends AppCompatActivity {
   }
 
   private ArrayList<ScriptedData> callUrl() {
-    DataBaseOpenHelper test = new DataBaseOpenHelper(this);
-    ArrayList<ScriptedURL> wholeList = new ArrayList<ScriptedURL>();
-    // intend: wholeList = test.getURLList();
+    DataBaseOpenHelpr dbHelper = new DataBaseOpenHelper(this);
     ArrayList ret = new ArrayList<ScriptedData>();
     double tempTime;
     final int wordsperMin = 180;
 
     // temp test code
-    String tempUrl1 = "http://www.bloter.net/archives/265787";
-    String tempUrl2 = "http://www.bloter.net/archives/256595";
-    String tempUrl3 = "http://www.bloter.net/archives/265786";
-    String tempUrl4 = "http://www.bloter.net/archives/267575";
-    String tempUrl5 = "http://www.bloter.net/archives/254316";
-    wholeList.add(new ScriptedURL(tempUrl1, 0));
-    wholeList.add(new ScriptedURL(tempUrl2, 0));
-    wholeList.add(new ScriptedURL(tempUrl3, 0));
-    wholeList.add(new ScriptedURL(tempUrl4, 0));
-    wholeList.add(new ScriptedURL(tempUrl5, 0));
+    ArrayList<ScriptedURL> wholeList = dbHelper.getUnreadUrlList();
 
     for (ScriptedURL temp : wholeList) {
       tempTime = (double) temp.getWordCount() / wordsperMin;

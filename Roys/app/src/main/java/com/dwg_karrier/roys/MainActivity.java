@@ -1,5 +1,6 @@
 package com.dwg_karrier.roys;
 
+import android.content.Context;
 import static com.dwg_karrier.roys.MainActivity.ACCESS_TOKEN;
 
 import android.content.Intent;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
   static final String ACCESS_TOKEN = "A06EprS0187tNdGMJ1XPTVQa1eE8SeGLXZeK3GZy2UwZ8qzOGSqZlPmXNcYul0zueeQRLYwN1nWbFszj6PyoNOkCGSbUp9zfJ3eLROo3bJWsUQktkXPfbFruJn9TGFQQ5r16aLhP7f-VXMFNxMtlrJw21eabhWzhzO-9r0OkXBesU_0Kscpb4SaRPW4TpYpfGiusnAKhaWmeNYdu5VaCGMdFpoch:feedlydev";
   static final String ID = "3d0c7dd1-a7bb-4cdf-92f0-6c25d88c52db";
 
+
   private static String convertStreamToString(InputStream is) {
 
     BufferedReader reader = new BufferedReader(new InputStreamReader(is));
@@ -58,11 +60,16 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
+    final Context mainActivity = this;
+
     Button btnFeedlyAccount = (Button) findViewById(R.id.FeedlyAccountBtn);
     btnFeedlyAccount.setOnClickListener(new Button.OnClickListener() {
       public void onClick(View v) {
+        DataBaseOpenHelper dataBaseOpenHelper;
+        dataBaseOpenHelper = new DataBaseOpenHelper(mainActivity);
+
         final String URL = "https://cloud.feedly.com/v3/streams/contents?streamId=user/" + ID + "/category/global.all";
-        new GetPageList().execute(URL);
+        new GetPageList(dataBaseOpenHelper, mainActivity).execute(URL);
       }
     });
 
@@ -95,10 +102,12 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private class GetPageList extends AsyncTask<String, Void, String> {
-    /*
-     * TODO(leesera): the constructor gets the DB as a parameter
-     */
-    public GetPageList() {
+    private DataBaseOpenHelper dataBaseOpenHelper;
+    private Context mainContext;
+
+    public GetPageList(DataBaseOpenHelper dbHelper, Context context) {
+      dataBaseOpenHelper = dbHelper;
+      mainContext = context;
     }
 
     @Override
@@ -115,15 +124,16 @@ public class MainActivity extends AppCompatActivity {
         JSONArray arr = obj.getJSONArray("items");
         int len = arr.length();
 
+        //For Test
+        //dataBaseOpenHelper.deleteAllPage();
+        //dataBaseOpenHelper.getTableAsString();
+
         for (int i = 0; i < len; i++) {
-          /*
-           * TODO(leesera): the url of script page should be saved at DB
-           * like arr.getJSONObject(i).getString("originId");
-           */
-          //
+          dataBaseOpenHelper.insertScriptedDataWithCheckDuplication(arr.getJSONObject(i).getString("originId"));
         }
 
         urlConnection.disconnect();
+
       } catch (IOException | JSONException e) {
         e.printStackTrace();
       }
@@ -132,7 +142,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPostExecute(String result) {
-
+      Toast toast = Toast.makeText(mainContext,
+          "Bring the pages from your feedly account", Toast.LENGTH_LONG);
+      toast.setGravity(Gravity.CENTER, 0, 0);
+      toast.show();
     }
   }
 }
