@@ -64,7 +64,7 @@ public class ListActivity extends AppCompatActivity {
 
     // from ContentView
     Intent getReadTime = new Intent(this.getIntent());
-    String readTime =  getReadTime.getStringExtra("readTime");
+    String readTime = getReadTime.getStringExtra("readTime");
     if (readTime != null) {
       Toast checkInfo = Toast.makeText(getApplicationContext(), "Congratulations!" + "\n" +
           "You finished reading in " + readTime + "sec", Toast.LENGTH_LONG);

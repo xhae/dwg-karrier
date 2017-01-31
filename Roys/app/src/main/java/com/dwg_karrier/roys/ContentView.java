@@ -61,12 +61,7 @@ public class ContentView extends AppCompatActivity {
 
         // Temporal check for DB and read time
         long readTime = (endTime - startTime) / 1000;
-//        Log.d("readTime", String.valueOf(readTime));
-//        Toast checkInfo = Toast.makeText(getApplicationContext(), "Congratulations!" + "\n" +
-//            "You finished reading in " + String.valueOf(readTime) + "sec", Toast.LENGTH_LONG);
-//        checkInfo.setGravity(Gravity.BOTTOM, 0, 0);
-//        checkInfo.show();
-        
+
         ListActivity finActivity = (ListActivity) ListActivity.saveActivity;
         finActivity.finish();
         Intent backToList = new Intent(ContentView.this, ListActivity.class);
