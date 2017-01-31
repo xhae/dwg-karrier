@@ -10,6 +10,8 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.Date;
+
 public class ContentView extends AppCompatActivity {
   private final String imgSizeCtrl = "<style>img{display: inline; height: auto; max-width: 100%;}</style>\n"; // fit image to the size of viewer
   String title;
@@ -17,6 +19,8 @@ public class ContentView extends AppCompatActivity {
   String url;
   long startTime;
   long endTime;
+  Date finTime;
+  Date curTime;
   /*
    * TODO(Juung): get CurTime and finTime so that could use them to calculate rest of the time --> use in next recommendation
    * TODO: think about 'go-back' action (should go back to the first page or the second?)
@@ -29,6 +33,11 @@ public class ContentView extends AppCompatActivity {
     final Intent getPageInfo = new Intent(this.getIntent());
     title = getPageInfo.getStringExtra("title");
     content = getPageInfo.getStringExtra("content");
+    Intent getTimeInfo = new Intent(this.getIntent());
+    finTime = (Date) getTimeInfo.getSerializableExtra("finTime");
+    curTime = (Date) getTimeInfo.getSerializableExtra("curTime");
+
+
     String view = title + "\n\n" + imgSizeCtrl + content;
 
     WebView wv = (WebView) findViewById(R.id.contentView);
@@ -45,10 +54,9 @@ public class ContentView extends AppCompatActivity {
 
     startTime = System.currentTimeMillis();
 
-    Button finishReading = (Button) findViewById(R.id.buttonFinish);
+    Button finishReading = (Button) findViewById(R.id.finishReading);
     url = getPageInfo.getStringExtra("url");
     finishReading.setOnClickListener(new View.OnClickListener() {
-
       @Override
       public void onClick(View v) {
         endTime = System.currentTimeMillis();
