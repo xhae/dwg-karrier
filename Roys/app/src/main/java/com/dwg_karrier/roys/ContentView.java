@@ -3,20 +3,22 @@ package com.dwg_karrier.roys;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.Toast;
+
+import java.util.Date;
 
 public class ContentView extends AppCompatActivity {
   private final String imgSizeCtrl = "<style>img{display: inline; height: auto; max-width: 100%;}</style>\n"; // fit image to the size of viewer
   String title;
   String content;
   String url;
+  Date finTime;
+  Date curTime;
   long startTime;
   long endTime;
+
   /*
    * TODO(Juung): get CurTime and finTime so that could use them to calculate rest of the time --> use in next recommendation
    * TODO: think about 'go-back' action (should go back to the first page or the second?)
@@ -29,6 +31,9 @@ public class ContentView extends AppCompatActivity {
     final Intent getPageInfo = new Intent(this.getIntent());
     title = getPageInfo.getStringExtra("title");
     content = getPageInfo.getStringExtra("content");
+    finTime = (Date) getPageInfo.getSerializableExtra("finTime");
+    curTime = (Date) getPageInfo.getSerializableExtra("curTime");
+
     String view = title + "\n\n" + imgSizeCtrl + content;
 
     WebView wv = (WebView) findViewById(R.id.contentView);
@@ -45,10 +50,9 @@ public class ContentView extends AppCompatActivity {
 
     startTime = System.currentTimeMillis();
 
-    Button finishReading = (Button) findViewById(R.id.buttonFinish);
+    Button finishReading = (Button) findViewById(R.id.finishReading);
     url = getPageInfo.getStringExtra("url");
     finishReading.setOnClickListener(new View.OnClickListener() {
-
       @Override
       public void onClick(View v) {
         endTime = System.currentTimeMillis();
@@ -57,18 +61,19 @@ public class ContentView extends AppCompatActivity {
 
         // Temporal check for DB and read time
         long readTime = (endTime - startTime) / 1000;
-        Log.d("readTime", String.valueOf(readTime));
-        Toast checkInfo = Toast.makeText(getApplicationContext(), "Congratulations!" + "\n" +
-            "You finished reading in " + String.valueOf(readTime) + "sec", Toast.LENGTH_LONG);
-        checkInfo.setGravity(Gravity.BOTTOM, 0, 0);
-        checkInfo.show();
+//        Log.d("readTime", String.valueOf(readTime));
+//        Toast checkInfo = Toast.makeText(getApplicationContext(), "Congratulations!" + "\n" +
+//            "You finished reading in " + String.valueOf(readTime) + "sec", Toast.LENGTH_LONG);
+//        checkInfo.setGravity(Gravity.BOTTOM, 0, 0);
+//        checkInfo.show();
         
         ListActivity finActivity = (ListActivity) ListActivity.saveActivity;
         finActivity.finish();
-        Intent intent1 = new Intent(ContentView.this, ListActivity.class);
-        intent1.putExtra("finTime", finTime);
-        intent1.putExtra("curTime", curTime);
-        startActivity(intent1);
+        Intent backToList = new Intent(ContentView.this, ListActivity.class);
+        backToList.putExtra("finTime", finTime);
+        backToList.putExtra("curTime", curTime);
+        backToList.putExtra("readTime", String.valueOf(readTime));
+        startActivity(backToList);
         finish();
       }
     });
