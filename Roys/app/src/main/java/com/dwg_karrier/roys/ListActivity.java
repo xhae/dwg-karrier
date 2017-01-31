@@ -57,16 +57,16 @@ public class ListActivity extends AppCompatActivity {
     final int wordsperMin = 180;
 
     // temp test code
-    wholeList.add(new ScriptedURL(finTime+"", 1, 130));
-    wholeList.add(new ScriptedURL(curTime+"", 1, 13));
-    wholeList.add(new ScriptedURL(duration+"", 1, 1123));
+    wholeList.add(new ScriptedURL(finTime + "", 1, 130));
+    wholeList.add(new ScriptedURL(curTime + "", 1, 13));
+    wholeList.add(new ScriptedURL(duration + "", 1, 1123));
     wholeList.add(new ScriptedURL("temp url4", 1, 13921));
     wholeList.add(new ScriptedURL("temp url5", 1, 23213));
 
     for (ScriptedURL temp : wholeList) {
       tempTime = (double) temp.getWordCount() / wordsperMin;
       Log.d("test tempTime", "" + tempTime + "wordCount" + temp.getWordCount());
-      ret.add(new ScriptedData(duration+"", tempTime, ""));
+      ret.add(new ScriptedData(duration + "", tempTime, ""));
     }
 
     return ret;
