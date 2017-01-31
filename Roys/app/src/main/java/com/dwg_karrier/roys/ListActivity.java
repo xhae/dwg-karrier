@@ -32,12 +32,9 @@ public class ListActivity extends AppCompatActivity {
     Intent getTimeInfo = new Intent(this.getIntent());
     finTime = (Date) getTimeInfo.getSerializableExtra("finTime");
     curTime = (Date) getTimeInfo.getSerializableExtra("curTime");
-
     duration = (finTime.getTime() - curTime.getTime()) / minute;
-    /*
-     * TODO: get Url from DB
-     */
-    data = callUrl(); // get Url from test DB
+
+    data = callUrl();
     lv = (ListView) findViewById(R.id.listView);
     lv.setAdapter(new ListViewAdapter(this, R.layout.item, data));
 
