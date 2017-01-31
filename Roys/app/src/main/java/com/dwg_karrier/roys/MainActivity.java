@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         //For Test
         //dataBaseOpenHelper.deleteAllPage();
         //dataBaseOpenHelper.getTableAsString();
-        
+
         for (int i = 0; i < len; i++) {
           dataBaseOpenHelper.insertScriptedDataWithCheckDuplication(arr.getJSONObject(i).getString("originId"));
         }

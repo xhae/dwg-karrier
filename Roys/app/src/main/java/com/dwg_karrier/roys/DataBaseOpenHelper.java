@@ -106,11 +106,11 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     String tableName = "page";
 
     String tableString = String.format("Table %s:\n", tableName);
-    Cursor allRows  = db.rawQuery("SELECT * FROM " + tableName, null);
-    if (allRows.moveToFirst() ){
+    Cursor allRows = db.rawQuery("SELECT * FROM " + tableName, null);
+    if (allRows.moveToFirst()) {
       String[] columnNames = allRows.getColumnNames();
       do {
-        for (String name: columnNames) {
+        for (String name : columnNames) {
           tableString += String.format("%s: %s\n", name,
               allRows.getString(allRows.getColumnIndex(name)));
         }
@@ -122,7 +122,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
 
   public void insertScriptedDataWithCheckDuplication(String url) {
     SQLiteDatabase dataBase = getReadableDatabase();
-    Cursor cursor = dataBase.rawQuery("SELECT * FROM PAGE WHERE URL = ('" + url + "') " , null);
+    Cursor cursor = dataBase.rawQuery("SELECT * FROM PAGE WHERE URL = ('" + url + "') ", null);
 
     if (cursor.getCount() == 0) {
       insertScriptedData(url);
