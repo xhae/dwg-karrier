@@ -1,5 +1,7 @@
 package com.dwg_karrier.roys;
 
+import static org.jsoup.Connection.Method.HEAD;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;

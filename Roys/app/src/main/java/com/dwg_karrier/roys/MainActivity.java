@@ -83,10 +83,10 @@ public class MainActivity extends AppCompatActivity {
         cal.add(Calendar.MINUTE, Integer.parseInt(inputTime));
         Date d = new Date(cal.getTimeInMillis());
 
-        Intent intent = new Intent(MainActivity.this, ListActivity.class);
-        intent.putExtra("finTime", d);
-        intent.putExtra("curTime", curTime);
-        startActivity(intent);
+        Intent openRcmdList = new Intent(MainActivity.this, ListActivity.class); // open Recommend Lists
+        openRcmdList.putExtra("finTime", d);
+        openRcmdList.putExtra("curTime", curTime);
+        startActivity(openRcmdList);
       }
     });
   }

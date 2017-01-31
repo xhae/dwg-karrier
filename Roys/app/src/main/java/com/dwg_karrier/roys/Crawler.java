@@ -12,6 +12,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author Ji hyung Moon <mjihyung@gmail.com>
@@ -78,7 +80,7 @@ public class Crawler {
     try {
       content = (String) this.jsonObject.get("content");
       Document jsoupDoc = Jsoup.parse(content);
-      content = jsoupDoc.text();
+      content = jsoupDoc.toString();
     } catch (Exception e) {
       Log.e("getContent_Error:", e.getMessage(), e);
       content = null;
@@ -86,15 +88,38 @@ public class Crawler {
     return content;
   }
 
-  public Integer getWordCount() {
-    Integer wordCount = 0;
+  public int getWordCount() {
+    int wordCount;
     try {
-      wordCount = (Integer) this.jsonObject.get("word_count");
+      wordCount = ((Long) this.jsonObject.get("word_count")).intValue();
     } catch (Exception e) {
       Log.e("getWordCount_Error:", e.getMessage(), e);
-      wordCount = null;
+      wordCount = 0;
     }
     return wordCount;
+  }
+
+  /**
+   * TODO(juung): Bring date of contents
+   *
+   * <p> Need to be fixed. (return null)
+   *
+   * <p> In my estimation, it might be API prob or dateformat prob
+   *
+   * @return string of published date with 'yyyy-MM-dd' format
+   */
+  public String getDate() {
+    String date;
+    try {
+      SimpleDateFormat parserSDF = new SimpleDateFormat("yyyy-MM-dd'T'KK:mm:ss"); //2016-09-30T07:00:12.000Z yyyy-MM-dd'T'KK:mm:ss
+      Date datePublished = parserSDF.parse((String) this.jsonObject.get("date_published"));
+      SimpleDateFormat newDate = new SimpleDateFormat("yyyy-MM-dd");
+      date = newDate.format(datePublished);
+    } catch (Exception e) {
+      Log.e("getData_Error:", e.getMessage(), e);
+      date = null;
+    }
+    return date;
   }
 
   /**
@@ -105,7 +130,7 @@ public class Crawler {
    * <p> AsyncTask runs in the background of main Thread. AsyncTask = Thread + Handler
    *
    * @returns json format response from Mercury-API (detailed response is described in {@link
-   * #getJsonResponse(String strUrl)} document.
+   *     #getJsonResponse(String strUrl)} document.
    */
   public class MyAsyncTask extends AsyncTask<String, Void, JSONObject> {
     @Override
