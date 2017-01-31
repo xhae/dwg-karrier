@@ -11,8 +11,9 @@ public final class DataBases {
     public static final String _CREATE =
         "create table " + _TABLENAME + "("
             + _ID + " integer primary key autoincrement, "
-            + READ + " integer , "
+            + READ + " integer default 0 , "
             + URL + " text not null , "
-            + WORDCOUNT + " integer );";
+            + WORDCOUNT + " integer, "
+            + "unique(" + URL + ")" + ");";
   }
 }
