@@ -10,6 +10,9 @@ import java.util.ArrayList;
 public class DataBaseOpenHelper extends SQLiteOpenHelper {
   public static final int DATABASE_VERSION = 1;
   public static final String DATABASE_NAME = "FeedReader.db";
+  public final int readColumn = 1;
+  public final int urlColumn = 2;
+  public final int wordCountColumn = 3;
 
   public DataBaseOpenHelper(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -47,14 +50,24 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     return result;
   }
 
-  public ArrayList<ScriptedURL> getUrlList() {
+  public ArrayList<ScriptedURL> getAllUrlList() {
+    String getUrlListQuery = "SELECT * from page";
+    return getUrlListFromQuery(getUrlListQuery);
+  }
+
+  public ArrayList<ScriptedURL> getUnreadUrlList() {
+    String unreadQuery = "SELECT * from page where read = 0";
+    return getUrlListFromQuery(unreadQuery);
+  }
+
+  private ArrayList<ScriptedURL> getUrlListFromQuery(String query) {
     SQLiteDatabase dataBase = getReadableDatabase();
     ArrayList<ScriptedURL> resultList = new ArrayList<ScriptedURL>();
 
-    Cursor cursor = dataBase.rawQuery("SELECT * from page ", null);
+    Cursor cursor = dataBase.rawQuery(query, null);
     while (cursor.moveToNext()) {
-      ScriptedURL scriptecItem = new ScriptedURL(cursor.getString(2), cursor.getInt(1));
-      resultList.add(scriptecItem);
+      ScriptedURL scriptedItem = new ScriptedURL(cursor.getString(urlColumn), cursor.getInt(readColumn), cursor.getInt(wordCountColumn));
+      resultList.add(scriptedItem);
     }
 
     return resultList;
@@ -79,5 +92,13 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     dataBase.execSQL("INSERT INTO PAGE (URL) VALUES ('" + url + "');");
     dataBase.close();
   }
-}
 
+  public void insertScriptedDataWithCheckDuplication(String url) {
+    SQLiteDatabase dataBase = getReadableDatabase();
+    Cursor cursor = dataBase.rawQuery("SELECT * FROM PAGE WHERE URL = ('" + url + "') " , null);
+    if (cursor.getCount() == 0) {
+      insertScriptedData(url);
+    }
+    dataBase.close();
+  }
+}
