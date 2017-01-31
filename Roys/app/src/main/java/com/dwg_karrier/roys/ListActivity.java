@@ -1,5 +1,6 @@
 package com.dwg_karrier.roys;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ListActivity extends AppCompatActivity {
+  public static Activity saveActivity;
   ListView lv;
   ArrayList<ScriptedData> data;
   Date finTime; // expected finish time
@@ -22,6 +24,7 @@ public class ListActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.list);
+    saveActivity = ListActivity.this;
 
     final int minute = 60000;
     Intent getTimeInfo = new Intent(this.getIntent());
@@ -58,24 +61,13 @@ public class ListActivity extends AppCompatActivity {
   }
 
   private ArrayList<ScriptedData> callUrl() {
-    DataBaseOpenHelper test = new DataBaseOpenHelper(this);
-    ArrayList<ScriptedURL> wholeList = new ArrayList<ScriptedURL>();
-    // intend: wholeList = test.getURLList();
+    DataBaseOpenHelpr dbHelper = new DataBaseOpenHelper(this);
     ArrayList ret = new ArrayList<ScriptedData>();
     double tempTime;
     final int wordsperMin = 180;
 
     // temp test code
-    String tempUrl1 = "http://www.bloter.net/archives/265787";
-    String tempUrl2 = "http://www.bloter.net/archives/256595";
-    String tempUrl3 = "http://www.bloter.net/archives/265786";
-    String tempUrl4 = "http://www.bloter.net/archives/267575";
-    String tempUrl5 = "http://www.bloter.net/archives/254316";
-    wholeList.add(new ScriptedURL(tempUrl1, 0));
-    wholeList.add(new ScriptedURL(tempUrl2, 0));
-    wholeList.add(new ScriptedURL(tempUrl3, 0));
-    wholeList.add(new ScriptedURL(tempUrl4, 0));
-    wholeList.add(new ScriptedURL(tempUrl5, 0));
+    ArrayList<ScriptedURL> wholeList = dbHelper.getUnreadUrlList();
 
     for (ScriptedURL temp : wholeList) {
       tempTime = (double) temp.getWordCount() / wordsperMin;
