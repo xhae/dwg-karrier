@@ -58,7 +58,6 @@ public class ListActivity extends AppCompatActivity {
         openSelectedPage.putExtra("content", content);
         openSelectedPage.putExtra("url", url);
         startActivity(openSelectedPage);
-        finish();
       }
     });
 
