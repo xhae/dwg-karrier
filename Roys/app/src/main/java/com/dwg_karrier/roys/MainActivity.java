@@ -1,6 +1,8 @@
 package com.dwg_karrier.roys;
 
 import android.content.Context;
+import static com.dwg_karrier.roys.MainActivity.ACCESS_TOKEN;
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.os.AsyncTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -90,10 +93,10 @@ public class MainActivity extends AppCompatActivity {
         cal.add(Calendar.MINUTE, Integer.parseInt(inputTime));
         Date d = new Date(cal.getTimeInMillis());
 
-        Intent intent = new Intent(MainActivity.this, ListActivity.class);
-        intent.putExtra("finTime", d);
-        intent.putExtra("curTime", curTime);
-        startActivity(intent);
+        Intent openRcmdList = new Intent(MainActivity.this, ListActivity.class); // open Recommend Lists
+        openRcmdList.putExtra("finTime", d);
+        openRcmdList.putExtra("curTime", curTime);
+        startActivity(openRcmdList);
       }
     });
   }
@@ -146,3 +149,4 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 }
+
