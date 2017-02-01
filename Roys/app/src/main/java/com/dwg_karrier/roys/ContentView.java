@@ -3,12 +3,9 @@ package com.dwg_karrier.roys;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.Toast;
 
 import java.util.Date;
 
@@ -17,10 +14,10 @@ public class ContentView extends AppCompatActivity {
   String title;
   String content;
   String url;
-  long startTime;
-  long endTime;
   Date finTime;
   Date curTime;
+  long startTime;
+  long endTime;
   /*
    * TODO(Juung): get CurTime and finTime so that could use them to calculate rest of the time --> use in next recommendation
    * TODO: think about 'go-back' action (should go back to the first page or the second?)
@@ -33,10 +30,8 @@ public class ContentView extends AppCompatActivity {
     final Intent getPageInfo = new Intent(this.getIntent());
     title = getPageInfo.getStringExtra("title");
     content = getPageInfo.getStringExtra("content");
-    Intent getTimeInfo = new Intent(this.getIntent());
-    finTime = (Date) getTimeInfo.getSerializableExtra("finTime");
-    curTime = (Date) getTimeInfo.getSerializableExtra("curTime");
-
+    finTime = (Date) getPageInfo.getSerializableExtra("finTime");
+    curTime = (Date) getPageInfo.getSerializableExtra("curTime");
 
     String view = title + "\n\n" + imgSizeCtrl + content;
 
@@ -65,18 +60,14 @@ public class ContentView extends AppCompatActivity {
 
         // Temporal check for DB and read time
         long readTime = (endTime - startTime) / 1000;
-        Log.d("readTime", String.valueOf(readTime));
-        Toast checkInfo = Toast.makeText(getApplicationContext(), "Congratulations!" + "\n" +
-            "You finished reading in " + String.valueOf(readTime) + "sec", Toast.LENGTH_LONG);
-        checkInfo.setGravity(Gravity.BOTTOM, 0, 0);
-        checkInfo.show();
-        
+
         ListActivity finActivity = (ListActivity) ListActivity.saveActivity;
         finActivity.finish();
-        Intent intent1 = new Intent(ContentView.this, ListActivity.class);
-        intent1.putExtra("finTime", finTime);
-        intent1.putExtra("curTime", curTime);
-        startActivity(intent1);
+        Intent backToList = new Intent(ContentView.this, ListActivity.class);
+        backToList.putExtra("finTime", finTime);
+        backToList.putExtra("curTime", curTime);
+        backToList.putExtra("readTime", String.valueOf(readTime));
+        startActivity(backToList);
         finish();
       }
     });
