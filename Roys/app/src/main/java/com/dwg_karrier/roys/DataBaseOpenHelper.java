@@ -66,8 +66,11 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
 
     Cursor cursor = dataBase.rawQuery(query, null);
     while (cursor.moveToNext()) {
-//      ScriptedURL scriptedItem = new ScriptedURL(cursor.getString(urlColumn), cursor.getInt(readColumn), cursor.getInt(wordCountColumn));
       ScriptedURL scriptedItem = new ScriptedURL(cursor.getString(urlColumn), cursor.getInt(readColumn));
+      /*
+       * TODO: Roys v.2 with word count info in the DB, use the below code
+       * ScriptedURL scriptedItem = new ScriptedURL(cursor.getString(urlColumn), cursor.getInt(readColumn), cursor.getInt(wordCountColumn));
+       */
       resultList.add(scriptedItem);
     }
 
@@ -83,7 +86,9 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
 
   public void setWordCount(String url, int wordCount) {
     SQLiteDatabase dataBase = getWritableDatabase();
-
+    /*
+     * TODO(Juung): omit wordCount from input --> this should be called from crawler
+     */
     dataBase.execSQL("UPDATE PAGE SET wordCount=" + wordCount + " WHERE url='" + url + "';");
     dataBase.close();
   }
