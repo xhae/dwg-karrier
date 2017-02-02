@@ -68,7 +68,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
 
     Cursor cursor = dataBase.rawQuery(query, null);
     while (cursor.moveToNext()) {
-      ScriptedURL scriptedItem = new ScriptedURL(cursor.getString(urlColumn), cursor.getInt(readColumn), cursor.getInt(wordCountColumn));
+      ScriptedURL scriptedItem = new ScriptedURL(cursor.getString(urlColumn), cursor.getInt(readColumn));
       resultList.add(scriptedItem);
     }
 
@@ -102,10 +102,6 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     dataBase.close();
   }
 
-  public void insertScriptedDataWithCheckDuplication(String url) {
-    SQLiteDatabase dataBase = getReadableDatabase();
-    Cursor cursor = dataBase.rawQuery("SELECT * FROM PAGE WHERE URL = ('" + url + "') " , null);
-  
   //For test
   public void getTableAsString() {
     SQLiteDatabase db = getReadableDatabase();

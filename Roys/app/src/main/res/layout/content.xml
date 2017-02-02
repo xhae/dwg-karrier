@@ -8,7 +8,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:id="@+id/finishReading" android:layout_weight="0.005"/>
-  <TextView
+  <WebView
       android:text="Content"
       android:scrollbars="vertical"
       android:layout_width="fill_parent"

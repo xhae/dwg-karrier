@@ -46,7 +46,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:id="@+id/FeedlyAccountBtn"
-      style="@style/Widget.AppCompat.Button.Colored" 
+      style="@style/Widget.AppCompat.Button.Colored"
       android:layout_above="@+id/textView2" android:layout_centerHorizontal="true"
-      android:layout_marginbottom="27dp"/>
+      android:layout_marginBottom="27dp"/>
 </RelativeLayout>

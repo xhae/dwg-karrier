@@ -62,7 +62,7 @@ public class ListActivity extends AppCompatActivity {
   }
 
   private ArrayList<ScriptedData> callUrl() {
-    DataBaseOpenHelpr dbHelper = new DataBaseOpenHelper(this);
+    DataBaseOpenHelper dbHelper = new DataBaseOpenHelper(this);
     ArrayList ret = new ArrayList<ScriptedData>();
     double tempTime;
     final int wordsperMin = 180;

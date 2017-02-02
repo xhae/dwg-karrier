@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.Date;
->>>>>>> ce02c1ce940ee21f6b35b73219e09b122c05665b
 
 public class ContentView extends AppCompatActivity {
   private final String imgSizeCtrl = "<style>img{display: inline; height: auto; max-width: 100%;}</style>\n"; // fit image to the size of viewer
@@ -37,11 +36,8 @@ public class ContentView extends AppCompatActivity {
     String view = title + "\n\n" + imgSizeCtrl + content;
 
     Intent getTimeInfo = new Intent(this.getIntent());
-    finTime = (Date) getTimeInfo.getSerializableExtra("finTime");
-    curTime = (Date) getTimeInfo.getSerializableExtra("curTime");
-
-
-    String view = title + "\n\n" + imgSizeCtrl + content;
+    finTime = (Date) getPageInfo.getSerializableExtra("finTime");
+    curTime = (Date) getPageInfo.getSerializableExtra("curTime");
 
     WebView wv = (WebView) findViewById(R.id.contentView);
       /*
