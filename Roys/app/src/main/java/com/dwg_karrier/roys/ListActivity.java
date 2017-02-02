@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,12 +32,9 @@ public class ListActivity extends AppCompatActivity {
     Intent getTimeInfo = new Intent(this.getIntent());
     finTime = (Date) getTimeInfo.getSerializableExtra("finTime");
     curTime = (Date) getTimeInfo.getSerializableExtra("curTime");
-
     duration = (finTime.getTime() - curTime.getTime()) / minute;
-    /*
-     * TODO: get Url from DB
-     */
-    data = callUrl(); // get Url from test DB
+
+    data = callUrl();
     lv = (ListView) findViewById(R.id.listView);
     lv.setAdapter(new ListViewAdapter(this, R.layout.item, data));
 
@@ -55,9 +54,18 @@ public class ListActivity extends AppCompatActivity {
         openSelectedPage.putExtra("content", content);
         openSelectedPage.putExtra("url", url);
         startActivity(openSelectedPage);
-        finish();
       }
     });
+
+    // from ContentView
+    Intent getReadTime = new Intent(this.getIntent());
+    String readTime = getReadTime.getStringExtra("readTime");
+    if (readTime != null) {
+      Toast checkInfo = Toast.makeText(getApplicationContext(), "Congratulations!" + "\n" +
+          "You finished reading in " + readTime + "sec", Toast.LENGTH_LONG);
+      checkInfo.setGravity(Gravity.CENTER, 0, 0);
+      checkInfo.show();
+    }
   }
 
   private ArrayList<ScriptedData> callUrl() {
