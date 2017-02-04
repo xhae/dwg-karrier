@@ -6,6 +6,8 @@ import static com.dwg_karrier.roys.MainActivity.ACCESS_TOKEN;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
@@ -31,7 +33,7 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
   static final String ACCESS_TOKEN = "A06EprS0187tNdGMJ1XPTVQa1eE8SeGLXZeK3GZy2UwZ8qzOGSqZlPmXNcYul0zueeQRLYwN1nWbFszj6PyoNOkCGSbUp9zfJ3eLROo3bJWsUQktkXPfbFruJn9TGFQQ5r16aLhP7f-VXMFNxMtlrJw21eabhWzhzO-9r0OkXBesU_0Kscpb4SaRPW4TpYpfGiusnAKhaWmeNYdu5VaCGMdFpoch:feedlydev";
   static final String ID = "3d0c7dd1-a7bb-4cdf-92f0-6c25d88c52db";
-
+  boolean getAccount = false;
 
   private static String convertStreamToString(InputStream is) {
 
@@ -62,11 +64,21 @@ public class MainActivity extends AppCompatActivity {
 
     final Context mainActivity = this;
 
-    DataBaseOpenHelper dataBaseOpenHelper;
-    dataBaseOpenHelper = new DataBaseOpenHelper(mainActivity);
+    final FloatingActionButton getFeedlyAccount = (FloatingActionButton) findViewById(R.id.fab);
+    getFeedlyAccount.setOnClickListener(new View.OnClickListener() {
 
-    final String URL = "https://cloud.feedly.com/v3/streams/contents?streamId=user/" + ID + "/category/global.all";
-    new GetPageList(dataBaseOpenHelper, mainActivity).execute(URL);
+      @Override
+      public void onClick(View view) {
+        DataBaseOpenHelper dataBaseOpenHelper;
+        dataBaseOpenHelper = new DataBaseOpenHelper(mainActivity);
+
+        final String URL = "https://cloud.feedly.com/v3/streams/contents?streamId=user/" + ID + "/category/global.all";
+        new GetPageList(dataBaseOpenHelper, mainActivity).execute(URL);
+
+        Snackbar.make(view, "Bring the pages from your feedly account", Snackbar.LENGTH_SHORT)
+            .setAction("Action", null).show();
+      }
+    });
 
     Button b = (Button) findViewById(R.id.button);
     final EditText editText = (EditText) findViewById(R.id.editText);
@@ -76,6 +88,13 @@ public class MainActivity extends AppCompatActivity {
       public void onClick(View v) {
         if (editText.getText().toString().isEmpty()) {
           Toast toast = Toast.makeText(getApplicationContext(), "Input time!", Toast.LENGTH_LONG);
+          toast.setGravity(Gravity.BOTTOM, 0, 0);
+          toast.show();
+          return;
+        }
+
+        if(getAccount == false){
+          Toast toast = Toast.makeText(getApplicationContext(), "connect to account!", Toast.LENGTH_LONG);
           toast.setGravity(Gravity.BOTTOM, 0, 0);
           toast.show();
           return;
@@ -137,10 +156,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPostExecute(String result) {
-      Toast toast = Toast.makeText(mainContext,
-          "Bring the pages from your feedly account", Toast.LENGTH_LONG);
-      toast.setGravity(Gravity.CENTER, 0, 0);
-      toast.show();
+      getAccount = true;
     }
   }
 }
