@@ -1,5 +1,6 @@
 package com.dwg_karrier.roys;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,9 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Date;
+
 public class ContentSwipe extends AppCompatActivity {
   private SectionsPagerAdapter mSectionsPagerAdapter;
   private ViewPager mViewPager;
+  String title;
+  String content;
+  Date finTime;
+  Date curTime;
+  double duration; // time duration between current_time and finish time
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +32,13 @@ public class ContentSwipe extends AppCompatActivity {
 
     mViewPager = (ViewPager) findViewById(R.id.container);
     mViewPager.setAdapter(mSectionsPagerAdapter);
+
+    Intent getTimeInfo = new Intent(this.getIntent());
+    finTime = (Date) getTimeInfo.getSerializableExtra("finTime");
+    curTime = (Date) getTimeInfo.getSerializableExtra("curTime");
+
+    final int minute = 60000;
+    duration = (finTime.getTime() - curTime.getTime()) / minute;
   }
 
   public static class PlaceholderFragment extends Fragment {
@@ -37,6 +52,10 @@ public class ContentSwipe extends AppCompatActivity {
       PlaceholderFragment fragment = new PlaceholderFragment();
       Bundle args = new Bundle();
       args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+      /*
+       * TODO put DB data into args like e.g. putType(key, value) in each fragment.
+       * args.putString("tempURL", "args test");
+       */
       fragment.setArguments(args);
       return fragment;
     }
@@ -45,7 +64,7 @@ public class ContentSwipe extends AppCompatActivity {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
       View rootView = inflater.inflate(R.layout.contentfragment, container, false);
       TextView contentTitle = (TextView) rootView.findViewById(R.id.title);
-      contentTitle.setText("title: "+getArguments().getInt(ARG_SECTION_NUMBER));
+      contentTitle.setText("title: " + getArguments().getInt(ARG_SECTION_NUMBER));
 
       /*
        * TODO: set representative image
