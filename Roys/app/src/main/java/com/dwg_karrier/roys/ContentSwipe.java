@@ -2,6 +2,8 @@ package com.dwg_karrier.roys;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -39,6 +41,18 @@ public class ContentSwipe extends AppCompatActivity {
 
     final int minute = 60000;
     duration = (finTime.getTime() - curTime.getTime()) / minute;
+
+    FloatingActionButton changeMode = (FloatingActionButton) findViewById(R.id.fab);
+    changeMode.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Intent openRcmdList = new Intent(ContentSwipe.this, ListActivity.class); // open Recommend Lists
+        openRcmdList.putExtra("finTime", finTime);
+        openRcmdList.putExtra("curTime", curTime);
+        startActivity(openRcmdList);
+        finish();
+      }
+    });
   }
 
   public static class PlaceholderFragment extends Fragment {
@@ -70,7 +84,13 @@ public class ContentSwipe extends AppCompatActivity {
        * TODO: set representative image
        * ImageView backgroundImage = (ImageView) rootView.findViewById(R.id.backImage);
        * backgroundImage.setImageURI();
-      */
+       */
+
+      /*
+       * TODO: connect to contentView
+       * Maybe Same as we did at ListActivity.
+       * Before we should put ars for each fragment
+       */
 
       return rootView;
     }
