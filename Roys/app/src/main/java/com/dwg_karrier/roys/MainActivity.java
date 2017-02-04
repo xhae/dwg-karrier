@@ -62,16 +62,11 @@ public class MainActivity extends AppCompatActivity {
 
     final Context mainActivity = this;
 
-    Button btnFeedlyAccount = (Button) findViewById(R.id.FeedlyAccountBtn);
-    btnFeedlyAccount.setOnClickListener(new Button.OnClickListener() {
-      public void onClick(View v) {
-        DataBaseOpenHelper dataBaseOpenHelper;
-        dataBaseOpenHelper = new DataBaseOpenHelper(mainActivity);
+    DataBaseOpenHelper dataBaseOpenHelper;
+    dataBaseOpenHelper = new DataBaseOpenHelper(mainActivity);
 
-        final String URL = "https://cloud.feedly.com/v3/streams/contents?streamId=user/" + ID + "/category/global.all";
-        new GetPageList(dataBaseOpenHelper, mainActivity).execute(URL);
-      }
-    });
+    final String URL = "https://cloud.feedly.com/v3/streams/contents?streamId=user/" + ID + "/category/global.all";
+    new GetPageList(dataBaseOpenHelper, mainActivity).execute(URL);
 
     Button b = (Button) findViewById(R.id.button);
     final EditText editText = (EditText) findViewById(R.id.editText);
@@ -93,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         cal.add(Calendar.MINUTE, Integer.parseInt(inputTime));
         Date d = new Date(cal.getTimeInMillis());
 
-        Intent openRcmdList = new Intent(MainActivity.this, ListActivity.class); // open Recommend Lists
+        Intent openRcmdList = new Intent(MainActivity.this, ContentSwipe.class); // open Recommend Lists
         openRcmdList.putExtra("finTime", d);
         openRcmdList.putExtra("curTime", curTime);
         startActivity(openRcmdList);
