@@ -17,7 +17,7 @@ import java.util.Date;
 
 /**
  * @author Ji hyung Moon <mjihyung@gmail.com>
- * @version 1.0
+ * @version 2.0
  */
 public class Crawler {
   JSONObject jsonObject = null;
