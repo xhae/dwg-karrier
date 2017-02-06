@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
           String feedContent = feedSummary.getString("content");
           int feedExpectedTime = countWords(feedContent) / WORDPERMIN;
 
-          //Please Let me know if you are have smart way of getting image url from html :)
+          //Please Let me know if you have smart way of getting image url from html :)
           String imgUrl = feedContent.split("src=\"")[1].split("\">")[0];
           if (imgUrl == null) {
             imgUrl = DEFAULTIMGURL;
