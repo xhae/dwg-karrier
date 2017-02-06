@@ -1,8 +1,6 @@
 package com.dwg_karrier.roys;
 
 import android.content.Context;
-import static com.dwg_karrier.roys.MainActivity.ACCESS_TOKEN;
-
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,11 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.os.AsyncTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -31,6 +29,7 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
   static final String ACCESS_TOKEN = "A06EprS0187tNdGMJ1XPTVQa1eE8SeGLXZeK3GZy2UwZ8qzOGSqZlPmXNcYul0zueeQRLYwN1nWbFszj6PyoNOkCGSbUp9zfJ3eLROo3bJWsUQktkXPfbFruJn9TGFQQ5r16aLhP7f-VXMFNxMtlrJw21eabhWzhzO-9r0OkXBesU_0Kscpb4SaRPW4TpYpfGiusnAKhaWmeNYdu5VaCGMdFpoch:feedlydev";
   static final String ID = "3d0c7dd1-a7bb-4cdf-92f0-6c25d88c52db";
+  static final String DEFAULTIMGURL = "https://blogdotstartlinkdotio.files.wordpress.com/2016/01/12620892_1077588858927687_1133266313_o.jpg?w=490&h=772";
 
 
   private static String convertStreamToString(InputStream is) {
@@ -65,8 +64,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnFeedlyAccount = (Button) findViewById(R.id.FeedlyAccountBtn);
     btnFeedlyAccount.setOnClickListener(new Button.OnClickListener() {
       public void onClick(View v) {
-        DataBaseOpenHelper dataBaseOpenHelper;
-        dataBaseOpenHelper = new DataBaseOpenHelper(mainActivity);
+        DataBaseOpenHelper dataBaseOpenHelper = new DataBaseOpenHelper(mainActivity);
 
         final String URL = "https://cloud.feedly.com/v3/streams/contents?streamId=user/" + ID + "/category/global.all";
         new GetPageList(dataBaseOpenHelper, mainActivity).execute(URL);
@@ -110,6 +108,13 @@ public class MainActivity extends AppCompatActivity {
       mainContext = context;
     }
 
+    private int countWords(String html) throws Exception {
+      org.jsoup.nodes.Document dom = Jsoup.parse(html);
+      String text = dom.text();
+
+      return text.split(" ").length;
+    }
+
     @Override
     protected String doInBackground(String... params) {
       try {
@@ -125,16 +130,33 @@ public class MainActivity extends AppCompatActivity {
         int len = arr.length();
 
         //For Test
-        //dataBaseOpenHelper.deleteAllPage();
+        dataBaseOpenHelper.deleteAllPage();
         //dataBaseOpenHelper.getTableAsString();
 
+        final int WORDPERMIN = 40;
+
+
         for (int i = 0; i < len; i++) {
-          dataBaseOpenHelper.insertScriptedDataWithCheckDuplication(arr.getJSONObject(i).getString("originId"));
+          JSONObject feed = arr.getJSONObject(i);
+          String feedUrl = feed.getString("originId");
+          String feedTitle = feed.getString("title");
+          JSONObject feedSummary = feed.getJSONObject("summary");
+          String feedContent = feedSummary.getString("content");
+          int feedExpectedTime = countWords(feedContent) / WORDPERMIN;
+
+          //Please Let me know if you are have smart way of getting image url from html :)
+          String imgUrl = feedContent.split("src=\"")[1].split("\">")[0];
+          if (imgUrl == null) {
+            imgUrl = DEFAULTIMGURL;
+          }
+          dataBaseOpenHelper.insertScriptedDataWithCheckDuplication(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl);
         }
 
         urlConnection.disconnect();
 
       } catch (IOException | JSONException e) {
+        e.printStackTrace();
+      } catch (Exception e) {
         e.printStackTrace();
       }
       return null;

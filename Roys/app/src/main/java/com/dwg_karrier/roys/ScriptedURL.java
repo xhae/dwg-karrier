@@ -4,7 +4,7 @@ public class ScriptedURL {
   private String url;
   private boolean isRead;
   private Crawler crawler;
-  private int wordCount;
+  private double expectedTime;
   private String title;
   private String content;
 
@@ -23,7 +23,6 @@ public class ScriptedURL {
       this.isRead = false;
     }
     this.crawler = new Crawler(url);
-    this.wordCount = crawler.getWordCount();
     this.title = crawler.getTitle();
     this.content = crawler.getContent();
   }
@@ -34,6 +33,17 @@ public class ScriptedURL {
     this.crawler = new Crawler(url);
   }
 
+  ScriptedURL(int isRead, String title, String content, int expectedTime) {
+    if (isRead == 1) {
+      this.isRead = true;
+    } else {
+      this.isRead = false;
+    }
+    this.title = title;
+    this.content = content;
+    this.expectedTime = expectedTime;
+  }
+
   ScriptedURL(String url, int isRead, int wordCount) {
     this.url = url;
     if (isRead == 1) {
@@ -41,7 +51,6 @@ public class ScriptedURL {
     } else {
       this.isRead = false;
     }
-    this.wordCount = wordCount;
     this.crawler = new Crawler(url);
   }
 
@@ -61,7 +70,7 @@ public class ScriptedURL {
     return content;
   }
 
-  public int getWordCount() {
-    return wordCount;
+  public double getExpectedTime() {
+    return expectedTime;
   }
 }

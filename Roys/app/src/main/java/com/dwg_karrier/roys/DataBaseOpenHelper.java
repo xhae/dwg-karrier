@@ -5,14 +5,17 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import java.util.ArrayList;
 
 public class DataBaseOpenHelper extends SQLiteOpenHelper {
   public static final int DATABASE_VERSION = 1;
-  public static final String DATABASE_NAME = "FeedReader.db";
+  public static final String DATABASE_NAME = "FeedReader_v2.db";
   public final int readColumn = 1;
-  public final int urlColumn = 2;
-  public final int wordCountColumn = 3;
+  public final int titleColumn = 3;
+  public final int contentColumn = 4;
+  public final int expectedTimeColumn = 5;
 
   public DataBaseOpenHelper(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -66,7 +69,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
 
     Cursor cursor = dataBase.rawQuery(query, null);
     while (cursor.moveToNext()) {
-      ScriptedURL scriptedItem = new ScriptedURL(cursor.getString(urlColumn), cursor.getInt(readColumn));
+      ScriptedURL scriptedItem = new ScriptedURL(cursor.getInt(readColumn), cursor.getString(titleColumn), cursor.getString(contentColumn), cursor.getInt(expectedTimeColumn));
       /*
        * TODO: Roys v.2 with word count info in the DB, use the below code
        * ScriptedURL scriptedItem = new ScriptedURL(cursor.getString(urlColumn), cursor.getInt(readColumn), cursor.getInt(wordCountColumn));
@@ -100,9 +103,11 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     dataBase.close();
   }
 
-  public void insertScriptedData(String url) {
+  public void insertScriptedData(String url, String title, String content, int expectedTime, String imgUrl) {
     SQLiteDatabase dataBase = getWritableDatabase();
-    dataBase.execSQL("INSERT INTO PAGE (URL) VALUES ('" + url + "');");
+    String escapedTitle = StringEscapeUtils.escapeHtml4(title);
+    String escapedContent = StringEscapeUtils.escapeHtml4(content);
+    dataBase.execSQL("INSERT INTO PAGE (URL, TITLE, CONTENT, EXPECTEDTIME, IMGURL) VALUES ('" + url + "',\"" + escapedTitle + "\", \"" + escapedContent + "\", " + String.valueOf(expectedTime) + " , '" + imgUrl + "');");
     dataBase.close();
   }
 
@@ -126,12 +131,12 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     }
   }
 
-  public void insertScriptedDataWithCheckDuplication(String url) {
+  public void insertScriptedDataWithCheckDuplication(String url, String title, String content, int expectedTime, String imgUrl) {
     SQLiteDatabase dataBase = getReadableDatabase();
     Cursor cursor = dataBase.rawQuery("SELECT * FROM PAGE WHERE URL = ('" + url + "') ", null);
 
     if (cursor.getCount() == 0) {
-      insertScriptedData(url);
+      insertScriptedData(url, title, content, expectedTime, imgUrl);
     }
     dataBase.close();
   }
