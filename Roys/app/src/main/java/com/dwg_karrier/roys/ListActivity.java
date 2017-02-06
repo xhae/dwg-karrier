@@ -3,6 +3,7 @@ package com.dwg_karrier.roys;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -55,6 +56,18 @@ public class ListActivity extends AppCompatActivity {
         openSelectedPage.putExtra("content", content);
         openSelectedPage.putExtra("url", url);
         startActivity(openSelectedPage);
+      }
+    });
+
+    FloatingActionButton changeMode = (FloatingActionButton) findViewById(R.id.toSwipe);
+    changeMode.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Intent openSwipe = new Intent(ListActivity.this, ContentSwipe.class); // open Recommend Lists
+        openSwipe.putExtra("finTime", finTime);
+        openSwipe.putExtra("curTime", curTime);
+        startActivity(openSwipe);
+        finish();
       }
     });
 

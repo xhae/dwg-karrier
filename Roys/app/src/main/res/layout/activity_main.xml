@@ -43,11 +43,11 @@
       android:layout_height="wrap_content" android:layout_alignBottom="@+id/editText"
       android:layout_toEndOf="@+id/editText" android:id="@+id/textView3" android:textSize="18sp"/>
   <android.support.design.widget.FloatingActionButton
-      android:id="@+id/fab"
+      android:id="@+id/getAccount"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="end|bottom"
-      app:srcCompat="@android:drawable/ic_dialog_email"
+      app:srcCompat="@android:drawable/ic_lock_idle_lock"
       app:backgroundTint="@android:color/holo_red_light" android:layout_alignParentBottom="true"
       android:layout_alignParentEnd="true"/>
 </RelativeLayout>

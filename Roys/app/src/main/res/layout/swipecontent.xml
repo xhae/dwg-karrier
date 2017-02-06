@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
+                xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
@@ -9,16 +9,20 @@
       android:id="@+id/container"
       android:layout_width="match_parent"
       android:layout_height="458dp"
-      app:layout_behavior="@string/appbar_scrolling_view_behavior" android:layout_margin="0dp"
-      android:layout_marginBottom="0dp" android:layout_marginEnd="0dp"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior"
+      android:layout_marginEnd="0dp"
       android:layout_marginLeft="0dp" android:layout_marginRight="0dp"
-      android:layout_marginStart="0dp" android:layout_marginTop="0dp"/>
+      android:layout_marginStart="0dp"
+      android:layout_alignParentBottom="true" android:layout_alignParentTop="true">
+  </android.support.v4.view.ViewPager>
   <android.support.design.widget.FloatingActionButton
-      android:id="@+id/fab"
+      android:id="@+id/toList"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_gravity="end|bottom"
+      android:layout_gravity="bottom|end"
       app:srcCompat="@android:drawable/ic_dialog_dialer"
-      app:backgroundTint="@android:color/holo_red_light" android:layout_alignParentBottom="true"
-      android:layout_alignParentEnd="true" android:layout_marginRight="20dp"/>
-</LinearLayout>
+      app:backgroundTint="@android:color/holo_red_light"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentEnd="true"
+      android:layout_marginRight="16dp" android:layout_marginBottom="16dp"/>
+</RelativeLayout>

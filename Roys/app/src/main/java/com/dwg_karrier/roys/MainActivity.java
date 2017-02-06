@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
     final Context mainActivity = this;
 
-    final FloatingActionButton getFeedlyAccount = (FloatingActionButton) findViewById(R.id.fab);
+    final FloatingActionButton getFeedlyAccount = (FloatingActionButton) findViewById(R.id.getAccount);
     getFeedlyAccount.setOnClickListener(new View.OnClickListener() {
 
       @Override

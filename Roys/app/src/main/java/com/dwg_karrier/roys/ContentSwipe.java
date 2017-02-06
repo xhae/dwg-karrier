@@ -3,7 +3,6 @@ package com.dwg_karrier.roys;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -17,8 +16,8 @@ import android.widget.TextView;
 import java.util.Date;
 
 public class ContentSwipe extends AppCompatActivity {
-  private SectionsPagerAdapter mSectionsPagerAdapter;
-  private ViewPager mViewPager;
+  private SectionsPagerAdapter pageSwipeAdapter;
+  private ViewPager pageSwipeView;
   String title;
   String content;
   Date finTime;
@@ -30,10 +29,10 @@ public class ContentSwipe extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.swipecontent);
 
-    mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+    pageSwipeAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-    mViewPager = (ViewPager) findViewById(R.id.container);
-    mViewPager.setAdapter(mSectionsPagerAdapter);
+    pageSwipeView = (ViewPager) findViewById(R.id.container);
+    pageSwipeView.setAdapter(pageSwipeAdapter);
 
     Intent getTimeInfo = new Intent(this.getIntent());
     finTime = (Date) getTimeInfo.getSerializableExtra("finTime");
@@ -42,7 +41,7 @@ public class ContentSwipe extends AppCompatActivity {
     final int minute = 60000;
     duration = (finTime.getTime() - curTime.getTime()) / minute;
 
-    FloatingActionButton changeMode = (FloatingActionButton) findViewById(R.id.fab);
+    FloatingActionButton changeMode = (FloatingActionButton) findViewById(R.id.toList);
     changeMode.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
@@ -67,7 +66,7 @@ public class ContentSwipe extends AppCompatActivity {
       Bundle args = new Bundle();
       args.putInt(ARG_SECTION_NUMBER, sectionNumber);
       /*
-       * TODO put DB data into args like e.g. putType(key, value) in each fragment.
+       * TODO(csoyee) put DB data into args like e.g. putType(key, value) in each fragment.
        * args.putString("tempURL", "args test");
        */
       fragment.setArguments(args);
@@ -81,13 +80,13 @@ public class ContentSwipe extends AppCompatActivity {
       contentTitle.setText("title: " + getArguments().getInt(ARG_SECTION_NUMBER));
 
       /*
-       * TODO: set representative image
+       * TODO(csoyee): set representative image
        * ImageView backgroundImage = (ImageView) rootView.findViewById(R.id.backImage);
        * backgroundImage.setImageURI();
        */
 
       /*
-       * TODO: connect to contentView
+       * TODO(leesera): connect to contentView
        * Maybe Same as we did at ListActivity.
        * Before we should put ars for each fragment
        */
@@ -109,7 +108,7 @@ public class ContentSwipe extends AppCompatActivity {
 
     @Override
     public int getCount() {
-      // TODO: change to the number of contents.
+      // TODO(csoyee): change to the number of contents.
       return 10;
     }
 
