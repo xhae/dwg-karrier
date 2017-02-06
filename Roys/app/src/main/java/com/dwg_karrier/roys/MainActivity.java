@@ -4,6 +4,7 @@ import android.content.Context;
 import static com.dwg_karrier.roys.MainActivity.ACCESS_TOKEN;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,6 +14,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 import android.os.AsyncTask;
 
@@ -61,58 +64,70 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+    setImage();
 
     final Context mainActivity = this;
+    DataBaseOpenHelper dataBaseOpenHelper;
+    dataBaseOpenHelper = new DataBaseOpenHelper(mainActivity);
 
-    final FloatingActionButton getFeedlyAccount = (FloatingActionButton) findViewById(R.id.getAccount);
-    getFeedlyAccount.setOnClickListener(new View.OnClickListener() {
+    final String URL = "https://cloud.feedly.com/v3/streams/contents?streamId=user/" + ID + "/category/global.all";
+    new GetPageList(dataBaseOpenHelper, mainActivity).execute(URL);
 
-      @Override
-      public void onClick(View view) {
-        DataBaseOpenHelper dataBaseOpenHelper;
-        dataBaseOpenHelper = new DataBaseOpenHelper(mainActivity);
+    GridLayout minuteLayout = (GridLayout)findViewById(R.id.mainLayout);
+    setImage();
 
-        final String URL = "https://cloud.feedly.com/v3/streams/contents?streamId=user/" + ID + "/category/global.all";
-        new GetPageList(dataBaseOpenHelper, mainActivity).execute(URL);
-
-        Snackbar.make(view, "Bring the pages from your feedly account", Snackbar.LENGTH_SHORT)
-            .setAction("Action", null).show();
-      }
-    });
-
-    Button b = (Button) findViewById(R.id.button);
-    final EditText editText = (EditText) findViewById(R.id.editText);
-
-    b.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        if (editText.getText().toString().isEmpty()) {
-          Toast toast = Toast.makeText(getApplicationContext(), "Input time!", Toast.LENGTH_LONG);
-          toast.setGravity(Gravity.BOTTOM, 0, 0);
-          toast.show();
-          return;
+    int childCount = minuteLayout.getChildCount();
+    final int timeUnit = 10;
+    for(int i = 0 ; i < childCount ; i++) {
+      final ImageView container = (ImageView) minuteLayout.getChildAt(i);
+      container.setTag((i + 1) * timeUnit + "");
+      container.setOnClickListener(new View.OnClickListener() {
+        public void onClick(View view){
+          Date curTime = new Date(System.currentTimeMillis());
+          Calendar cal = Calendar.getInstance();
+          cal.setTime(curTime);
+          String inputTime = (String) container.getTag();
+          cal.add(Calendar.MINUTE, Integer.parseInt(inputTime));
+          Date d = new Date(cal.getTimeInMillis());
+          
+          Intent openRcmdList = new Intent(MainActivity.this, ContentSwipe.class); // open Recommend Lists
+          openRcmdList.putExtra("finTime", d);
+          openRcmdList.putExtra("curTime", curTime);
+          startActivity(openRcmdList);
         }
+      });
+    }
+  }
 
-        if(getAccount == false){
-          Toast toast = Toast.makeText(getApplicationContext(), "connect to account!", Toast.LENGTH_LONG);
-          toast.setGravity(Gravity.BOTTOM, 0, 0);
-          toast.show();
-          return;
-        }
+  private void setImage() {
+    Point windowSize = new Point();
+    getWindowManager().getDefaultDisplay().getSize(windowSize);
+    final int screenWidth = windowSize.x;
+    final int screenHeight = windowSize.y;
 
-        Date curTime = new Date(System.currentTimeMillis());
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(curTime);
-        String inputTime = String.valueOf(editText.getText());
-        cal.add(Calendar.MINUTE, Integer.parseInt(inputTime));
-        Date d = new Date(cal.getTimeInMillis());
+    ImageView min10 = (ImageView)findViewById(R.id.min10);
+    ImageView min20 = (ImageView)findViewById(R.id.min20);
+    ImageView min30 = (ImageView)findViewById(R.id.min30);
+    ImageView min40 = (ImageView)findViewById(R.id.min40);
+    ImageView min50 = (ImageView)findViewById(R.id.min50);
+    ImageView min60 = (ImageView)findViewById(R.id.min60);
+    ImageView more = (ImageView)findViewById(R.id.more);
 
-        Intent openRcmdList = new Intent(MainActivity.this, ContentSwipe.class); // open Recommend Lists
-        openRcmdList.putExtra("finTime", d);
-        openRcmdList.putExtra("curTime", curTime);
-        startActivity(openRcmdList);
-      }
-    });
+    min10.getLayoutParams().width = (int)(screenWidth * 0.5);
+    min20.getLayoutParams().width = (int)(screenWidth * 0.5);
+    min30.getLayoutParams().width = (int)(screenWidth * 0.5);
+    min40.getLayoutParams().width = (int)(screenWidth * 0.5);
+    min50.getLayoutParams().width = (int)(screenWidth * 0.5);
+    min60.getLayoutParams().width = (int)(screenWidth * 0.5);
+    more.getLayoutParams().width = (int)(screenWidth * 0.5);
+
+    min10.getLayoutParams().height = (int)(screenHeight * 0.5);
+    min20.getLayoutParams().height = (int)(screenHeight * 0.25);
+    min30.getLayoutParams().height = (int)(screenHeight * 0.25);
+    min40.getLayoutParams().height = (int)(screenHeight * 0.25);
+    min50.getLayoutParams().height = (int)(screenHeight * 0.25);
+    min60.getLayoutParams().height = (int)(screenHeight * 0.25);
+    more.getLayoutParams().height = (int)(screenHeight * 0.25);
   }
 
   private class GetPageList extends AsyncTask<String, Void, String> {

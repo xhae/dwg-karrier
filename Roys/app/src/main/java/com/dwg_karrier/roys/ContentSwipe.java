@@ -28,7 +28,6 @@ public class ContentSwipe extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.swipecontent);
-
     pageSwipeAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
     pageSwipeView = (ViewPager) findViewById(R.id.container);
