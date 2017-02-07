@@ -41,27 +41,6 @@ public class Authentication{
     mainContext = context;
   }
 
-  static String convertStreamToString(InputStream is) {
-    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-    StringBuilder sb = new StringBuilder();
-
-    String line = null;
-    try {
-      while ((line = reader.readLine()) != null) {
-        sb.append(line + "\n");
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-    } finally {
-      try {
-        is.close();
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    }
-    return sb.toString();
-  }
-
   void authenticationAndBringPages() {
     final Dialog auth_dialog;
     WebView web;
@@ -136,7 +115,6 @@ public class Authentication{
       mainContext = context;
     }
 
-
     @Override
     protected void onPreExecute() {
       super.onPreExecute();
@@ -205,7 +183,7 @@ public class Authentication{
         int len = arr.length();
 
         //For Test
-        dataBaseOpenHelper.deleteAllPage();
+        //dataBaseOpenHelper.deleteAllPage();
         //dataBaseOpenHelper.getTableAsString();
 
         final int WORDPERMIN = 40;
@@ -242,5 +220,26 @@ public class Authentication{
       toast.setGravity(Gravity.CENTER, 0, 0);
       toast.show();
     }
+  }
+
+  static String convertStreamToString(InputStream is) {
+    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+    StringBuilder sb = new StringBuilder();
+
+    String line = null;
+    try {
+      while ((line = reader.readLine()) != null) {
+        sb.append(line + "\n");
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        is.close();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+    return sb.toString();
   }
 }
