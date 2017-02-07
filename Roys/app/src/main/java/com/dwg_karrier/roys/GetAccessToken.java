@@ -98,7 +98,7 @@ public class GetAccessToken{
     auth_dialog.show();
   }
 
-  public JSONObject gettoken(String address, String token, String clientID, String clientSecret, String redirectUri, String grantType) {
+  public JSONObject requestToken(String address, String token, String clientID, String clientSecret, String redirectUri, String grantType) {
     JSONObject jObj = null;
     try {
       String params = "?code=" + token + "&client_id=" + clientID + "&client_secret=" + clientSecret + "&redirect_uri=" + redirectUri + "&grant_type=" + grantType;
@@ -150,7 +150,7 @@ public class GetAccessToken{
 
     @Override
     protected JSONObject doInBackground(String... args) {
-      JSONObject json = gettoken(TOKENURL, code, CLIENTID, CLIENTSECRET, REDIRECTURI, GRANTTYPE);
+      JSONObject json = requestToken(TOKENURL, code, CLIENTID, CLIENTSECRET, REDIRECTURI, GRANTTYPE);
       return json;
     }
 
