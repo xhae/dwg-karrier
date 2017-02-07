@@ -24,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
     Button btnFeedlyAccount = (Button) findViewById(R.id.FeedlyAccountBtn);
     btnFeedlyAccount.setOnClickListener(new Button.OnClickListener() {
       public void onClick(View v) {
-        GetAccessToken getToken = new GetAccessToken(mainActivity);
-        getToken.authenticationAndBringPages();
+        Authentication authentication = new Authentication(mainActivity);
+        authentication.authenticationAndBringPages();
       }
     });
 

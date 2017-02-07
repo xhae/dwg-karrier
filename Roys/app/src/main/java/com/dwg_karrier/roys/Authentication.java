@@ -26,7 +26,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class GetAccessToken{
+public class Authentication{
   static final String DEFAULTIMGURL = "https://blogdotstartlinkdotio.files.wordpress.com/2016/01/12620892_1077588858927687_1133266313_o.jpg?w=490&h=772";
   static final String CLIENTID = "sandbox";
   static final String CLIENTSECRET = "OE12J47X2W5PEF7CKPGZ";
@@ -37,7 +37,7 @@ public class GetAccessToken{
   static final String GRANTTYPE = "authorization_code";
   Context mainContext;
 
-  public GetAccessToken(Context context) {
+  public Authentication(Context context) {
     mainContext = context;
   }
 
@@ -63,7 +63,6 @@ public class GetAccessToken{
   }
 
   void authenticationAndBringPages() {
-    final GetAccessToken getAccessContext = this;
     final Dialog auth_dialog;
     WebView web;
     auth_dialog = new Dialog(mainContext);
