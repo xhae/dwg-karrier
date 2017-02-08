@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 
 public class DataBaseOpenHelper extends SQLiteOpenHelper {
-  public static final int DATABASE_VERSION = 1;
+  public static final int DATABASE_VERSION = 2;
   public static final String DATABASE_NAME = "FeedReader.db";
   public final int readColumn = 1;
   public final int urlColumn = 2;
@@ -23,6 +23,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   }
 
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    db.execSQL("drop table page;");
     onCreate(db);
   }
 
