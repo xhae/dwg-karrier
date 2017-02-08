@@ -1,11 +1,15 @@
 package com.dwg_karrier.roys;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
-import com.mashape.unirest.http.Unirest;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
 
 /**
@@ -37,20 +41,63 @@ public class Summarizer {
    * Get any length of summary of text
    *
    * @param outputSize length of summarized sentences
-   * @return summary text
+   * @return summarized text in Array
    */
-  public String getSummary(int outputSize) {
+  public JSONArray getSummary(int outputSize) {
     try {
-      HttpResponse<JsonNode> response = Unirest.get(analyzerUrl + size
-          + String.valueOf(outputSize) + text + urlEncodeString)
-          .header("X-Mashape-Key", "HJUpHedt5ImshhJMjvFOhZt8ciSWp1PKGMKjsnngAnsZhfF3f4") // get Key from hyeonjong
-          .header("Accept", "application/json")
-          .asJson();
-      return response.getBody().toString();
-      // TODO(Juung): check the result form of result
+      SummaryAsyncTask summaryAsyncTask = new SummaryAsyncTask();
+      JSONArray summaryArrayResult = summaryAsyncTask.execute(outputSize).get();
+      return summaryArrayResult;
     } catch (Exception e) {
-      Log.e("No summary response", e.getMessage(), e);
+      Log.e("getSummary", e.getMessage(), e);
       return null;
+    }
+  }
+
+  /**
+   * Makes possible to use {@link #getSummary(int outputSize)}
+   *
+   * <p> Sending request and receiving response via API is impossible in main Thread.
+   *
+   * <p> AsyncTask runs in the background of main Thread. AsyncTask = Thread + Handler
+   *
+   * @returns json format response from Mercury-API (detailed response is described in {@link
+   *     #getSummary(int outputSize)} document.
+   */
+  public class SummaryAsyncTask extends AsyncTask<Integer, Void, JSONArray> {
+
+    @Override
+    protected JSONArray doInBackground(Integer... integers) {
+      StringBuilder stringBuilder = new StringBuilder();
+      Integer outputSize = integers[0];
+      try {
+        URL url = new URL(analyzerUrl + size
+            + String.valueOf(outputSize) + text + urlEncodeString);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestProperty("X-Mashape-Key", "cEFaSsEY22mshE5HLrmxP41OZiJHp1fwKbijsn6kn8qZmVITUB");
+        conn.setRequestProperty("Accept", "application/json");
+        if (conn.getResponseCode() == conn.HTTP_OK) {
+          BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+          String line;
+          while ((line = br.readLine()) != null) {
+            stringBuilder.append(line);
+          }
+          br.close();
+        }
+        conn.disconnect();
+        JSONArray response = null;
+        try {
+          String jsonStr = stringBuilder.toString();
+          JSONParser jsonParser = new JSONParser();
+          response = (JSONArray) jsonParser.parse(jsonStr);
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+        return response;
+      } catch (Exception e) {
+        Log.e("Error", e.getMessage(), e);
+        return null;
+      }
     }
   }
 }

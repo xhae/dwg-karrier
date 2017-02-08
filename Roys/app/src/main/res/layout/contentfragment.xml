@@ -20,7 +20,7 @@
       android:id="@+id/summary"
       android:textColor="@android:color/background_light"
       android:layout_centerVertical="true" android:layout_centerHorizontal="true"
-      android:textSize="40dp" android:layout_marginLeft="20dp" android:layout_marginRight="20dp"
+      android:textSize="20dp" android:layout_marginLeft="20dp" android:layout_marginRight="20dp"
   />
   <TextView
       android:text="title"
