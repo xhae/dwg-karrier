@@ -181,9 +181,10 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
       readValue = 0;
     }
     SQLiteDatabase dataBase = getWritableDatabase();
-    dataBase.execSQL("INSERT INTO PAGE VALUES (" + readValue + ", '" + scriptedURL.getUrl() + "', '"
-        + scriptedURL.getTitle() + "', '" + scriptedURL.getRepImageUrl() + "', '"
-        + scriptedURL.getContent() + "', " + scriptedURL.getWordCount() + ");");
+    dataBase.execSQL("INSERT INTO PAGE (READ, URL, TITLE, repImage, CONTENT, WORDCOUNT) VALUES ("
+        + readValue + ", '" + scriptedURL.getUrl() + "', '" + scriptedURL.getTitle() + "', '"
+        + scriptedURL.getRepImageUrl() + "', '" + scriptedURL.getContent() + "', "
+        + scriptedURL.getWordCount() + ");");
     dataBase.close();
   }
 }
