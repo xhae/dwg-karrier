@@ -72,6 +72,7 @@ public class Authentication{
         } else if (url.contains("error=access_denied")) {
           Log.i("", "ACCESS_DENIED_HERE");
           authDialog.dismiss();
+          Toast.makeText(mainContext, "Bringing feedly count failed!", Toast.LENGTH_SHORT).show();
         }
       }
     });
