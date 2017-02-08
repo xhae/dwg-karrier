@@ -1,5 +1,7 @@
 package com.dwg_karrier.roys;
 
+import static com.dwg_karrier.roys.R.layout.auth_dialog;
+
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -42,11 +44,11 @@ public class Authentication{
   }
 
   void authenticationAndBringPages() {
-    final Dialog auth_dialog;
+    final Dialog authDialog;
     WebView web;
-    auth_dialog = new Dialog(mainContext);
-    auth_dialog.setContentView(R.layout.auth_dialog);
-    web = (WebView) auth_dialog.findViewById(R.id.webv);
+    authDialog = new Dialog(mainContext);
+    authDialog.setContentView(auth_dialog);
+    web = (WebView) authDialog.findViewById(R.id.webv);
     web.getSettings().setJavaScriptEnabled(true);
     web.loadUrl(OAUTHURL + "?redirect_uri=" + REDIRECTURI + "&response_type=code&client_id=" + CLIENTID + "&scope=" + OAUTHSCOPE);
     web.setWebViewClient(new WebViewClient() {
@@ -65,15 +67,15 @@ public class Authentication{
           Uri uri = Uri.parse(url);
           authCode = uri.getQueryParameter("code");
 
-          auth_dialog.dismiss();
+          authDialog.dismiss();
           new TokenGet(authCode, mainContext).execute();
         } else if (url.contains("error=access_denied")) {
           Log.i("", "ACCESS_DENIED_HERE");
-          auth_dialog.dismiss();
+          authDialog.dismiss();
         }
       }
     });
-    auth_dialog.show();
+    authDialog.show();
   }
 
   public JSONObject requestToken(String address, String token, String clientID, String clientSecret, String redirectUri, String grantType) {
