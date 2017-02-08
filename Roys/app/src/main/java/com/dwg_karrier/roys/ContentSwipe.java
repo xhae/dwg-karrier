@@ -85,6 +85,11 @@ public class ContentSwipe extends AppCompatActivity {
        */
 
       /*
+       * TODO(juung): get summarized text
+       */
+
+
+      /*
        * TODO(leesera): connect to contentView
        * Maybe Same as we did at ListActivity.
        * Before we should put ars for each fragment
