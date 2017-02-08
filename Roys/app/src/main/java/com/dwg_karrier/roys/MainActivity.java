@@ -36,7 +36,6 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
   static final String ACCESS_TOKEN = "A06EprS0187tNdGMJ1XPTVQa1eE8SeGLXZeK3GZy2UwZ8qzOGSqZlPmXNcYul0zueeQRLYwN1nWbFszj6PyoNOkCGSbUp9zfJ3eLROo3bJWsUQktkXPfbFruJn9TGFQQ5r16aLhP7f-VXMFNxMtlrJw21eabhWzhzO-9r0OkXBesU_0Kscpb4SaRPW4TpYpfGiusnAKhaWmeNYdu5VaCGMdFpoch:feedlydev";
   static final String ID = "3d0c7dd1-a7bb-4cdf-92f0-6c25d88c52db";
-  boolean getAccount = false;
 
   private static String convertStreamToString(InputStream is) {
 
@@ -89,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
           String inputTime = (String) container.getTag();
           cal.add(Calendar.MINUTE, Integer.parseInt(inputTime));
           Date d = new Date(cal.getTimeInMillis());
-          
+
           Intent openRcmdList = new Intent(MainActivity.this, ContentSwipe.class); // open Recommend Lists
           openRcmdList.putExtra("finTime", d);
           openRcmdList.putExtra("curTime", curTime);
@@ -153,10 +152,6 @@ public class MainActivity extends AppCompatActivity {
         JSONArray arr = obj.getJSONArray("items");
         int len = arr.length();
 
-        //For Test
-        //dataBaseOpenHelper.deleteAllPage();
-        //dataBaseOpenHelper.getTableAsString();
-
         for (int i = 0; i < len; i++) {
           dataBaseOpenHelper.insertScriptedDataWithCheckDuplication(arr.getJSONObject(i).getString("originId"));
         }
@@ -171,7 +166,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPostExecute(String result) {
-      getAccount = true;
     }
   }
 }
