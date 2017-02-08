@@ -28,6 +28,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     db.execSQL("drop table page;");
     onCreate(db);
+    // TODO(Sunju): This solution's disadvantage is remove table database. find update table with save database solution. 
   }
 
   public int getTotalPageCount() {
