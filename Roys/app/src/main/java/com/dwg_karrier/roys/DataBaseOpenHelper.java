@@ -12,7 +12,10 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   public static final String DATABASE_NAME = "FeedReader.db";
   public final int readColumn = 1;
   public final int urlColumn = 2;
-  public final int wordCountColumn = 3;
+  public final int titleColumn = 3;
+  public final int repImageUrlColumn = 4;
+  public final int contentColumn = 5;
+  public final int wordCountColumn = 6;
 
   public DataBaseOpenHelper(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -67,11 +70,10 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
 
     Cursor cursor = dataBase.rawQuery(query, null);
     while (cursor.moveToNext()) {
-      ScriptedURL scriptedItem = new ScriptedURL(cursor.getString(urlColumn), cursor.getInt(readColumn));
-      /*
-       * TODO: Roys v.2 with word count info in the DB, use the below code
-       * ScriptedURL scriptedItem = new ScriptedURL(cursor.getString(urlColumn), cursor.getInt(readColumn), cursor.getInt(wordCountColumn));
-       */
+      ScriptedURL scriptedItem = new ScriptedURL(cursor.getString(urlColumn),
+          cursor.getInt(readColumn), cursor.getString(titleColumn),
+          cursor.getString(contentColumn), cursor.getString(repImageUrlColumn),
+          cursor.getInt(wordCountColumn));
       resultList.add(scriptedItem);
     }
 
@@ -79,18 +81,36 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   }
 
   public void setIsRead(String url, int status) {
-    SQLiteDatabase dataBase = getWritableDatabase();
-
-    dataBase.execSQL("UPDATE PAGE SET read=" + status + " WHERE url='" + url + "';");
-    dataBase.close();
+    String query = "read = " + status;
+    updateDataQuery(query, url);
   }
 
   public void setWordCount(String url, int wordCount) {
-    SQLiteDatabase dataBase = getWritableDatabase();
     /*
      * TODO(Juung): omit wordCount from input --> this should be called from crawler
      */
-    dataBase.execSQL("UPDATE PAGE SET wordCount=" + wordCount + " WHERE url='" + url + "';");
+    String query = "wordCount = " + wordCount;
+    updateDataQuery(query, url);
+  }
+
+  public void setTitle(String url, String title) {
+    String query = "title = '" + title + "'";
+    updateDataQuery(query, url);
+  }
+
+  public void setRepImageUrl(String url, String imageUrl) {
+    String query = "repImage = '" + imageUrl + "'";
+    updateDataQuery(query, url);
+  }
+
+  public void setContent(String url, String content) {
+    String query = "content = '" + content + "'";
+    updateDataQuery(query, url);
+  }
+
+  private void updateDataQuery(String query, String url) {
+    SQLiteDatabase dataBase = getWritableDatabase();
+    dataBase.execSQL("UPDATE PAGE SET " + query + " WHERE url='" + url + "';");
     dataBase.close();
   }
 
@@ -99,6 +119,20 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     SQLiteDatabase dataBase = getWritableDatabase();
     dataBase.execSQL("delete from page;");
     dataBase.close();
+  }
+
+  private boolean isDuplicationUrl(String url) {
+    SQLiteDatabase dataBase = getReadableDatabase();
+    int urlDuplicationCount;
+    Cursor cursor = dataBase.rawQuery("SELECT * FROM PAGE WHERE URL = ('" + url + "') ", null);
+    urlDuplicationCount = cursor.getCount();
+    dataBase.close();
+
+    if (urlDuplicationCount == 0) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   public void insertScriptedData(String url) {
@@ -128,12 +162,28 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   }
 
   public void insertScriptedDataWithCheckDuplication(String url) {
-    SQLiteDatabase dataBase = getReadableDatabase();
-    Cursor cursor = dataBase.rawQuery("SELECT * FROM PAGE WHERE URL = ('" + url + "') ", null);
-
-    if (cursor.getCount() == 0) {
+    if (!isDuplicationUrl(url)) {
       insertScriptedData(url);
     }
+  }
+
+  public void insertScriptedUrl(ScriptedURL scriptedUrl) {
+    if (!isDuplicationUrl(scriptedUrl.getUrl())) {
+      insertScriptedUrlQuery(scriptedUrl);
+    }
+  }
+
+  private void insertScriptedUrlQuery(ScriptedURL scriptedURL) {
+    int readValue;
+    if (scriptedURL.getIsRead()) {
+      readValue = 1;
+    } else {
+      readValue = 0;
+    }
+    SQLiteDatabase dataBase = getWritableDatabase();
+    dataBase.execSQL("INSERT INTO PAGE VALUES (" + readValue + ", '" + scriptedURL.getUrl() + "', '"
+        + scriptedURL.getTitle() + "', '" + scriptedURL.getRepImageUrl() + "', '"
+        + scriptedURL.getContent() + "', " + scriptedURL.getWordCount() + ");");
     dataBase.close();
   }
 }

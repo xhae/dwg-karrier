@@ -19,7 +19,9 @@ public final class DataBases {
             + TITLE + " text default '' , "
             + REPIMAGEURL + " text default '' , "
             + CONTENT + " text default '' , "
-            + WORDCOUNT + " integer, "
+            + WORDCOUNT + " integer, " 
+            // TODO: Data Type Change
+            // if wordCount will change to expectedTime and data type change to double -> USE REAL TYPE instead INTEGER
             + "unique(" + URL + ")" + ");";
   }
 }

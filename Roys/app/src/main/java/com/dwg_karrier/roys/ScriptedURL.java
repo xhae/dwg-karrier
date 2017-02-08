@@ -7,6 +7,7 @@ public class ScriptedURL {
   private int wordCount;
   private String title;
   private String content;
+  private String repImageUrl;
 
 
   ScriptedURL(String url, boolean isRead) {
@@ -45,6 +46,20 @@ public class ScriptedURL {
     this.crawler = new Crawler(url);
   }
 
+  ScriptedURL(String url, int isRead, String title, String content, String repImageUrl, int wordCount) {
+    this.url = url;
+    if (isRead == 1) {
+      this.isRead = true;
+    } else {
+      this.isRead = false;
+    }
+    this.title = title;
+    this.content = content;
+    this.repImageUrl = repImageUrl;
+    this.wordCount = wordCount;
+    this.crawler = new Crawler(url);
+  }
+
   public String getUrl() {
     return url;
   }
@@ -63,5 +78,9 @@ public class ScriptedURL {
 
   public int getWordCount() {
     return wordCount;
+  }
+
+  public String getRepImageUrl() {
+    return repImageUrl;
   }
 }
