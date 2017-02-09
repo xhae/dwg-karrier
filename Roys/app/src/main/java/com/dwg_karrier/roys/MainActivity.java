@@ -1,23 +1,21 @@
 package com.dwg_karrier.roys;
 
 import android.content.Context;
-import static com.dwg_karrier.roys.MainActivity.ACCESS_TOKEN;
 
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
-import android.os.AsyncTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +34,7 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
   static final String ACCESS_TOKEN = "A06EprS0187tNdGMJ1XPTVQa1eE8SeGLXZeK3GZy2UwZ8qzOGSqZlPmXNcYul0zueeQRLYwN1nWbFszj6PyoNOkCGSbUp9zfJ3eLROo3bJWsUQktkXPfbFruJn9TGFQQ5r16aLhP7f-VXMFNxMtlrJw21eabhWzhzO-9r0OkXBesU_0Kscpb4SaRPW4TpYpfGiusnAKhaWmeNYdu5VaCGMdFpoch:feedlydev";
   static final String ID = "3d0c7dd1-a7bb-4cdf-92f0-6c25d88c52db";
+  boolean connectAccount = false; // check if user connect to Account.
 
   private static String convertStreamToString(InputStream is) {
 
@@ -65,14 +64,7 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
     setImage();
 
-    final Context mainActivity = this;
-    DataBaseOpenHelper dataBaseOpenHelper;
-    dataBaseOpenHelper = new DataBaseOpenHelper(mainActivity);
-
-    final String URL = "https://cloud.feedly.com/v3/streams/contents?streamId=user/" + ID + "/category/global.all";
-    new GetPageList(dataBaseOpenHelper, mainActivity).execute(URL);
-
-    GridLayout minuteLayout = (GridLayout)findViewById(R.id.mainLayout);
+    final GridLayout minuteLayout = (GridLayout)findViewById(R.id.maingridLayout);
     setImage();
 
     int childCount = minuteLayout.getChildCount();
@@ -82,6 +74,13 @@ public class MainActivity extends AppCompatActivity {
       container.setTag((i + 1) * timeUnit + "");
       container.setOnClickListener(new View.OnClickListener() {
         public void onClick(View view){
+          if(connectAccount == false){
+            Toast checkInfo = Toast.makeText(getApplicationContext(), "Please connect to account.", Toast.LENGTH_SHORT);
+            checkInfo.setGravity(Gravity.CENTER, 0, 0);
+            checkInfo.show();
+            return ;
+          }
+
           Date curTime = new Date(System.currentTimeMillis());
           Calendar cal = Calendar.getInstance();
           cal.setTime(curTime);
@@ -96,6 +95,24 @@ public class MainActivity extends AppCompatActivity {
         }
       });
     }
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.main_menu_item, menu);
+    return super.onCreateOptionsMenu(menu);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    DataBaseOpenHelper dataBaseOpenHelper;
+    final Context mainActivity = this;
+    dataBaseOpenHelper = new DataBaseOpenHelper(mainActivity);
+
+    final String URL = "https://cloud.feedly.com/v3/streams/contents?streamId=user/" + ID + "/category/global.all";
+    new GetPageList(dataBaseOpenHelper, mainActivity).execute(URL);
+
+    return super.onOptionsItemSelected(item);
   }
 
   private void setImage() {
@@ -166,6 +183,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPostExecute(String result) {
+      Toast checkInfo = Toast.makeText(getApplicationContext(), "Connect to account successfully.", Toast.LENGTH_SHORT);
+      checkInfo.setGravity(Gravity.CENTER, 0, 0);
+      checkInfo.show();
+
+      connectAccount = true;
     }
   }
 }
