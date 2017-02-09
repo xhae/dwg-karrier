@@ -7,6 +7,8 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import java.util.Date;
 
 public class ContentView extends AppCompatActivity {
@@ -33,7 +35,7 @@ public class ContentView extends AppCompatActivity {
     finTime = (Date) getPageInfo.getSerializableExtra("finTime");
     curTime = (Date) getPageInfo.getSerializableExtra("curTime");
 
-    String view = title + "\n\n" + imgSizeCtrl + content;
+    String view = title + "\n\n" + imgSizeCtrl + StringEscapeUtils.unescapeHtml4(content);
 
     WebView wv = (WebView) findViewById(R.id.contentView);
       /*

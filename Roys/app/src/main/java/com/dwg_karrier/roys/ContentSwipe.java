@@ -16,13 +16,13 @@ import android.widget.TextView;
 import java.util.Date;
 
 public class ContentSwipe extends AppCompatActivity {
-  private SectionsPagerAdapter pageSwipeAdapter;
-  private ViewPager pageSwipeView;
   String title;
   String content;
   Date finTime;
   Date curTime;
   double duration; // time duration between current_time and finish time
+  private SectionsPagerAdapter pageSwipeAdapter;
+  private ViewPager pageSwipeView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

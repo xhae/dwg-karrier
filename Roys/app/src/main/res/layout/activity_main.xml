@@ -23,9 +23,9 @@
         android:id="@+id/min10"
         android:scaleType="centerCrop"
         android:layout_gravity="center"
-        android:layout_marginBottom="0dp"  android:layout_marginTop="0dp"
-        android:layout_marginLeft="0dp"  android:layout_marginRight="0dp"
-        android:layout_rowSpan="2"  android:layout_row="0"
+        android:layout_marginBottom="0dp" android:layout_marginTop="0dp"
+        android:layout_marginLeft="0dp" android:layout_marginRight="0dp"
+        android:layout_rowSpan="2" android:layout_row="0"
         android:layout_column="0" android:layout_columnSpan="1"/>
     <ImageView
         android:layout_width="wrap_content"
@@ -33,9 +33,9 @@
         android:layout_gravity="center"
         android:id="@+id/min20"
         android:scaleType="centerCrop"
-        android:layout_marginBottom="0dp"  android:layout_marginTop="0dp"
-        android:layout_marginLeft="0dp"  android:layout_marginRight="0dp"
-        android:layout_rowSpan="1"  android:layout_row="0"
+        android:layout_marginBottom="0dp" android:layout_marginTop="0dp"
+        android:layout_marginLeft="0dp" android:layout_marginRight="0dp"
+        android:layout_rowSpan="1" android:layout_row="0"
         android:layout_column="1" android:layout_columnSpan="1"/>
     <ImageView
         android:layout_width="wrap_content"
@@ -43,19 +43,19 @@
         android:layout_gravity="center"
         android:id="@+id/min30"
         android:scaleType="centerCrop"
-        android:layout_marginBottom="0dp"  android:layout_marginTop="0dp"
-        android:layout_marginLeft="0dp"  android:layout_marginRight="0dp"
-        android:layout_rowSpan="1"  android:layout_row="1"
+        android:layout_marginBottom="0dp" android:layout_marginTop="0dp"
+        android:layout_marginLeft="0dp" android:layout_marginRight="0dp"
+        android:layout_rowSpan="1" android:layout_row="1"
         android:layout_column="1" android:layout_columnSpan="1"/>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" app:srcCompat="@drawable/min40"
         android:id="@+id/min40"
         android:scaleType="centerCrop"
-        android:layout_marginBottom="0dp"  android:layout_marginTop="0dp"
-        android:layout_marginLeft="0dp"  android:layout_marginRight="0dp"
+        android:layout_marginBottom="0dp" android:layout_marginTop="0dp"
+        android:layout_marginLeft="0dp" android:layout_marginRight="0dp"
         android:layout_gravity="center"
-        android:layout_rowSpan="1"  android:layout_row="2"
+        android:layout_rowSpan="1" android:layout_row="2"
         android:layout_column="0" android:layout_columnSpan="1"/>
     <ImageView
         android:layout_width="wrap_content"
@@ -63,9 +63,9 @@
         android:id="@+id/min50"
         android:scaleType="centerCrop"
         android:layout_gravity="center"
-        android:layout_marginBottom="0dp"  android:layout_marginTop="0dp"
-        android:layout_marginLeft="0dp"  android:layout_marginRight="0dp"
-        android:layout_rowSpan="1"  android:layout_row="2"
+        android:layout_marginBottom="0dp" android:layout_marginTop="0dp"
+        android:layout_marginLeft="0dp" android:layout_marginRight="0dp"
+        android:layout_rowSpan="1" android:layout_row="2"
         android:layout_column="1" android:layout_columnSpan="1"/>
     <ImageView
         android:layout_width="wrap_content"
@@ -73,9 +73,9 @@
         android:id="@+id/min60"
         android:scaleType="centerCrop"
         android:layout_gravity="center"
-        android:layout_marginBottom="0dp"  android:layout_marginTop="0dp"
-        android:layout_marginLeft="0dp"  android:layout_marginRight="0dp"
-        android:layout_rowSpan="1"  android:layout_row="3"
+        android:layout_marginBottom="0dp" android:layout_marginTop="0dp"
+        android:layout_marginLeft="0dp" android:layout_marginRight="0dp"
+        android:layout_rowSpan="1" android:layout_row="3"
         android:layout_column="0" android:layout_columnSpan="1"/>
     <ImageView
         android:layout_width="wrap_content"
@@ -83,9 +83,9 @@
         android:id="@+id/more"
         android:scaleType="centerCrop"
         android:layout_gravity="center"
-        android:layout_marginBottom="0dp"  android:layout_marginTop="0dp"
-        android:layout_marginLeft="0dp"  android:layout_marginRight="0dp"
-        android:layout_rowSpan="1"  android:layout_row="3"
+        android:layout_marginBottom="0dp" android:layout_marginTop="0dp"
+        android:layout_marginLeft="0dp" android:layout_marginRight="0dp"
+        android:layout_rowSpan="1" android:layout_row="3"
         android:layout_column="1" android:layout_columnSpan="1"/>
 
   </GridLayout>

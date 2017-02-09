@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,7 +17,7 @@ import java.util.Date;
 public class ListActivity extends AppCompatActivity {
   public static Activity saveActivity;
   ListView lv;
-  ArrayList<ScriptedData> data;
+  ArrayList<ScriptedURL> data;
   Date finTime; // expected finish time
   Date curTime; // current time
   double duration; // time duration between current_time and finish time
@@ -47,14 +46,12 @@ public class ListActivity extends AppCompatActivity {
         openSelectedPage.putExtra("finTime", finTime);
         openSelectedPage.putExtra("curTime", curTime);
 
-        ScriptedData pageInfo = data.get(position);
+        ScriptedURL pageInfo = data.get(position);
         String title = pageInfo.getTitle();
         String content = pageInfo.getContent();
-        String url = pageInfo.getUrl();
 
         openSelectedPage.putExtra("title", title);
         openSelectedPage.putExtra("content", content);
-        openSelectedPage.putExtra("url", url);
         startActivity(openSelectedPage);
       }
     });
@@ -82,23 +79,12 @@ public class ListActivity extends AppCompatActivity {
     }
   }
 
-  private ArrayList<ScriptedData> callUrl() {
+  private ArrayList<ScriptedURL> callUrl() {
     DataBaseOpenHelper dbHelper = new DataBaseOpenHelper(this);
-    ArrayList ret = new ArrayList<ScriptedData>();
+    dbHelper.getTableAsString();
     double tempTime;
     final int wordsperMin = 180;
-
-    // temp test code
-    ArrayList<ScriptedURL> wholeList = dbHelper.getUnreadUrlList();
-
-    for (ScriptedURL temp : wholeList) {
-      tempTime = (double) temp.getWordCount() / wordsperMin;
-      Log.d("test tempTime", "" + tempTime + "wordCount" + temp.getWordCount());
-      String title = temp.getTitle();
-      String content = temp.getContent();
-      String url = temp.getUrl();
-      ret.add(new ScriptedData(url, title, tempTime, content));
-    }
-    return ret;
+    ArrayList<ScriptedURL> unreadPageList = dbHelper.getUnreadUrlList();
+    return unreadPageList;
   }
 }
