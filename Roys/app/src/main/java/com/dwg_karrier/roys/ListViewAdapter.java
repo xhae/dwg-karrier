@@ -11,10 +11,10 @@ import java.util.ArrayList;
 
 public class ListViewAdapter extends BaseAdapter {
   private LayoutInflater inflater;
-  private ArrayList<ScriptedData> data;
+  private ArrayList<ScriptedURL> data;
   private int layout;
 
-  public ListViewAdapter(Context contest, int layout, ArrayList<ScriptedData> data) {
+  public ListViewAdapter(Context contest, int layout, ArrayList<ScriptedURL> data) {
     this.inflater = (LayoutInflater) contest.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     this.data = data;
     this.layout = layout;
@@ -42,12 +42,12 @@ public class ListViewAdapter extends BaseAdapter {
     if (convertView == null) {
       convertView = inflater.inflate(layout, parent, false);
     }
-    ScriptedData scriptedData = data.get(position);
+    ScriptedURL scriptedURL = data.get(position);
     TextView title = (TextView) convertView.findViewById(R.id.TitleView);
-    title.setText("Title: " + scriptedData.getTitle());
+    title.setText("Title: " + scriptedURL.getTitle());
     TextView expectedTime = (TextView) convertView.findViewById(R.id.TimeView);
-    expectedTime.setText("Time: " + (int) scriptedData.getExpectedTime() / minute + "hour"
-        + Double.parseDouble(String.format("%.2f", scriptedData.getExpectedTime() % minute)) + "min");
+    expectedTime.setText("Time: " + (int) scriptedURL.getExpectedTime() / minute + "hour"
+        + Double.parseDouble(String.format("%.2f", (float) scriptedURL.getExpectedTime() % minute)) + "min");
 
     return convertView;
   }

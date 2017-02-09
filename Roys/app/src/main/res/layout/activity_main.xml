@@ -15,7 +15,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context="com.dwg_karrier.roys.MainActivity">
-
       <GridLayout
           android:layout_width="match_parent"
           android:layout_height="match_parent"
@@ -24,7 +23,6 @@
           android:rowCount="4"
           android:orientation="horizontal"
           android:layout_margin="0dp">
-
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" app:srcCompat="@drawable/min20"

@@ -1,13 +1,10 @@
 package com.dwg_karrier.roys;
 
 import android.content.Context;
-
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.Menu;
@@ -65,16 +62,17 @@ public class MainActivity extends AppCompatActivity {
     setImage();
 
     final GridLayout minuteLayout = (GridLayout)findViewById(R.id.maingridLayout);
+
     setImage();
 
     int childCount = minuteLayout.getChildCount();
     final int timeUnit = 10;
-    for(int i = 0 ; i < childCount ; i++) {
+    for (int i = 0 ; i < childCount ; i++) {
       final ImageView container = (ImageView) minuteLayout.getChildAt(i);
       container.setTag((i + 1) * timeUnit + "");
       container.setOnClickListener(new View.OnClickListener() {
-        public void onClick(View view){
-          if(connectAccount == false){
+        public void onClick(View view) {
+          if(connectAccount == false) {
             Toast checkInfo = Toast.makeText(getApplicationContext(), "Please connect to account.", Toast.LENGTH_SHORT);
             checkInfo.setGravity(Gravity.CENTER, 0, 0);
             checkInfo.show();
@@ -105,13 +103,10 @@ public class MainActivity extends AppCompatActivity {
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    DataBaseOpenHelper dataBaseOpenHelper;
     final Context mainActivity = this;
-    dataBaseOpenHelper = new DataBaseOpenHelper(mainActivity);
 
-    final String URL = "https://cloud.feedly.com/v3/streams/contents?streamId=user/" + ID + "/category/global.all";
-    new GetPageList(dataBaseOpenHelper, mainActivity).execute(URL);
-
+    Authentication authentication = new Authentication(mainActivity);
+    authentication.authenticationAndBringPages();
     return super.onOptionsItemSelected(item);
   }
 
@@ -145,50 +140,4 @@ public class MainActivity extends AppCompatActivity {
     min60.getLayoutParams().height = (int)(screenHeight * 0.25);
     more.getLayoutParams().height = (int)(screenHeight * 0.25);
   }
-
-  private class GetPageList extends AsyncTask<String, Void, String> {
-    private DataBaseOpenHelper dataBaseOpenHelper;
-    private Context mainContext;
-
-    public GetPageList(DataBaseOpenHelper dbHelper, Context context) {
-      dataBaseOpenHelper = dbHelper;
-      mainContext = context;
-    }
-
-    @Override
-    protected String doInBackground(String... params) {
-      try {
-        URL url = new URL(params[0]);
-        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-        urlConnection.setRequestProperty("Authorization", "OAuth " + ACCESS_TOKEN);
-
-        InputStream stream = new BufferedInputStream(urlConnection.getInputStream());
-        String result = convertStreamToString(stream);
-
-        JSONObject obj = new JSONObject(result);
-        JSONArray arr = obj.getJSONArray("items");
-        int len = arr.length();
-
-        for (int i = 0; i < len; i++) {
-          dataBaseOpenHelper.insertScriptedDataWithCheckDuplication(arr.getJSONObject(i).getString("originId"));
-        }
-
-        urlConnection.disconnect();
-
-      } catch (IOException | JSONException e) {
-        e.printStackTrace();
-      }
-      return null;
-    }
-
-    @Override
-    protected void onPostExecute(String result) {
-      Toast checkInfo = Toast.makeText(getApplicationContext(), "Connect to account successfully.", Toast.LENGTH_SHORT);
-      checkInfo.setGravity(Gravity.CENTER, 0, 0);
-      checkInfo.show();
-
-      connectAccount = true;
-    }
-  }
 }
-
