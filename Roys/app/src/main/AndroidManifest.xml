@@ -23,7 +23,7 @@
     <activity android:name=".ContentView"
               android:exported="true"/>
     <activity android:name=".ContentSwipe"
-    android:exported="true"/>
+              android:exported="true"/>
     <activity android:name=".ImageListActivity">
     </activity>
   </application>

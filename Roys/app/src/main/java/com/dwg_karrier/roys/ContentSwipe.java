@@ -1,5 +1,6 @@
 package com.dwg_karrier.roys;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,7 +13,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import org.json.simple.JSONArray;
 
@@ -29,6 +33,7 @@ public class ContentSwipe extends AppCompatActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
+    final Context contentSwipe = this;
     super.onCreate(savedInstanceState);
     setContentView(R.layout.swipecontent);
     pageSwipeAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -92,7 +97,13 @@ public class ContentSwipe extends AppCompatActivity {
        * ImageView backgroundImage = (ImageView) rootView.findViewById(R.id.backImage);
        * backgroundImage.setImageURI();
        */
-
+      ImageView backgroundImage = (ImageView) rootView.findViewById(R.id.backImage);
+      try {
+        String imgUrl = "http://www.bloter.net/wp-content/uploads/2015/09/portal_logo_150923.png"; // sample
+        Picasso.with(getActivity().getApplicationContext()).load(imgUrl).into(backgroundImage);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
       /*
        * TODO(juung): get wordCount and determine different summarized line
        * if (wordCount < ) {
