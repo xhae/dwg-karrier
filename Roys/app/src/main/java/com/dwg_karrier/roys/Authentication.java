@@ -65,10 +65,9 @@ public class Authentication {
   }
 
   void authenticationAndBringPages() {
-    final Dialog authDialog;
-    WebView web;
-    authDialog = new Dialog(mainContext);
+    Dialog authDialog = new Dialog(mainContext);
     authDialog.setContentView(auth_dialog);
+    WebView web;
     web = (WebView) authDialog.findViewById(R.id.webv);
     web.getSettings().setJavaScriptEnabled(true);
     web.loadUrl(OAUTHURL + "?redirect_uri=" + REDIRECTURI + "&response_type=code&client_id=" + CLIENTID + "&scope=" + OAUTHSCOPE);
