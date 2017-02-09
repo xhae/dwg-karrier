@@ -17,7 +17,7 @@ import java.util.Date;
 
 /**
  * @author Ji hyung Moon <mjihyung@gmail.com>
- * @version 1.0
+ * @version 2.0
  */
 public class Crawler {
   JSONObject jsonObject = null;
@@ -58,7 +58,7 @@ public class Crawler {
     try {
       title = (String) this.jsonObject.get("title");
     } catch (Exception e) {
-      Log.e("getTitle_error:", e.getMessage(), e);
+      Log.e("getTitle_error", e.getMessage(), e);
       e.printStackTrace();
       title = null;
     }
@@ -82,7 +82,7 @@ public class Crawler {
       Document jsoupDoc = Jsoup.parse(content);
       content = jsoupDoc.toString();
     } catch (Exception e) {
-      Log.e("getContent_Error:", e.getMessage(), e);
+      Log.e("getContent_Error", e.getMessage(), e);
       content = null;
     }
     return content;
@@ -93,10 +93,21 @@ public class Crawler {
     try {
       wordCount = ((Long) this.jsonObject.get("word_count")).intValue();
     } catch (Exception e) {
-      Log.e("getWordCount_Error:", e.getMessage(), e);
+      Log.e("getWordCount_Error", e.getMessage(), e);
       wordCount = 0;
     }
     return wordCount;
+  }
+
+  public String getLeadImgUrl() {
+    String imgUrl;
+    try {
+      imgUrl = (String) this.jsonObject.get("lead_image_url");
+    } catch (Exception e) {
+      Log.e("getLeadImgUrl_Error", e.getMessage(), e);
+      imgUrl = null;
+    }
+    return imgUrl;
   }
 
   /**

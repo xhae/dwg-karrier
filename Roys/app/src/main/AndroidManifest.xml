@@ -22,6 +22,9 @@
     <activity android:name=".ListActivity"/>
     <activity android:name=".ContentView"
               android:exported="true"/>
-    <activity android:name=".ContentSwipe"/>
+    <activity android:name=".ContentSwipe"
+              android:exported="true"/>
+    <activity android:name=".ImageListActivity">
+    </activity>
   </application>
 </manifest>
