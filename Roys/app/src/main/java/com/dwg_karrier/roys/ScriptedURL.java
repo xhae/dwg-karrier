@@ -33,7 +33,7 @@ public class ScriptedURL {
     this.crawler = new Crawler(url);
   }
 
-  ScriptedURL(int isRead, String title, String content, int expectedTime) {
+  ScriptedURL(int isRead, String title, String content, double expectedTime) {
     if (isRead == 1) {
       this.isRead = true;
     } else {

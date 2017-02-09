@@ -28,7 +28,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class Authentication{
+public class Authentication {
   static final String DEFAULTIMGURL = "https://blogdotstartlinkdotio.files.wordpress.com/2016/01/12620892_1077588858927687_1133266313_o.jpg?w=490&h=772";
   static final String CLIENTID = "sandbox";
   static final String CLIENTSECRET = "OE12J47X2W5PEF7CKPGZ";
@@ -41,6 +41,27 @@ public class Authentication{
 
   public Authentication(Context context) {
     mainContext = context;
+  }
+
+  static String convertStreamToString(InputStream is) {
+    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+    StringBuilder sb = new StringBuilder();
+
+    String line = null;
+    try {
+      while ((line = reader.readLine()) != null) {
+        sb.append(line + "\n");
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        is.close();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+    return sb.toString();
   }
 
   void authenticationAndBringPages() {
@@ -109,9 +130,9 @@ public class Authentication{
   }
 
   private class TokenGet extends AsyncTask<String, String, JSONObject> {
-    String code;
+    private String code;
     private ProgressDialog pDialog;
-    Context mainContext;
+    private Context mainContext;
 
     public TokenGet(String tokencode, Context context) {
       code = tokencode;
@@ -139,7 +160,7 @@ public class Authentication{
       if (json != null) {
         try {
           final String URL = "https://cloud.feedly.com/v3/streams/contents?streamId=user/" + json.getString("id") + "/category/global.all";
-          new GetPageList(new DataBaseOpenHelper(mainContext), mainContext, json.getString("access_token"),pDialog).execute(URL);
+          new GetPageList(new DataBaseOpenHelper(mainContext), mainContext, json.getString("access_token"), pDialog).execute(URL);
         } catch (JSONException e) {
           e.printStackTrace();
         }
@@ -151,9 +172,9 @@ public class Authentication{
   }
 
   private class GetPageList extends AsyncTask<String, Void, String> {
+    String accessToken;
     private DataBaseOpenHelper dataBaseOpenHelper;
     private Context mainContext;
-    String accessToken;
     private ProgressDialog pDialog;
 
     public GetPageList(DataBaseOpenHelper dbHelper, Context context, String token, ProgressDialog dialog) {
@@ -223,26 +244,5 @@ public class Authentication{
       toast.setGravity(Gravity.CENTER, 0, 0);
       toast.show();
     }
-  }
-
-  static String convertStreamToString(InputStream is) {
-    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-    StringBuilder sb = new StringBuilder();
-
-    String line = null;
-    try {
-      while ((line = reader.readLine()) != null) {
-        sb.append(line + "\n");
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-    } finally {
-      try {
-        is.close();
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    }
-    return sb.toString();
   }
 }
