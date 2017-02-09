@@ -122,7 +122,13 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     dataBase.close();
   }
 
-  private boolean isDuplicationUrl(String url) {
+
+  /**
+   * check url duplication from database data.
+   * @param url
+   * @return url duplication result. duplication -> true, not duplication -> false
+   */
+  public boolean isDuplicationUrl(String url) {
     SQLiteDatabase dataBase = getReadableDatabase();
     int urlDuplicationCount;
     Cursor cursor = dataBase.rawQuery("SELECT * FROM PAGE WHERE URL = ('" + url + "') ", null);
@@ -131,15 +137,8 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
 
     if (urlDuplicationCount == 0) {
       return false;
-    } else {
-      return true;
     }
-  }
-
-  public void insertScriptedData(String url) {
-    SQLiteDatabase dataBase = getWritableDatabase();
-    dataBase.execSQL("INSERT INTO PAGE (URL) VALUES ('" + url + "');");
-    dataBase.close();
+    return true;
   }
 
   //For test
@@ -162,19 +161,23 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     }
   }
 
-  public void insertScriptedDataWithCheckDuplication(String url) {
-    if (!isDuplicationUrl(url)) {
-      insertScriptedData(url);
-    }
+  /**
+   * Please Check URL duplication before using insert method.
+   * Using isDuplicationUrl()
+   * @param url
+   */
+  public void insertScriptedData(String url) {
+      SQLiteDatabase dataBase = getWritableDatabase();
+      dataBase.execSQL("INSERT INTO PAGE (URL) VALUES ('" + url + "');");
+      dataBase.close();
   }
 
-  public void insertScriptedUrl(ScriptedURL scriptedUrl) {
-    if (!isDuplicationUrl(scriptedUrl.getUrl())) {
-      insertScriptedUrlQuery(scriptedUrl);
-    }
-  }
-
-  private void insertScriptedUrlQuery(ScriptedURL scriptedURL) {
+  /**
+   * Please Check URL duplication before using insert method.
+   * Using isDuplicationUrl()
+   * @param scriptedURL
+   */
+  public void insertScriptedUrl(ScriptedURL scriptedURL) {
     int readValue;
     if (scriptedURL.getIsRead()) {
       readValue = 1;

@@ -128,8 +128,13 @@ public class MainActivity extends AppCompatActivity {
         //dataBaseOpenHelper.deleteAllPage();
         //dataBaseOpenHelper.getTableAsString();
 
+        // TODO: add another check url duplication method. (Without database query.)
+
         for (int i = 0; i < len; i++) {
-          dataBaseOpenHelper.insertScriptedDataWithCheckDuplication(arr.getJSONObject(i).getString("originId"));
+          String urlItem = arr.getJSONObject(i).getString("originId");
+          if (!dataBaseOpenHelper.isDuplicationUrl(urlItem)) {
+            dataBaseOpenHelper.insertScriptedData(urlItem);
+          }
         }
 
         urlConnection.disconnect();
