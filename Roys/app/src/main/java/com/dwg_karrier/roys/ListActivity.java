@@ -3,6 +3,7 @@ package com.dwg_karrier.roys;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
@@ -40,7 +41,7 @@ public class ListActivity extends AppCompatActivity {
     lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        // TODO: put selected ScriptedData to intent. data[position]
         Intent openSelectedPage = new Intent(ListActivity.this, ContentView.class);
         openSelectedPage.putExtra("finTime", finTime);
         openSelectedPage.putExtra("curTime", curTime);
@@ -52,6 +53,18 @@ public class ListActivity extends AppCompatActivity {
         openSelectedPage.putExtra("title", title);
         openSelectedPage.putExtra("content", content);
         startActivity(openSelectedPage);
+      }
+    });
+
+    FloatingActionButton changeMode = (FloatingActionButton) findViewById(R.id.toSwipe);
+    changeMode.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Intent openSwipe = new Intent(ListActivity.this, ContentSwipe.class); // open Recommend Lists
+        openSwipe.putExtra("finTime", finTime);
+        openSwipe.putExtra("curTime", curTime);
+        startActivity(openSwipe);
+        finish();
       }
     });
 
