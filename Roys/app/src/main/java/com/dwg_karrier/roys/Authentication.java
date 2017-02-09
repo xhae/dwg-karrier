@@ -204,7 +204,7 @@ public class Authentication {
 
         JSONObject obj = new JSONObject(result);
         JSONArray arr = obj.getJSONArray("items");
-        int len = arr.length();
+        final int len = arr.length();
 
         //For Test
         //dataBaseOpenHelper.deleteAllPage();
