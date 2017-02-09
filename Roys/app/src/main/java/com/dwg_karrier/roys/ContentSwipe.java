@@ -68,9 +68,15 @@ public class ContentSwipe extends AppCompatActivity {
       Bundle args = new Bundle();
       args.putInt(ARG_SECTION_NUMBER, sectionNumber);
       /*
+       * TODO(juung): bring html content from DB
+       */
+
+      /*
        * TODO(csoyee) put DB data into args like e.g. putType(key, value) in each fragment.
+       * TODO(csoyee) bring image url
        * args.putString("tempURL", "args test");
        */
+
       fragment.setArguments(args);
       return fragment;
     }
@@ -101,6 +107,9 @@ public class ContentSwipe extends AppCompatActivity {
 
       /*
        * TODO(juung): html text(from DB) to simple text(contentText)
+       * String html = "";
+       * org.jsoup.nodes.Document dom = Jsoup.parse(html);
+       * String contentText = dom.text();
        */
       // example of simple text
       String contentText = "Once, not so long ago, movies were Great. Leading men could sing, " +
