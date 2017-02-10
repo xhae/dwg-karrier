@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     setImage();
-    final GridLayout minuteLayout = (GridLayout)findViewById(R.id.maingridLayout);
+    GridLayout minuteLayout = (GridLayout)findViewById(R.id.maingridLayout);
 
     int childCount = minuteLayout.getChildCount();
     final int timeUnit = 10;

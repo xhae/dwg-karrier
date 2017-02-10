@@ -38,6 +38,7 @@ public class Authentication {
   static final String TOKENURL = "https://sandbox.feedly.com/v3/auth/token";
   static final String GRANTTYPE = "authorization_code";
   Context mainContext;
+  Dialog authDialog;
 
   public Authentication(Context context) {
     mainContext = context;
@@ -65,14 +66,13 @@ public class Authentication {
   }
 
   void authenticationAndBringPages() {
-    final Dialog authDialog = new Dialog(mainContext);
+    authDialog = new Dialog(mainContext);
     authDialog.setContentView(auth_dialog);
     WebView web;
     web = (WebView) authDialog.findViewById(R.id.webv);
     web.getSettings().setJavaScriptEnabled(true);
     web.loadUrl(OAUTHURL + "?redirect_uri=" + REDIRECTURI + "&response_type=code&client_id=" + CLIENTID + "&scope=" + OAUTHSCOPE);
     web.setWebViewClient(new WebViewClient() {
-      boolean authComplete = false;
       String authCode;
 
       @Override

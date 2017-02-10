@@ -160,7 +160,6 @@ public class ContentSwipe extends AppCompatActivity {
 
     @Override
     public Fragment getItem(int position) {
-
       return PlaceholderFragment.newInstance(position + 1);
     }
 
