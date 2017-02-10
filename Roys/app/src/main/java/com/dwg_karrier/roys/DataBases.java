@@ -9,8 +9,9 @@ public final class DataBases {
     public static final String CONTENT = "content";
     public static final String TITLE = "title";
     public static final String REPIMAGEURL = "repImage";
-    public static final String WORDCOUNT = "wordCount";
+    public static final String EXPECTEDTIME = "expectedtime";
     public static final String _TABLENAME = "page";
+    public static final String IMGURL = "imgurl";
     public static final String _CREATE =
         "create table " + _TABLENAME + "("
             + _ID + " integer primary key autoincrement, "
@@ -19,7 +20,7 @@ public final class DataBases {
             + TITLE + " text default '' , "
             + REPIMAGEURL + " text default '' , "
             + CONTENT + " text default '' , "
-            + WORDCOUNT + " integer, " 
+            + EXPECTEDTIME + " integer, "
             // TODO: Data Type Change
             // if wordCount will change to expectedTime and data type change to double -> USE REAL TYPE instead INTEGER
             + "unique(" + URL + ")" + ");";

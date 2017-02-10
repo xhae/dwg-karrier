@@ -3,8 +3,8 @@ package com.dwg_karrier.roys;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,7 +17,7 @@ import java.util.Date;
 public class ListActivity extends AppCompatActivity {
   public static Activity saveActivity;
   ListView lv;
-  ArrayList<ScriptedData> data;
+  ArrayList<ScriptedURL> data;
   Date finTime; // expected finish time
   Date curTime; // current time
   double duration; // time duration between current_time and finish time
@@ -41,20 +41,30 @@ public class ListActivity extends AppCompatActivity {
     lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        // TODO: put selected ScriptedData to intent. data[position]
         Intent openSelectedPage = new Intent(ListActivity.this, ContentView.class);
         openSelectedPage.putExtra("finTime", finTime);
         openSelectedPage.putExtra("curTime", curTime);
 
-        ScriptedData pageInfo = data.get(position);
+        ScriptedURL pageInfo = data.get(position);
         String title = pageInfo.getTitle();
         String content = pageInfo.getContent();
-        String url = pageInfo.getUrl();
 
         openSelectedPage.putExtra("title", title);
         openSelectedPage.putExtra("content", content);
-        openSelectedPage.putExtra("url", url);
         startActivity(openSelectedPage);
+      }
+    });
+
+    FloatingActionButton changeMode = (FloatingActionButton) findViewById(R.id.toSwipe);
+    changeMode.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Intent openSwipe = new Intent(ListActivity.this, ContentSwipe.class); // open Recommend Lists
+        openSwipe.putExtra("finTime", finTime);
+        openSwipe.putExtra("curTime", curTime);
+        startActivity(openSwipe);
+        finish();
       }
     });
 
@@ -69,21 +79,12 @@ public class ListActivity extends AppCompatActivity {
     }
   }
 
-  private ArrayList<ScriptedData> callUrl() {
+  private ArrayList<ScriptedURL> callUrl() {
     DataBaseOpenHelper dbHelper = new DataBaseOpenHelper(this);
-    ArrayList ret = new ArrayList<ScriptedData>();
+    dbHelper.getTableAsString();
     double tempTime;
     final int wordsperMin = 180;
-    ArrayList<ScriptedURL> wholeList = dbHelper.getUnreadUrlList();
-
-    for (ScriptedURL temp : wholeList) {
-      tempTime = (double) temp.getWordCount() / wordsperMin;
-      Log.d("test tempTime", "" + tempTime + "wordCount" + temp.getWordCount());
-      String title = temp.getTitle();
-      String content = temp.getContent();
-      String url = temp.getUrl();
-      ret.add(new ScriptedData(url, title, tempTime, content));
-    }
-    return ret;
+    ArrayList<ScriptedURL> unreadPageList = dbHelper.getUnreadUrlList();
+    return unreadPageList;
   }
 }

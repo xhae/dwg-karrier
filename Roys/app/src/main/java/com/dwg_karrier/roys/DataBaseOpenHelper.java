@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import java.util.ArrayList;
 
 public class DataBaseOpenHelper extends SQLiteOpenHelper {
@@ -15,7 +17,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   public final int titleColumn = 3;
   public final int repImageUrlColumn = 4;
   public final int contentColumn = 5;
-  public final int wordCountColumn = 6;
+  public final int expectedTimeColumn = 6;
 
   public DataBaseOpenHelper(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -74,7 +76,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
       ScriptedURL scriptedItem = new ScriptedURL(cursor.getString(urlColumn),
           cursor.getInt(readColumn), cursor.getString(titleColumn),
           cursor.getString(contentColumn), cursor.getString(repImageUrlColumn),
-          cursor.getInt(wordCountColumn));
+          cursor.getInt(expectedTimeColumn));
       resultList.add(scriptedItem);
     }
 
@@ -122,7 +124,6 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     dataBase.close();
   }
 
-
   /**
    * check url duplication from database data.
    * @param url
@@ -166,10 +167,12 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
    * Using isDuplicationUrl()
    * @param url
    */
-  public void insertScriptedData(String url) {
-      SQLiteDatabase dataBase = getWritableDatabase();
-      dataBase.execSQL("INSERT INTO PAGE (URL) VALUES ('" + url + "');");
-      dataBase.close();
+  public void insertScriptedData(String url, String title, String content, int expectedTime, String imgUrl) {
+    SQLiteDatabase dataBase = getWritableDatabase();
+    String escapedTitle = StringEscapeUtils.escapeHtml4(title);
+    String escapedContent = StringEscapeUtils.escapeHtml4(content);
+    dataBase.execSQL("INSERT INTO PAGE (URL, TITLE, CONTENT, EXPECTEDTIME, IMGURL) VALUES ('" + url + "',\"" + escapedTitle + "\", \"" + escapedContent + "\", " + String.valueOf((int)expectedTime) + " , '" + imgUrl + "');");
+    dataBase.close();
   }
 
   /**
@@ -188,7 +191,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     dataBase.execSQL("INSERT INTO PAGE (READ, URL, TITLE, repImage, CONTENT, WORDCOUNT) VALUES ("
         + readValue + ", '" + scriptedURL.getUrl() + "', '" + scriptedURL.getTitle() + "', '"
         + scriptedURL.getRepImageUrl() + "', '" + scriptedURL.getContent() + "', "
-        + scriptedURL.getWordCount() + ");");
+        + (int)scriptedURL.getExpectedTime() + ");");
     dataBase.close();
   }
 }
