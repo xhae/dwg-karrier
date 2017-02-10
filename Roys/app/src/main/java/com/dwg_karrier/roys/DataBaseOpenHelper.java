@@ -53,7 +53,6 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     while (cursor.moveToNext()) {
       result = cursor.getInt(0);
     }
-
     return result;
   }
 
@@ -65,6 +64,17 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   public ArrayList<ScriptedURL> getUnreadUrlList() {
     String unreadQuery = "SELECT * from page where read = 0";
     return getUrlListFromQuery(unreadQuery);
+  }
+
+  /**
+   * It returns ScriptedUrl List by user's spear time from Database.
+   * @param minTime expected time's minimum value
+   * @param maxTime expected time's maximum value
+   * @return ScriptedUrl List, Item's expected time : over then minTime and less then maxTime.
+   */
+  public ArrayList<ScriptedURL> getScriptedUrlListByTime(int minTime, int maxTime) {
+    String getUrlListQuery = "SELECT * from page where expectedtime >= " + minTime + "and exexpectedtime <= " + maxTime;
+    return getUrlListFromQuery(getUrlListQuery);
   }
 
   private ArrayList<ScriptedURL> getUrlListFromQuery(String query) {
