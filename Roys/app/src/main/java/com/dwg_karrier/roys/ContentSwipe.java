@@ -149,7 +149,6 @@ public class ContentSwipe extends AppCompatActivity {
         }
         final TextView contentSummary = (TextView) rootView.findViewById(R.id.summary);
         contentSummary.setText(summaryResult);
-
         backgroundImage.setOnClickListener(new ImageView.OnClickListener() {
           public void onClick(View v) {
             Intent openSelectedPage = new Intent(getActivity(), ContentView.class);
