@@ -17,7 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
-  boolean connectAccount = false; // check if user connect to Account.
+  boolean isAccountConnected; // check if user connect to Account.
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
       container.setTag((i + 1) * timeUnit + "");
       container.setOnClickListener(new View.OnClickListener() {
         public void onClick(View view) {
-          if(!connectAccount) {
+          if(!isAccountConnected) {
             Toast checkInfo = Toast.makeText(getApplicationContext(), "Please connect to account.", Toast.LENGTH_SHORT);
             checkInfo.setGravity(Gravity.CENTER, 0, 0);
             checkInfo.show();
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
     Authentication authentication = new Authentication(mainActivity);
     authentication.authenticationAndBringPages();
-    connectAccount = true;
+    isAccountConnected = true;
     return super.onOptionsItemSelected(item);
   }
 
