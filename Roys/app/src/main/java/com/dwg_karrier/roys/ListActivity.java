@@ -41,7 +41,6 @@ public class ListActivity extends AppCompatActivity {
     lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // TODO: put selected ScriptedData to intent. data[position]
         Intent openSelectedPage = new Intent(ListActivity.this, ContentView.class);
         openSelectedPage.putExtra("finTime", finTime);
         openSelectedPage.putExtra("curTime", curTime);
@@ -82,9 +81,8 @@ public class ListActivity extends AppCompatActivity {
   private ArrayList<ScriptedURL> callUrl() {
     DataBaseOpenHelper dbHelper = new DataBaseOpenHelper(this);
     dbHelper.getTableAsString();
-    double tempTime;
-    final int wordsperMin = 180;
     ArrayList<ScriptedURL> unreadPageList = dbHelper.getUnreadUrlList();
+
     return unreadPageList;
   }
 }

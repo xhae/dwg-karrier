@@ -70,10 +70,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     Cursor cursor = dataBase.rawQuery(query, null);
     while (cursor.moveToNext()) {
       ScriptedURL scriptedItem = new ScriptedURL(cursor.getInt(readColumn), cursor.getString(titleColumn), cursor.getString(contentColumn), cursor.getInt(expectedTimeColumn));
-      /*
-       * TODO: Roys v.2 with word count info in the DB, use the below code
-       * ScriptedURL scriptedItem = new ScriptedURL(cursor.getString(urlColumn), cursor.getInt(readColumn), cursor.getInt(wordCountColumn));
-       */
+
       resultList.add(scriptedItem);
     }
 
