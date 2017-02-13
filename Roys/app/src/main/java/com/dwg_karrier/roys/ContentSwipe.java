@@ -80,10 +80,12 @@ public class ContentSwipe extends AppCompatActivity {
       Bundle args = new Bundle();
 
       args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+      args.putInt("TOTALPAGENUM", totalPageNum);
       if(totalPageNum == 0){
         args.putString("TITLE","No Content");
         args.putString("CONTENT","There is no content saved");
       }else {
+        args.putString("TITLE","temp title");
         /*
          * TODO(juung): bring html content from DB
          */
@@ -105,10 +107,9 @@ public class ContentSwipe extends AppCompatActivity {
       TextView contentSum = (TextView) rootView.findViewById(R.id.summary);
       ImageView backgroundImage = (ImageView) rootView.findViewById(R.id.backImage);
 
-      String getTitle = getArguments().getString("TITLE");
 
-      if(getTitle.equals("No Content")){
-        contentTitle.setText(getTitle);
+      if(getArguments().getInt("TOTALPAGENUM") == 0){
+        contentTitle.setText(getArguments().getString("TITLE"));
         contentSum.setText(getArguments().getString("CONTENT"));
         backgroundImage.setImageResource(R.drawable.empty);
       }else {
@@ -195,6 +196,5 @@ public class ContentSwipe extends AppCompatActivity {
        return 1;
       }
     }
-
   }
 }

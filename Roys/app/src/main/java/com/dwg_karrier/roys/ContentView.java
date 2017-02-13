@@ -1,8 +1,11 @@
 package com.dwg_karrier.roys;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -23,6 +26,9 @@ public class ContentView extends AppCompatActivity {
   /*
    * TODO(Juung): get CurTime and finTime so that could use them to calculate rest of the time --> use in next recommendation
    * TODO: think about 'go-back' action (should go back to the first page or the second?)
+   */
+  /*
+   * TODO(Csoyee): make translation menu bar and show translation result in webview
    */
 
   protected void onCreate(Bundle savedInstanceState) {
