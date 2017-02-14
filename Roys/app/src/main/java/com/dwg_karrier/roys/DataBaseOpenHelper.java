@@ -142,8 +142,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   public boolean Duplication(String url) {
     SQLiteDatabase dataBase = getReadableDatabase();
     Cursor cursor = dataBase.rawQuery("SELECT * FROM PAGE WHERE URL = ('" + url + "') ", null);
-    int urlDuplicationCount;
-    urlDuplicationCount = cursor.getCount();
+    int urlDuplicationCount = cursor.getCount();
     dataBase.close();
 
     if (urlDuplicationCount == 0) {
