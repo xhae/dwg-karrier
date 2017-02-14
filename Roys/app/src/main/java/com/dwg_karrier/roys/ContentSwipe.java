@@ -107,7 +107,6 @@ public class ContentSwipe extends AppCompatActivity {
       TextView contentSum = (TextView) rootView.findViewById(R.id.summary);
       ImageView backgroundImage = (ImageView) rootView.findViewById(R.id.backImage);
 
-
       if(getArguments().getInt("TOTALPAGENUM") == 0){
         contentTitle.setText(getArguments().getString("TITLE"));
         contentSum.setText(getArguments().getString("CONTENT"));
@@ -171,8 +170,13 @@ public class ContentSwipe extends AppCompatActivity {
          * TODO(leesera): connect to contentView
          * Maybe Same as we did at ListActivity.
          * Before we should put ars for each fragment
+         * backgroundImage.setOnClickListener(new ImageView.OnClickListener() {
+         *   public void onClick(View v) {
+         *   }
+         * });
          */
       }
+
       return rootView;
     }
   }
