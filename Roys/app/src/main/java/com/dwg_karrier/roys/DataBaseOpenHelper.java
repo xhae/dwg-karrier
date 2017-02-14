@@ -139,10 +139,10 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
    * @param url
    * @return url duplication result. duplication -> true, not duplication -> false
    */
-  public boolean isDuplicationUrl(String url) {
+  public boolean Duplication(String url) {
     SQLiteDatabase dataBase = getReadableDatabase();
-    int urlDuplicationCount;
     Cursor cursor = dataBase.rawQuery("SELECT * FROM PAGE WHERE URL = ('" + url + "') ", null);
+    int urlDuplicationCount;
     urlDuplicationCount = cursor.getCount();
     dataBase.close();
 
@@ -174,7 +174,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
 
   /**
    * Please Check URL duplication before using insert method.
-   * Using isDuplicationUrl()
+   * Using Duplication()
    * @param url
    */
   public void insertScriptedData(String url, String title, String content, int expectedTime, String imgUrl) {
@@ -187,7 +187,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
 
   /**
    * Please Check URL duplication before using insert method.
-   * Using isDuplicationUrl()
+   * Using Duplication()
    * @param scriptedURL
    */
   public void insertScriptedUrl(ScriptedURL scriptedURL) {
