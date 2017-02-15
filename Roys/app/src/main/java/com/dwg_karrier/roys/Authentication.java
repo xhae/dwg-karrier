@@ -65,14 +65,13 @@ public class Authentication {
   }
 
   void authenticationAndBringPages() {
-    Dialog authDialog = new Dialog(mainContext);
+    final Dialog authDialog = new Dialog(mainContext);
     authDialog.setContentView(auth_dialog);
     WebView web;
     web = (WebView) authDialog.findViewById(R.id.webv);
     web.getSettings().setJavaScriptEnabled(true);
     web.loadUrl(OAUTHURL + "?redirect_uri=" + REDIRECTURI + "&response_type=code&client_id=" + CLIENTID + "&scope=" + OAUTHSCOPE);
     web.setWebViewClient(new WebViewClient() {
-      boolean authComplete = false;
       String authCode;
 
       @Override
@@ -158,7 +157,7 @@ public class Authentication {
     protected void onPostExecute(JSONObject json) {
       if (json != null) {
         try {
-          final String URL = "https://cloud.feedly.com/v3/streams/contents?streamId=user/" + json.getString("id") + "/category/global.all";
+          final String URL = "https://sandbox.feedly.com/v3/streams/contents?streamId=user/" + json.getString("id") + "/category/global.all";
           new GetPageList(new DataBaseOpenHelper(mainContext), mainContext, json.getString("access_token"), pDialog).execute(URL);
         } catch (JSONException e) {
           e.printStackTrace();
@@ -193,7 +192,6 @@ public class Authentication {
     @Override
     protected String doInBackground(String... params) {
       try {
-        pDialog.setMessage("Bring Scripted Pages from Feedly ...");
         URL url = new URL(params[0]);
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         urlConnection.setRequestProperty("Authorization", "OAuth " + accessToken);
