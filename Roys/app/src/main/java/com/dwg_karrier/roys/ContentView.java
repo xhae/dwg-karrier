@@ -1,6 +1,5 @@
 package com.dwg_karrier.roys;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,13 +22,6 @@ public class ContentView extends AppCompatActivity {
   Date curTime;
   long startTime;
   long endTime;
-  /*
-   * TODO(Juung): get CurTime and finTime so that could use them to calculate rest of the time --> use in next recommendation
-   * TODO: think about 'go-back' action (should go back to the first page or the second?)
-   */
-  /*
-   * TODO(Csoyee): make translation menu bar and show translation result in webview
-   */
 
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -41,19 +33,7 @@ public class ContentView extends AppCompatActivity {
     finTime = (Date) getPageInfo.getSerializableExtra("finTime");
     curTime = (Date) getPageInfo.getSerializableExtra("curTime");
 
-    String view = title + "\n\n" + imgSizeCtrl + StringEscapeUtils.unescapeHtml4(content);
-
-    WebView wv = (WebView) findViewById(R.id.contentView);
-      /*
-       * viewer settings
-       * v.2 might have image scaling (Let's talk about this after using v.1)
-       */
-    wv.setVerticalScrollBarEnabled(true);
-    wv.setHorizontalScrollBarEnabled(false);
-
-    final String mimeType = "text/html";
-    final String encoding = "UTF-8";
-    wv.loadDataWithBaseURL("", view, mimeType, encoding, "");
+    setView(title, content);
 
     startTime = System.currentTimeMillis();
 
@@ -79,5 +59,46 @@ public class ContentView extends AppCompatActivity {
         finish();
       }
     });
+  }
+
+  public void setView(String showTitle, String showContent) {
+    String view = showTitle + "\n\n" + imgSizeCtrl + StringEscapeUtils.unescapeHtml4(showContent);
+
+    WebView wv = (WebView) findViewById(R.id.contentView);
+    wv.setVerticalScrollBarEnabled(true);
+    wv.setHorizontalScrollBarEnabled(false);
+
+    final String mimeType = "text/html";
+    final String encoding = "UTF-8";
+    wv.loadDataWithBaseURL("", view, mimeType, encoding, "");
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.translatelanguagemenu, menu);
+    return super.onCreateOptionsMenu(menu);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    String translatedContent ;
+    switch (item.getItemId()) {
+      case R.id.chineses :
+        // TODO(juung): put tranlated content into translatedContent. (chinese)
+        translatedContent = content;
+        setView(title, content);
+        return true;
+      case R.id.korean :
+        // TODO(juung): put tranlated content into translatedContent. (korean)
+        translatedContent = content;
+        setView(title, content);
+        return true;
+      case R.id.german :
+        // TODO(juung): put tranlated content into translatedContent. (german)
+        translatedContent = content;
+        setView(title, content);
+        return true;
+    }
+    return super.onOptionsItemSelected(item);
   }
 }
