@@ -5,41 +5,42 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
+  boolean isAccountConnected; // check if user connect to Account.
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     setImage();
-
-    final Context mainActivity = this;
-
-    Button btnFeedlyAccount = (Button) findViewById(R.id.FeedlyAccountBtn);
-    btnFeedlyAccount.setOnClickListener(new Button.OnClickListener() {
-      public void onClick(View v) {
-        Authentication authentication = new Authentication(mainActivity);
-        authentication.authenticationAndBringPages();
-      }
-    });
-
-    GridLayout minuteLayout = (GridLayout) findViewById(R.id.mainLayout);
-    setImage();
+    GridLayout minuteLayout = (GridLayout)findViewById(R.id.maingridLayout);
 
     int childCount = minuteLayout.getChildCount();
     final int timeUnit = 10;
-    for (int i = 0; i < childCount; i++) {
+
+    for (int i = 0 ; i < childCount ; i++) {
       final ImageView container = (ImageView) minuteLayout.getChildAt(i);
       container.setTag((i + 1) * timeUnit + "");
       container.setOnClickListener(new View.OnClickListener() {
         public void onClick(View view) {
+          if(!isAccountConnected) {
+            Toast checkInfo = Toast.makeText(getApplicationContext(), "Please connect to account.", Toast.LENGTH_SHORT);
+            checkInfo.setGravity(Gravity.CENTER, 0, 0);
+            checkInfo.show();
+            return ;
+          }
+
           Date curTime = new Date(System.currentTimeMillis());
           Calendar cal = Calendar.getInstance();
           cal.setTime(curTime);
@@ -56,35 +57,50 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.main_menu_item, menu);
+    return super.onCreateOptionsMenu(menu);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    final Context mainActivity = this;
+
+    Authentication authentication = new Authentication(mainActivity);
+    authentication.authenticationAndBringPages();
+    isAccountConnected = true;
+    return super.onOptionsItemSelected(item);
+  }
+
   private void setImage() {
     Point windowSize = new Point();
     getWindowManager().getDefaultDisplay().getSize(windowSize);
     final int screenWidth = windowSize.x;
     final int screenHeight = windowSize.y;
 
-    ImageView min10 = (ImageView) findViewById(R.id.min10);
-    ImageView min20 = (ImageView) findViewById(R.id.min20);
-    ImageView min30 = (ImageView) findViewById(R.id.min30);
-    ImageView min40 = (ImageView) findViewById(R.id.min40);
-    ImageView min50 = (ImageView) findViewById(R.id.min50);
-    ImageView min60 = (ImageView) findViewById(R.id.min60);
-    ImageView more = (ImageView) findViewById(R.id.more);
+    ImageView min10 = (ImageView)findViewById(R.id.min10);
+    ImageView min20 = (ImageView)findViewById(R.id.min20);
+    ImageView min30 = (ImageView)findViewById(R.id.min30);
+    ImageView min40 = (ImageView)findViewById(R.id.min40);
+    ImageView min50 = (ImageView)findViewById(R.id.min50);
+    ImageView min60 = (ImageView)findViewById(R.id.min60);
+    ImageView more = (ImageView)findViewById(R.id.more);
 
-    min10.getLayoutParams().width = (int) (screenWidth * 0.5);
-    min20.getLayoutParams().width = (int) (screenWidth * 0.5);
-    min30.getLayoutParams().width = (int) (screenWidth * 0.5);
-    min40.getLayoutParams().width = (int) (screenWidth * 0.5);
-    min50.getLayoutParams().width = (int) (screenWidth * 0.5);
-    min60.getLayoutParams().width = (int) (screenWidth * 0.5);
-    more.getLayoutParams().width = (int) (screenWidth * 0.5);
+    min10.getLayoutParams().width = (int)(screenWidth * 0.5);
+    min20.getLayoutParams().width = (int)(screenWidth * 0.5);
+    min30.getLayoutParams().width = (int)(screenWidth * 0.5);
+    min40.getLayoutParams().width = (int)(screenWidth * 0.5);
+    min50.getLayoutParams().width = (int)(screenWidth * 0.5);
+    min60.getLayoutParams().width = (int)(screenWidth * 0.5);
+    more.getLayoutParams().width = (int)(screenWidth * 0.5);
 
-    min10.getLayoutParams().height = (int) (screenHeight * 0.5);
-    min20.getLayoutParams().height = (int) (screenHeight * 0.25);
-    min30.getLayoutParams().height = (int) (screenHeight * 0.25);
-    min40.getLayoutParams().height = (int) (screenHeight * 0.25);
-    min50.getLayoutParams().height = (int) (screenHeight * 0.25);
-    min60.getLayoutParams().height = (int) (screenHeight * 0.25);
-    more.getLayoutParams().height = (int) (screenHeight * 0.25);
+    min10.getLayoutParams().height = (int)(screenHeight * 0.5);
+    min20.getLayoutParams().height = (int)(screenHeight * 0.25);
+    min30.getLayoutParams().height = (int)(screenHeight * 0.25);
+    min40.getLayoutParams().height = (int)(screenHeight * 0.25);
+    min50.getLayoutParams().height = (int)(screenHeight * 0.25);
+    min60.getLayoutParams().height = (int)(screenHeight * 0.25);
+    more.getLayoutParams().height = (int)(screenHeight * 0.25);
   }
 }
-
