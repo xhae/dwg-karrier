@@ -55,7 +55,7 @@ public class ScriptedURL {
     this.crawler = new Crawler(url);
   }
 
-  ScriptedURL(String url, int isRead, String title, String content, String repImageUrl, int wordCount) {
+  ScriptedURL(String url, int isRead, String title, String content, String repImageUrl, double expectedTime) {
     this.url = url;
     if (isRead == 1) {
       this.isRead = true;
@@ -65,7 +65,7 @@ public class ScriptedURL {
     this.title = title;
     this.content = content;
     this.repImageUrl = repImageUrl;
-    this.wordCount = wordCount;
+    this.expectedTime = expectedTime;
     this.crawler = new Crawler(url);
   }
 

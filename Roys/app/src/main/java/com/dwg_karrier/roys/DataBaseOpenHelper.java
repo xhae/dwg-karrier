@@ -73,7 +73,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
    * @return ScriptedUrl List, Item's expected time : over then minTime and less then maxTime.
    */
   public ArrayList<ScriptedURL> getScriptedUrlListByTime(int minTime, int maxTime) {
-    String getUrlListQuery = "SELECT * from page where expectedtime >= " + minTime + "and exexpectedtime <= " + maxTime;
+    String getUrlListQuery = "SELECT * from page where expectedtime >= " + minTime + "and expectedtime <= " + maxTime;
     return getUrlListFromQuery(getUrlListQuery);
   }
 
