@@ -136,10 +136,11 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
 
   /**
    * check url duplication from database data.
+   * If result returns true, you can't insert url data into DB.
    * @param url
-   * @return url duplication result. duplication -> true, not duplication -> false
+   * @return checked result. If the url is duplicated , returns true. Else return false.
    */
-  public boolean Duplication(String url) {
+  public boolean isDuplicationUrl(String url) {
     SQLiteDatabase dataBase = getReadableDatabase();
     Cursor cursor = dataBase.rawQuery("SELECT * FROM PAGE WHERE URL = ('" + url + "') ", null);
     int urlDuplicationCount = cursor.getCount();
