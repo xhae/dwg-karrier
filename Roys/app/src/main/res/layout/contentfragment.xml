@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:orientation="vertical"
+                xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -15,20 +15,21 @@
       android:layout_marginLeft="0dp" android:layout_marginRight="0dp"
       android:layout_marginStart="0dp" android:layout_marginTop="0dp"/>
   <TextView
+      android:text="title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="10dp" android:id="@+id/title"
+      android:textColor="@android:color/background_light"
+      android:layout_above="@+id/summary" android:layout_alignStart="@+id/summary"
+      android:layout_marginLeft="10dp" android:textSize="21dp" android:layout_marginRight="10dp"
+      android:layout_marginTop="50dp"/>
+  <TextView
       android:text="three line summary"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:id="@+id/summary"
       android:textColor="@android:color/background_light"
-      android:layout_centerVertical="true" android:layout_centerHorizontal="true"
-      android:textSize="20dp" android:layout_marginLeft="10dp" android:layout_marginRight="20dp"
-  />
-  <TextView
-      android:text="title"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginBottom="10dp" android:id="@+id/title"
-      android:textColor="@android:color/background_light" android:textSize="30dp"
-      android:layout_above="@+id/summary" android:layout_alignStart="@+id/summary"
-      android:layout_marginLeft="10dp"/>
+      android:textSize="17dp" android:layout_marginLeft="10dp" android:layout_marginRight="20dp"
+      android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"
+      android:layout_marginBottom="217dp"/>
 </RelativeLayout>
