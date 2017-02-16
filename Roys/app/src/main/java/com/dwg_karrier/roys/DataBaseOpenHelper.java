@@ -11,7 +11,9 @@ import java.util.ArrayList;
 
 public class DataBaseOpenHelper extends SQLiteOpenHelper {
   public static final int DATABASE_VERSION = 2;
+
   public static final String DATABASE_NAME = "FeedReader.db";
+
   public final int readColumn = 1;
   public final int urlColumn = 2;
   public final int titleColumn = 3;
@@ -83,9 +85,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
 
     Cursor cursor = dataBase.rawQuery(query, null);
     while (cursor.moveToNext()) {
-
       ScriptedURL scriptedItem = new ScriptedURL(cursor.getInt(readColumn), cursor.getString(titleColumn), cursor.getString(contentColumn), cursor.getInt(expectedTimeColumn));
-
       resultList.add(scriptedItem);
     }
 
@@ -145,10 +145,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     int urlDuplicationCount = cursor.getCount();
     dataBase.close();
 
-    if (urlDuplicationCount == 0) {
-      return false;
-    }
-    return true;
+    return urlDuplicationCount != 0;
   }
 
   //For test
@@ -190,12 +187,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
    * @param scriptedURL
    */
   public void insertScriptedUrl(ScriptedURL scriptedURL) {
-    int readValue;
-    if (scriptedURL.getIsRead()) {
-      readValue = 1;
-    } else {
-      readValue = 0;
-    }
+    int readValue = scriptedURL.getIsRead() ? 1 : 0;
     SQLiteDatabase dataBase = getWritableDatabase();
     dataBase.execSQL("INSERT INTO PAGE (READ, URL, TITLE, repImage, CONTENT, WORDCOUNT) VALUES ("
         + readValue + ", '" + scriptedURL.getUrl() + "', '" + scriptedURL.getTitle() + "', '"
