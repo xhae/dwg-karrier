@@ -229,6 +229,7 @@ public class Authentication {
           }
         }
         urlConnection.disconnect();
+
       } catch (IOException | JSONException e) {
         e.printStackTrace();
       } catch (Exception e) {

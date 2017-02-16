@@ -29,8 +29,5 @@
               android:exported="true"/>
     <activity android:name=".ImageListActivity">
     </activity>
-    <meta-data
-        android:name="com.google.cloud.translate.API_KEY"
-        android:value="AIzaSyCYlF-x5190cbhUplhefYsppzkcVHp08MI" />
   </application>
 </manifest>
