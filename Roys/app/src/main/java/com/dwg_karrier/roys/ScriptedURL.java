@@ -7,6 +7,7 @@ public class ScriptedURL {
   private double expectedTime;
   private String title;
   private String content;
+  private String repImageUrl;
 
 
   ScriptedURL(String url, boolean isRead) {
@@ -17,11 +18,7 @@ public class ScriptedURL {
 
   ScriptedURL(String url, int isRead) {
     this.url = url;
-    if (isRead == 1) {
-      this.isRead = true;
-    } else {
-      this.isRead = false;
-    }
+    this.isRead = isRead == 1;
     this.crawler = new Crawler(url);
     this.title = crawler.getTitle();
     this.content = crawler.getContent();
@@ -34,11 +31,7 @@ public class ScriptedURL {
   }
 
   ScriptedURL(int isRead, String title, String content, double expectedTime) {
-    if (isRead == 1) {
-      this.isRead = true;
-    } else {
-      this.isRead = false;
-    }
+    this.isRead = isRead == 1;
     this.title = title;
     this.content = content;
     this.expectedTime = expectedTime;
@@ -46,11 +39,17 @@ public class ScriptedURL {
 
   ScriptedURL(String url, int isRead, int wordCount) {
     this.url = url;
-    if (isRead == 1) {
-      this.isRead = true;
-    } else {
-      this.isRead = false;
-    }
+    this.isRead = isRead == 1;
+    this.crawler = new Crawler(url);
+  }
+
+  ScriptedURL(String url, int isRead, String title, String content, String repImageUrl, double expectedTime) {
+    this.url = url;
+    this.isRead = isRead == 1;
+    this.title = title;
+    this.content = content;
+    this.repImageUrl = repImageUrl;
+    this.expectedTime = expectedTime;
     this.crawler = new Crawler(url);
   }
 
@@ -72,5 +71,9 @@ public class ScriptedURL {
 
   public double getExpectedTime() {
     return expectedTime;
+  }
+
+  public String getRepImageUrl() {
+    return repImageUrl;
   }
 }

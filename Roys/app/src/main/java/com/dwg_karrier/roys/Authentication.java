@@ -222,7 +222,11 @@ public class Authentication {
           if (imgUrl == null) {
             imgUrl = DEFAULTIMGURL;
           }
-          dataBaseOpenHelper.insertScriptedDataWithCheckDuplication(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl);
+
+          // TODO: add another check url duplication method. (Without database query.)
+          if (!dataBaseOpenHelper.isDuplicatedUrl(feedUrl)) {
+            dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl);
+          }
         }
         urlConnection.disconnect();
       } catch (IOException | JSONException e) {
