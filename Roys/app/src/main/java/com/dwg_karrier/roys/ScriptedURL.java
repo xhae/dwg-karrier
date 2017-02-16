@@ -50,6 +50,7 @@ public class ScriptedURL {
     this.content = content;
     this.repImageUrl = repImageUrl;
     this.expectedTime = expectedTime;
+    this.crawler = new Crawler(url);
   }
 
   public String getUrl() {
