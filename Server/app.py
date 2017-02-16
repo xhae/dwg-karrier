@@ -29,17 +29,15 @@ class User(db.Model):
   def blogs(self):
     return Blog
 
-  def is_subscribing(self, blog):
+  def isSubscribing(self, blog):
             return self.blogs().where('subscribed_id', blog.id).exists()
 
   def subscribes(self,blog):
-    if not self.is_subscribing(blog):
+    if not self.isSubscribing(blog):
       self.blogs().attach(blog)
 
-  def find_recommend(self):
+  def findRecommend(self):
     blogs = self.subscribes()
-
-
 
 class Blog(db.Model):
   __fillable__ = ['url']
@@ -78,17 +76,14 @@ def create_user():
     blog = Blog.first_or_create(url=burl)
     user.subscribes(blog)
   
-
   return jsonify(user)
-
 
 @app.route('/users/<int:user_id>/recommend', methods=['GET'])
 def get_user_recommend(user_id):
   user = User.find_or_fail(user_id)
   #TODO(seralee)
-  #return jsonify(user.find_recommend())
+  #return jsonify(user.findRecommend())
   return None 
-
 
 if __name__ == '__main__':
   app.run()
