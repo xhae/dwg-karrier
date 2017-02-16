@@ -10,13 +10,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.simple.JSONArray;
@@ -33,7 +31,7 @@ public class ContentSwipe extends AppCompatActivity {
   Date finTime;
   Date curTime;
   public int totalPageNum ;
-  private static ArrayList<ScriptedURL> unreadPageList;
+  private static ArrayList<ScriptedURL> unreadPageList; // TODO (Csoyee, Jungshik): static prob...
   double duration; // time duration between current_time and finish time
   private SectionsPagerAdapter pageSwipeAdapter;
   private ViewPager pageSwipeView;
