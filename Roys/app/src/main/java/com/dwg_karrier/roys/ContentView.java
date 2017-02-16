@@ -1,11 +1,10 @@
 package com.dwg_karrier.roys;
 
-import static com.dwg_karrier.roys.ListActivity.saveActivity;
 import static com.dwg_karrier.roys.ContentSwipe.saveSwipeActivity;
+import static com.dwg_karrier.roys.ListActivity.saveActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +20,7 @@ public class ContentView extends AppCompatActivity {
   private final String imgSizeCtrl = "<style>img{display: inline; height: auto; max-width: 100%;}</style>\n"; // fit image to the size of viewer
   String title;
   String content;
+  String escapedContent;
   String url;
   Date finTime;
   Date curTime;
@@ -37,7 +37,8 @@ public class ContentView extends AppCompatActivity {
     finTime = (Date) getPageInfo.getSerializableExtra("finTime");
     curTime = (Date) getPageInfo.getSerializableExtra("curTime");
 
-    setView(title, content);
+    escapedContent = StringEscapeUtils.unescapeHtml4(content);
+    setView(title, escapedContent);
 
     startTime = System.currentTimeMillis();
 
@@ -54,11 +55,11 @@ public class ContentView extends AppCompatActivity {
         long readTime = (endTime - startTime) / 1000;
 
         Intent backToList = null;
-        if(saveActivity != null) {
+        if (saveActivity != null) {
           saveActivity.finish();
           saveActivity = null;
           backToList = new Intent(ContentView.this, ListActivity.class);
-        } else if(saveSwipeActivity != null) {
+        } else if (saveSwipeActivity != null) {
           saveSwipeActivity.finish();
           saveSwipeActivity = null;
           backToList = new Intent(ContentView.this, ContentSwipe.class);
@@ -74,7 +75,7 @@ public class ContentView extends AppCompatActivity {
   }
 
   public void setView(String showTitle, String showContent) {
-    String view = showTitle + "\n\n" + imgSizeCtrl + StringEscapeUtils.unescapeHtml4(showContent);
+    String view = showTitle + "\n\n" + imgSizeCtrl + showContent;
 
     WebView wv = (WebView) findViewById(R.id.contentView);
     wv.setVerticalScrollBarEnabled(true);
@@ -93,21 +94,19 @@ public class ContentView extends AppCompatActivity {
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    String translatedContent ;
+    String translatedContent;
+    Translator translator = new Translator("en", escapedContent);
     switch (item.getItemId()) {
-      case R.id.chineses :
-        // TODO(juung): put tranlated content into translatedContent. (chinese)
-        translatedContent = content;
+      case R.id.chineses:
+        translatedContent = translator.getTranslate("zh-TW");
         setView(title, translatedContent);
         return true;
-      case R.id.korean :
-        // TODO(juung): put tranlated content into translatedContent. (korean)
-        translatedContent = content;
+      case R.id.korean:
+        translatedContent = translator.getTranslate("ko");
         setView(title, translatedContent);
         return true;
-      case R.id.german :
-        // TODO(juung): put tranlated content into translatedContent. (german)
-        translatedContent = content;
+      case R.id.german:
+        translatedContent = translator.getTranslate("de");
         setView(title, translatedContent);
         return true;
     }
