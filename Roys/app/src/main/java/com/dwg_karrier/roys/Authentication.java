@@ -224,7 +224,7 @@ public class Authentication {
           }
 
           // TODO: add another check url duplication method. (Without database query.)
-          if (!dataBaseOpenHelper.isDuplicationUrl(feedUrl)) {
+          if (!dataBaseOpenHelper.isDuplicatedUrl(feedUrl)) {
             dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl);
           }
         }
