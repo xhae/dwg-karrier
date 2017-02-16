@@ -85,7 +85,10 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
 
     Cursor cursor = dataBase.rawQuery(query, null);
     while (cursor.moveToNext()) {
-      ScriptedURL scriptedItem = new ScriptedURL(cursor.getInt(readColumn), cursor.getString(titleColumn), cursor.getString(contentColumn), cursor.getInt(expectedTimeColumn));
+      ScriptedURL scriptedItem = new ScriptedURL(cursor.getString(urlColumn),
+          cursor.getInt(readColumn), cursor.getString(titleColumn),
+          cursor.getString(contentColumn), cursor.getString(repImageUrlColumn),
+          cursor.getInt(expectedTimeColumn));
       resultList.add(scriptedItem);
     }
 
