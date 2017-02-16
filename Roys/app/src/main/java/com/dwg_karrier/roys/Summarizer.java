@@ -31,7 +31,7 @@ public class Summarizer {
    */
   public Summarizer(String inputText) {
     try {
-      this.urlEncodeString = URLEncoder.encode(inputText, "ASCII");
+      this.urlEncodeString = URLEncoder.encode(inputText, "UTF-8");
     } catch (Exception e) {
       Log.d("Summarizer Initialize", e.getMessage(), e);
     }

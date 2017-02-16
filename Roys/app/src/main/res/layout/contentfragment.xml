@@ -30,6 +30,7 @@
       android:id="@+id/summary"
       android:textColor="@android:color/background_light"
       android:textSize="17dp" android:layout_marginLeft="10dp" android:layout_marginRight="20dp"
-      android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"
-      android:layout_marginBottom="217dp"/>
+      android:layout_centerHorizontal="true"
+      android:layout_centerVertical="true" android:layout_alignWithParentIfMissing="false"
+      android:layout_centerInParent="false"/>
 </RelativeLayout>

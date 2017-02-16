@@ -212,9 +212,9 @@ public class Authentication {
         for (int i = 0; i < len; i++) {
           JSONObject feed = arr.getJSONObject(i);
           String feedUrl = feed.getString("originId");
-          String feedTitle = feed.getString("title");
+          String feedTitle = (String) feed.get("title");
           JSONObject feedSummary = feed.getJSONObject("summary");
-          String feedContent = feedSummary.getString("content");
+          String feedContent = (String) feedSummary.get("content");
           int feedExpectedTime = countWords(feedContent) / WORDPERMIN;
 
           //Please Let me know if you have smart way of getting image url from html :)
