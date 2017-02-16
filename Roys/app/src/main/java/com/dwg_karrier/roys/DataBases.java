@@ -17,10 +17,12 @@ public final class DataBases {
             + _ID + " integer primary key autoincrement, "
             + READ + " integer default 0 , "
             + URL + " text not null , "
-            + TITLE + " text default '', "
-            + REPIMAGEURL + "text default '', "
-            + CONTENT + " text default '', "
+            + TITLE + " text default '' , "
+            + REPIMAGEURL + " text default '' , "
+            + CONTENT + " text default '' , "
             + EXPECTEDTIME + " integer, "
+            // TODO: Data Type Change
+            // if wordCount will change to expectedTime and data type change to double -> USE REAL TYPE instead INTEGER
             + "unique(" + URL + ")" + ");";
   }
 }
