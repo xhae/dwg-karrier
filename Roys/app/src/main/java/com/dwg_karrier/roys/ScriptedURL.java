@@ -39,20 +39,13 @@ public class ScriptedURL {
     this.expectedTime = expectedTime;
   }
 
-  ScriptedURL(String url, int isRead) {
-    this.url = url;
-    this.isRead = isRead == 1;
-    this.crawler = new Crawler(url);
-  }
-
   ScriptedURL(String url, int isRead, String title, String content, String repImageUrl, double expectedTime) {
     this.url = url;
     this.isRead = isRead == 1;
-    this.title = title;
-    this.content = content;
+    this.title = StringEscapeUtils.unescapeHtml4(title);
+    this.content = StringEscapeUtils.unescapeHtml4(content);
     this.repImageUrl = repImageUrl;
     this.expectedTime = expectedTime;
-    this.crawler = new Crawler(url);
   }
 
   public String getUrl() {

@@ -85,11 +85,19 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
 
     Cursor cursor = dataBase.rawQuery(query, null);
     while (cursor.moveToNext()) {
-      ScriptedURL scriptedItem = new ScriptedURL(cursor.getInt(readColumn), cursor.getString(titleColumn), cursor.getString(contentColumn), cursor.getInt(expectedTimeColumn));
+      ScriptedURL scriptedItem = new ScriptedURL(cursor.getString(urlColumn),
+          cursor.getInt(readColumn), cursor.getString(titleColumn),
+          cursor.getString(contentColumn), cursor.getString(repImageUrlColumn),
+          cursor.getInt(expectedTimeColumn));
       resultList.add(scriptedItem);
     }
 
     return resultList;
+  }
+
+  public void setExpectedTime(String url, int expectedTime) {
+    String query = "expectedtime = " + expectedTime;
+    updateDataQuery(query, url);
   }
 
   public void setIsRead(String url, int status) {
@@ -170,14 +178,14 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
 
   /**
    * Please Check URL duplication before using insert method.
-   * Using Duplication()
+   * Using isDuplicatedUrl()
    * @param url
    */
   public void insertScriptedData(String url, String title, String content, int expectedTime, String imgUrl) {
     SQLiteDatabase dataBase = getWritableDatabase();
     String escapedTitle = StringEscapeUtils.escapeHtml4(title);
     String escapedContent = StringEscapeUtils.escapeHtml4(content);
-    dataBase.execSQL("INSERT INTO PAGE (URL, TITLE, CONTENT, EXPECTEDTIME, IMGURL) VALUES ('" + url + "',\"" + escapedTitle + "\", \"" + escapedContent + "\", " + String.valueOf((int)expectedTime) + " , '" + imgUrl + "');");
+    dataBase.execSQL("INSERT INTO PAGE (URL, TITLE, CONTENT, EXPECTEDTIME, repImage) VALUES ('" + url + "',\"" + escapedTitle + "\", \"" + escapedContent + "\", " + String.valueOf((int)expectedTime) + " , '" + imgUrl + "');");
     dataBase.close();
   }
 
@@ -189,7 +197,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   public void insertScriptedUrl(ScriptedURL scriptedURL) {
     int readValue = scriptedURL.getIsRead() ? 1 : 0;
     SQLiteDatabase dataBase = getWritableDatabase();
-    dataBase.execSQL("INSERT INTO PAGE (READ, URL, TITLE, repImage, CONTENT, WORDCOUNT) VALUES ("
+    dataBase.execSQL("INSERT INTO PAGE (READ, URL, TITLE, repImage, CONTENT, expectedtime) VALUES ("
         + readValue + ", '" + scriptedURL.getUrl() + "', '" + scriptedURL.getTitle() + "', '"
         + scriptedURL.getRepImageUrl() + "', '" + scriptedURL.getContent() + "', "
         + (int)scriptedURL.getExpectedTime() + ");");
