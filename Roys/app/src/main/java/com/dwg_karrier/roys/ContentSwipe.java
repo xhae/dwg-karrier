@@ -13,8 +13,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.simple.JSONArray;
@@ -91,11 +95,7 @@ public class ContentSwipe extends AppCompatActivity {
         ScriptedURL pageInfo = unreadPageList.get(sectionNumber);
         args.putString("TITLE", pageInfo.getTitle());
         args.putString("CONTENT", pageInfo.getContent());
-        /*
-         * TODO(csoyee) put DB data into args like e.g. putType(key, value) in each fragment.
-         * TODO(csoyee) bring image url
-         * args.putString("tempURL", "args test");
-         */
+        args.putString("REPIMAGE", pageInfo.getRepImageUrl());
       }
       fragment.setArguments(args);
       return fragment;
@@ -114,6 +114,8 @@ public class ContentSwipe extends AppCompatActivity {
         backgroundImage.setImageResource(R.drawable.empty);
       }else {
         contentTitle.setText(getArguments().getString("TITLE"));
+
+        Picasso.with(getActivity().getApplicationContext()).load(getArguments().getString("REPIMAGE")).into(backgroundImage);
         /*
          * TODO(csoyee): set representative image
          * try {
