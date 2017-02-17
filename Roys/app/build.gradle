@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-  signingConfigs {
-    config {
-      keyAlias 'RoysKey'
-      keyPassword 'royskey'
-      storeFile file('/Users/demouser/Dropbox/Juung/Google/DwG/project/dwg-karrier/Roys/royskey.jks')
-    }
-  }
+//  signingConfigs {
+//    config {
+//      keyAlias 'RoysKey'
+//      keyPassword 'royskey'
+//      storeFile file('/Users/demouser/Dropbox/Juung/Google/DwG/project/dwg-karrier/Roys/royskey.jks')
+//    }
+//  }
   compileSdkVersion 25
   buildToolsVersion "25.0.1"
   defaultConfig {
@@ -23,7 +23,7 @@ android {
     release {
       minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-      signingConfig signingConfigs.config
+//      signingConfig signingConfigs.config
     }
   }
   productFlavors {
