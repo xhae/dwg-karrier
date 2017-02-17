@@ -75,7 +75,8 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
    * @return ScriptedUrl List, Item's expected time : over then minTime and less then maxTime.
    */
   public ArrayList<ScriptedURL> getScriptedUrlListByTime(int minTime, int maxTime) {
-    String getUrlListQuery = "SELECT * from page where expectedtime >= " + minTime + "and expectedtime <= " + maxTime;
+    String getUrlListQuery = "SELECT * from page where expectedtime >= " + minTime + "and expectedtime <= " + maxTime
+        + "and read = 0";
     return getUrlListFromQuery(getUrlListQuery);
   }
 
@@ -142,10 +143,10 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   }
 
   /**
-   * check url duplication from database data.
+   * check duplicated url from database data.
    * If result returns true, you can't insert url data into DB.
    * @param url
-   * @return checked result. If the url is duplicated , returns true. Else return false.
+   * @return checked result. If duplicated url, returns true. Else return false.
    */
   public boolean isDuplicatedUrl(String url) {
     SQLiteDatabase dataBase = getReadableDatabase();
@@ -177,7 +178,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   }
 
   /**
-   * Please Check URL duplication before using insert method.
+   * Please Check duplicated url before using insert method.
    * Using isDuplicatedUrl()
    * @param url
    */
@@ -190,7 +191,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   }
 
   /**
-   * Please Check URL duplication before using insert method.
+   * Please Check duplicated url before using insert method.
    * Using isDuplicatedUrl()
    * @param scriptedURL
    */
