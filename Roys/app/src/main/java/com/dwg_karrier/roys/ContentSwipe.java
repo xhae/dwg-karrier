@@ -1,5 +1,6 @@
 package com.dwg_karrier.roys;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,7 +21,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.simple.JSONArray;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -32,17 +32,18 @@ public class ContentSwipe extends AppCompatActivity {
   String title;
   String content;
   String imageUrl;
-  Date finTime;
-  Date curTime;
-  public int totalPageNum ;
-  private static ArrayList<ScriptedURL> unreadPageList; // TODO (Csoyee, Jungshik): static prob...
   double duration; // time duration between current_time and finish time
+  public int totalPageNum ;
   private SectionsPagerAdapter pageSwipeAdapter;
   private ViewPager pageSwipeView;
+  private static ArrayList<ScriptedURL> unreadPageList; // TODO (Csoyee, Jungshik): static prob...
+  static Date finTime;
+  static Date curTime;
+  public static Activity saveSwipeActivity;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    final Context contentSwipe = this;
     super.onCreate(savedInstanceState);
     setContentView(R.layout.swipecontent);
 
@@ -104,7 +105,7 @@ public class ContentSwipe extends AppCompatActivity {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
       View rootView = inflater.inflate(R.layout.contentfragment, container, false);
-      TextView contentTitle = (TextView) rootView.findViewById(R.id.title);
+      final TextView contentTitle = (TextView) rootView.findViewById(R.id.title);
       TextView contentSum = (TextView) rootView.findViewById(R.id.summary);
       ImageView backgroundImage = (ImageView) rootView.findViewById(R.id.backImage);
 
@@ -113,19 +114,15 @@ public class ContentSwipe extends AppCompatActivity {
         contentSum.setText(getArguments().getString("CONTENT"));
         backgroundImage.setImageResource(R.drawable.empty);
       }else {
-        contentTitle.setText(getArguments().getString("TITLE"));
+        final String getTitle = getArguments().getString("TITLE");
+        final String getContent = getArguments().getString("CONTENT");
 
-        Picasso.with(getActivity().getApplicationContext()).load(getArguments().getString("REPIMAGE")).into(backgroundImage);
-        /*
-         * TODO(csoyee): set representative image
-         * try {
-         *   String imgUrl = "http://www.bloter.net/wp-content/uploads/2015/09/portal_logo_150923.png"; // sample
-         *   Picasso.with(getActivity().getApplicationContext()).load(imgUrl).into(backgroundImage);
-         * } catch (Exception e) {
-         *   e.printStackTrace();
-         * }
-         */
-
+        contentTitle.setText(getTitle);
+        try {
+          Picasso.with(getActivity().getApplicationContext()).load(getArguments().getString("REPIMAGE")).into(backgroundImage);
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
         /*
          * TODO(juung): get wordCount and determine different summarized line
          * if (wordCount < ) {
@@ -136,9 +133,8 @@ public class ContentSwipe extends AppCompatActivity {
          *  return summaryNum;
          * }
          */
-        String testContent = getArguments().getString("CONTENT");
-        Document jsoupdoc = Jsoup.parse(testContent);
-        String contentText = jsoupdoc.text();
+        Document jsoupdoc = Jsoup.parse(getContent);
+        final String contentText = jsoupdoc.text();
 
         Summarizer summarizer = new Summarizer(contentText);
         int summaryNum = 3;
@@ -151,11 +147,18 @@ public class ContentSwipe extends AppCompatActivity {
             Log.e("Summarize", "No Summarized result");
           }
         }
-        TextView contentSummary = (TextView) rootView.findViewById(R.id.summary);
+        final TextView contentSummary = (TextView) rootView.findViewById(R.id.summary);
         contentSummary.setText(summaryResult);
-        
-         backgroundImage.setOnClickListener(new ImageView.OnClickListener() {
+
+        backgroundImage.setOnClickListener(new ImageView.OnClickListener() {
            public void onClick(View v) {
+             Intent openSelectedPage = new Intent(getActivity(), ContentView.class);
+             saveSwipeActivity = getActivity();
+             openSelectedPage.putExtra("finTime", finTime);
+             openSelectedPage.putExtra("curTime", curTime);
+             openSelectedPage.putExtra("title", getTitle);
+             openSelectedPage.putExtra("content", getContent);
+             startActivity(openSelectedPage);
            }
          });
       }
@@ -172,7 +175,7 @@ public class ContentSwipe extends AppCompatActivity {
 
     @Override
     public Fragment getItem(int position) {
-      return PlaceholderFragment.newInstance(position + 1, totalPageNum, title, content, imageUrl);
+      return PlaceholderFragment.newInstance(position, totalPageNum, title, content, imageUrl);
     }
 
     @Override

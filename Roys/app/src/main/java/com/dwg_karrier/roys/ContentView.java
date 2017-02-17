@@ -1,14 +1,19 @@
 package com.dwg_karrier.roys;
 
+import static com.dwg_karrier.roys.ListActivity.saveActivity;
+import static com.dwg_karrier.roys.ContentSwipe.saveSwipeActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import java.util.Date;
@@ -23,7 +28,7 @@ public class ContentView extends AppCompatActivity {
   long startTime;
   long endTime;
 
-  protected void onCreate(Bundle savedInstanceState) {
+  protected void onCreate(final Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.content);
 
@@ -49,9 +54,17 @@ public class ContentView extends AppCompatActivity {
         // Temporal check for DB and read time
         long readTime = (endTime - startTime) / 1000;
 
-        ListActivity finActivity = (ListActivity) ListActivity.saveActivity;
-        finActivity.finish();
-        Intent backToList = new Intent(ContentView.this, ListActivity.class);
+        Intent backToList = null;
+        if(saveActivity != null) {
+          saveActivity.finish();
+          saveActivity = null;
+          backToList = new Intent(ContentView.this, ListActivity.class);
+        } else if(saveSwipeActivity != null) {
+          saveSwipeActivity.finish();
+          saveSwipeActivity = null;
+          backToList = new Intent(ContentView.this, ContentSwipe.class);
+        }
+
         backToList.putExtra("finTime", finTime);
         backToList.putExtra("curTime", curTime);
         backToList.putExtra("readTime", String.valueOf(readTime));
