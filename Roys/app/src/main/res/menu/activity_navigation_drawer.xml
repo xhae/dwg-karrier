@@ -2,12 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
   <group android:checkableBehavior="single">
     <item
-        android:id="@+id/image_view"
-        android:icon="@drawable/ic_image_view"
-        android:title="Image View"/>
+        android:id="@+id/all_contents"
+        android:icon="@drawable/ic_all_contents"
+        android:title="All Contents"/>
     <item
-        android:id="@+id/list_view"
-        android:icon="@drawable/ic_list_view"
-        android:title="List View"/>
+        android:id="@+id/recommendations"
+        android:icon="@drawable/ic_recommendations"
+        android:title="Recommend Pages"/>
+    <item
+        android:id="@+id/my_report"
+        android:icon="@drawable/ic_my_report"
+        android:title="My Report"/>
   </group>
 </menu>
