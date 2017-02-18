@@ -44,9 +44,9 @@ public class ListViewAdapter extends BaseAdapter {
     }
     ScriptedURL scriptedURL = data.get(position);
     TextView title = (TextView) convertView.findViewById(R.id.TitleView);
-    title.setText("Title: " + scriptedURL.getTitle());
+    title.setText(scriptedURL.getTitle());
     TextView expectedTime = (TextView) convertView.findViewById(R.id.TimeView);
-    expectedTime.setText("Time: " + (int) scriptedURL.getExpectedTime() / minute + "hour"
+    expectedTime.setText((int) scriptedURL.getExpectedTime() / minute + "hour"
         + Double.parseDouble(String.format("%.2f", (float) scriptedURL.getExpectedTime() % minute)) + "min");
 
     return convertView;
