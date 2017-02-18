@@ -1,7 +1,8 @@
 package com.dwg_karrier.roys;
 
+import static com.dwg_karrier.roys.ListActivity.saveActivity;
+
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -154,6 +155,7 @@ public class ContentSwipe extends AppCompatActivity {
            public void onClick(View v) {
              Intent openSelectedPage = new Intent(getActivity(), ContentView.class);
              saveSwipeActivity = getActivity();
+             saveActivity = null;
              openSelectedPage.putExtra("finTime", finTime);
              openSelectedPage.putExtra("curTime", curTime);
              openSelectedPage.putExtra("title", getTitle);

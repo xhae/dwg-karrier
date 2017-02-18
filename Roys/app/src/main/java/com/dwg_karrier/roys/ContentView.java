@@ -5,15 +5,14 @@ import static com.dwg_karrier.roys.ContentSwipe.saveSwipeActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
 
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import java.util.Date;
@@ -99,17 +98,17 @@ public class ContentView extends AppCompatActivity {
       case R.id.chineses :
         // TODO(juung): put tranlated content into translatedContent. (chinese)
         translatedContent = content;
-        setView(title, content);
+        setView(title, translatedContent);
         return true;
       case R.id.korean :
         // TODO(juung): put tranlated content into translatedContent. (korean)
         translatedContent = content;
-        setView(title, content);
+        setView(title, translatedContent);
         return true;
       case R.id.german :
         // TODO(juung): put tranlated content into translatedContent. (german)
         translatedContent = content;
-        setView(title, content);
+        setView(title, translatedContent);
         return true;
     }
     return super.onOptionsItemSelected(item);

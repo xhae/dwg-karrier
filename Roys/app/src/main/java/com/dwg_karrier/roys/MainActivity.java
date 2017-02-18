@@ -1,23 +1,18 @@
 package com.dwg_karrier.roys;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
-  boolean isAccountConnected; // check if user connect to Account.
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +29,6 @@ public class MainActivity extends AppCompatActivity {
       container.setTag((i + 1) * timeUnit + "");
       container.setOnClickListener(new View.OnClickListener() {
         public void onClick(View view) {
-          if(!isAccountConnected) {
-            Toast checkInfo = Toast.makeText(getApplicationContext(), "Please connect to account.", Toast.LENGTH_SHORT);
-            checkInfo.setGravity(Gravity.CENTER, 0, 0);
-            checkInfo.show();
-            return ;
-          }
 
           Date curTime = new Date(System.currentTimeMillis());
           Calendar cal = Calendar.getInstance();
@@ -55,22 +44,6 @@ public class MainActivity extends AppCompatActivity {
         }
       });
     }
-  }
-
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.main_menu_item, menu);
-    return super.onCreateOptionsMenu(menu);
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    final Context mainActivity = this;
-
-    Authentication authentication = new Authentication(mainActivity);
-    authentication.authenticationAndBringPages();
-    isAccountConnected = true;
-    return super.onOptionsItemSelected(item);
   }
 
   private void setImage() {
