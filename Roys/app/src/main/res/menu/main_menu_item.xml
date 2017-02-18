@@ -3,7 +3,7 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="com.example.userpc.gridlayout.MainActivity">
   <item android:id="@+id/feedlyAccountBtn"
-        android:title="getfeedlyAccount!"
-        android:icon="@drawable/login"
-        app:showAsAction="ifRoom"/>
+        android:title="K-arrier, Roys"
+        android:icon="@drawable/ic_login_chocolate"
+        app:showAsAction="always"/>
 </menu>
