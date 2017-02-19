@@ -1,6 +1,5 @@
 package com.dwg_karrier.roys;
 
-import static com.dwg_karrier.roys.LoginActivity.isAccountConnected;
 import static com.dwg_karrier.roys.R.layout.auth_dialog;
 
 import android.app.Dialog;
@@ -11,6 +10,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.Gravity;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
