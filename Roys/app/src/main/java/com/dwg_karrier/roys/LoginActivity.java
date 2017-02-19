@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 public class LoginActivity extends AppCompatActivity {
-  static boolean isAccountConnected; // check if user connect to Account.
+  boolean isAccountConnected; // check if user connect to Account.
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
