@@ -15,8 +15,8 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="bottom|end"
-      app:srcCompat="@android:drawable/ic_dialog_dialer"
-      app:backgroundTint="@android:color/holo_red_light"
+      android:src ="@drawable/ic_image_view_white"
+      app:backgroundTint="@color/textColorAccent"
       android:layout_alignParentBottom="true"
       android:layout_alignParentEnd="true"
       android:layout_marginRight="16dp" android:layout_marginBottom="16dp"/>

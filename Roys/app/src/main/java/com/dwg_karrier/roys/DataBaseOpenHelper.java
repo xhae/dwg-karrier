@@ -70,6 +70,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
 
   /**
    * It returns ScriptedUrl List by user's spear time from Database.
+   *
    * @param minTime expected time's minimum value
    * @param maxTime expected time's maximum value
    * @return ScriptedUrl List, Item's expected time : over then minTime and less then maxTime.
@@ -142,9 +143,9 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   }
 
   /**
-   * check url duplication from database data.
-   * If result returns true, you can't insert url data into DB.
-   * @param url
+   * check url duplication from database data. If result returns true, you can't insert url data
+   * into DB.
+   *
    * @return checked result. If the url is duplicated , returns true. Else return false.
    */
   public boolean isDuplicatedUrl(String url) {
@@ -177,22 +178,18 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   }
 
   /**
-   * Please Check URL duplication before using insert method.
-   * Using isDuplicatedUrl()
-   * @param url
+   * Please Check URL duplication before using insert method. Using isDuplicatedUrl()
    */
   public void insertScriptedData(String url, String title, String content, int expectedTime, String imgUrl) {
     SQLiteDatabase dataBase = getWritableDatabase();
     String escapedTitle = StringEscapeUtils.escapeHtml4(title);
     String escapedContent = StringEscapeUtils.escapeHtml4(content);
-    dataBase.execSQL("INSERT INTO PAGE (URL, TITLE, CONTENT, EXPECTEDTIME, repImage) VALUES ('" + url + "',\"" + escapedTitle + "\", \"" + escapedContent + "\", " + String.valueOf((int)expectedTime) + " , '" + imgUrl + "');");
+    dataBase.execSQL("INSERT INTO PAGE (URL, TITLE, CONTENT, EXPECTEDTIME, repImage) VALUES ('" + url + "',\"" + escapedTitle + "\", \"" + escapedContent + "\", " + String.valueOf((int) expectedTime) + " , '" + imgUrl + "');");
     dataBase.close();
   }
 
   /**
-   * Please Check URL duplication before using insert method.
-   * Using Duplication()
-   * @param scriptedURL
+   * Please Check URL duplication before using insert method. Using Duplication()
    */
   public void insertScriptedUrl(ScriptedURL scriptedURL) {
     int readValue = scriptedURL.getIsRead() ? 1 : 0;
@@ -200,7 +197,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     dataBase.execSQL("INSERT INTO PAGE (READ, URL, TITLE, repImage, CONTENT, expectedtime) VALUES ("
         + readValue + ", '" + scriptedURL.getUrl() + "', '" + scriptedURL.getTitle() + "', '"
         + scriptedURL.getRepImageUrl() + "', '" + scriptedURL.getContent() + "', "
-        + (int)scriptedURL.getExpectedTime() + ");");
+        + (int) scriptedURL.getExpectedTime() + ");");
     dataBase.close();
   }
 }
