@@ -1,5 +1,6 @@
 package com.dwg_karrier.roys;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -78,11 +79,12 @@ public class Navigation extends AppCompatActivity
     int id = item.getItemId();
 
     if (id == R.id.all_contents) {
-      // Handle the camera action
+      // TODO(soyee): link to all_contents_list_view
     } else if (id == R.id.recommendations) {
-
+      // TODO(seralee): link to recommendation activity
     } else if (id == R.id.my_report) {
-
+      Intent go_my_report = new Intent(this, MyReportActivity.class);
+      startActivity(go_my_report);
     }
 
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

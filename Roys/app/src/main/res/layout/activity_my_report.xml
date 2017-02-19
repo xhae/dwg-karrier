@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" android:weightSum="1">
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="163dp"
+      android:orientation="vertical" android:weightSum="1" android:layout_weight="0.19">
+    <ImageView
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="0dp"
+        android:layout_width="83dp"
+        android:layout_height="85dp"
+        android:src="@drawable/ic_user_xhae"
+        android:id="@+id/my_image"
+        android:layout_gravity="center"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/my_name"
+        android:layout_gravity="center"
+        android:text="xhae"
+        android:textSize="22sp"
+        android:textColor="@android:color/black"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Lv.2"
+        android:textColor="@color/textColorPrimaryDark"
+        android:textSize="15sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="172 Pages | 41 hours"
+        android:textSize="15sp"
+        android:textColor="@color/textColorPrimaryDark"
+        android:layout_gravity="center"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/darker_gray"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5sp"
+        android:layout_gravity="center"
+        android:textColor="@color/textColorPrimaryDark"
+        android:text="My Record"
+        android:textSize="20sp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/darker_gray"/>
+  </LinearLayout>
+  <ScrollView
+      android:layout_marginTop="6dp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" android:weightSum="1">
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="My Using Time"
+          android:layout_marginLeft="16dp"
+          android:textColor="@android:color/black"
+          android:textSize="15sp"/>
+      <LinearLayout
+          android:layout_marginTop="6dp"
+          android:id="@+id/layout_graph_view"
+          android:layout_width="384dp"
+          android:layout_height="150dp"
+          android:orientation="horizontal" android:layout_weight="9.17">
+      </LinearLayout>
+      <TextView
+          android:layout_marginTop="6dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="My Keyword"
+          android:layout_marginLeft="16dp"
+          android:textColor="@android:color/black"
+          android:textSize="15sp"/>
+      <LinearLayout
+          android:layout_marginTop="6dp"
+          android:id="@+id/keyword_view"
+          android:layout_width="384dp"
+          android:layout_height="150dp"
+          android:orientation="horizontal" android:layout_weight="9.17">
+      </LinearLayout>
+    </LinearLayout>
+  </ScrollView>
+</LinearLayout>

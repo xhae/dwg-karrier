@@ -43,5 +43,6 @@ dependencies {
   compile 'com.android.support:design:25.1.1'
   compile files('libs/json_simple-1.1.jar')
   compile files('libs/jsoup-1.10.2.jar')
+  compile files('libs/hzgraperlibrary_v1.0.0.jar')
   testCompile 'junit:junit:4.12'
 }
