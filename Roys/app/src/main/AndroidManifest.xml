@@ -32,11 +32,6 @@
         android:exported="true"/>
     <activity android:name=".ImageListActivity">
     </activity>
-    <activity
-        android:name=".Navigation"
-        android:label="@string/title_activity_navigation"
-        android:theme="@style/AppTheme.NoActionBar">
-    </activity>
     <activity android:name=".MyReportActivity">
     </activity>
   </application>

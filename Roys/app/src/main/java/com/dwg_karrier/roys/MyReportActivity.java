@@ -1,11 +1,10 @@
 package com.dwg_karrier.roys;
 
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.handstudio.android.hzgrapherlib.animation.GraphAnimation;
 import com.handstudio.android.hzgrapherlib.graphview.LineGraphView;
@@ -24,16 +23,17 @@ public class MyReportActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_my_report);
-
-    // show my image in oval shape
+    // show user_image
     ImageView imageView = (ImageView) findViewById(R.id.my_image);
-    imageView.setBackground(new ShapeDrawable(new OvalShape()));
-    imageView.setClipToOutline(true);
-
+    // TODO(juung): show user image from preference
+    imageView.setImageResource(R.mipmap.ic_user_xhae);
+    // show user id
+    TextView textView = (TextView) findViewById(R.id.my_name);
+    // TODO(juung): show user id from preference
+    textView.setText(user);
     // show my time zone
     layoutGraphView = (ViewGroup) findViewById(R.id.layout_graph_view);
     setLineGraph();
-
     // show my keyword
 
 
