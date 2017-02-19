@@ -1,15 +1,16 @@
 package com.dwg_karrier.roys;
 
+import static com.dwg_karrier.roys.LoginActivity.isAccountConnected;
 import static com.dwg_karrier.roys.R.layout.auth_dialog;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.Gravity;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
@@ -240,10 +241,7 @@ public class Authentication {
     @Override
     protected void onPostExecute(String result) {
       pDialog.dismiss();
-      Toast toast = Toast.makeText(mainContext,
-          "Bring the pages from your feedly account", Toast.LENGTH_LONG);
-      toast.setGravity(Gravity.CENTER, 0, 0);
-      toast.show();
+      isAccountConnected = true;
     }
   }
 }
