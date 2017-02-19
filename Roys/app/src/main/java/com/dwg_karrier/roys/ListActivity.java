@@ -1,5 +1,7 @@
 package com.dwg_karrier.roys;
 
+import static com.dwg_karrier.roys.ContentSwipe.saveSwipeActivity;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -59,6 +61,7 @@ public class ListActivity extends AppCompatActivity {
     changeMode.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
+        saveSwipeActivity = null;
         Intent openSwipe = new Intent(ListActivity.this, ContentSwipe.class); // open Recommend Lists
         openSwipe.putExtra("finTime", finTime);
         openSwipe.putExtra("curTime", curTime);

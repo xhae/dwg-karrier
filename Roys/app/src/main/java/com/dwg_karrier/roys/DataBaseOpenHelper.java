@@ -70,6 +70,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
 
   /**
    * It returns ScriptedUrl List by user's spear time from Database.
+   *
    * @param minTime expected time's minimum value
    * @param maxTime expected time's maximum value
    * @return ScriptedUrl List, Item's expected time : over then minTime and less then maxTime.
@@ -94,6 +95,11 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     }
 
     return resultList;
+  }
+
+  public void setExpectedTime(String url, int expectedTime) {
+    String query = "expectedtime = " + expectedTime;
+    updateDataQuery(query, url);
   }
 
   public void setIsRead(String url, int status) {
@@ -201,7 +207,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     dataBase.execSQL("INSERT INTO PAGE (READ, URL, TITLE, repImage, CONTENT, expectedtime) VALUES ("
         + readValue + ", '" + scriptedURL.getUrl() + "', '" + scriptedURL.getTitle() + "', '"
         + scriptedURL.getRepImageUrl() + "', '" + scriptedURL.getContent() + "', "
-        + (int)scriptedURL.getExpectedTime() + ");");
+        + (int) scriptedURL.getExpectedTime() + ");");
     dataBase.close();
   }
 }

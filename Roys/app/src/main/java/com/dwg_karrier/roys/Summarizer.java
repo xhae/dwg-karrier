@@ -17,9 +17,9 @@ import java.net.URLEncoder;
  * @version 1.0
  */
 public class Summarizer {
-  private String analyzerUrl = "https://nehac-ml-analyzer.p.mashape.com/article";
-  private String size = "?size=";
-  private String text = "&text=";
+  private static final String ANALYZER_URL = "https://nehac-ml-analyzer.p.mashape.com/article";
+  private static final String SIZE = "?size=";
+  private static final String TEXT = "&text=";
   private String urlEncodeString;
 
   /**
@@ -31,7 +31,7 @@ public class Summarizer {
    */
   public Summarizer(String inputText) {
     try {
-      this.urlEncodeString = URLEncoder.encode(inputText, "ASCII");
+      this.urlEncodeString = URLEncoder.encode(inputText, "UTF-8");
     } catch (Exception e) {
       Log.d("Summarizer Initialize", e.getMessage(), e);
     }
@@ -71,8 +71,8 @@ public class Summarizer {
       StringBuilder stringBuilder = new StringBuilder();
       Integer outputSize = integers[0];
       try {
-        URL url = new URL(analyzerUrl + size
-            + String.valueOf(outputSize) + text + urlEncodeString);
+        URL url = new URL(ANALYZER_URL + SIZE
+            + String.valueOf(outputSize) + TEXT + urlEncodeString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestProperty("X-Mashape-Key", "cEFaSsEY22mshE5HLrmxP41OZiJHp1fwKbijsn6kn8qZmVITUB");
         conn.setRequestProperty("Accept", "application/json");

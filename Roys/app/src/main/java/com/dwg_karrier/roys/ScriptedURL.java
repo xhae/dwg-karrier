@@ -1,5 +1,7 @@
 package com.dwg_karrier.roys;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 public class ScriptedURL {
   private String url;
   private boolean isRead;
@@ -8,7 +10,6 @@ public class ScriptedURL {
   private String title;
   private String content;
   private String repImageUrl;
-
 
   ScriptedURL(String url, boolean isRead) {
     this.url = url;
@@ -31,23 +32,18 @@ public class ScriptedURL {
   }
 
   ScriptedURL(int isRead, String title, String content, double expectedTime) {
+	  
     this.isRead = isRead == 1;
     this.title = title;
     this.content = content;
     this.expectedTime = expectedTime;
   }
 
-  ScriptedURL(String url, int isRead, int wordCount) {
-    this.url = url;
-    this.isRead = isRead == 1;
-    this.crawler = new Crawler(url);
-  }
-
   ScriptedURL(String url, int isRead, String title, String content, String repImageUrl, double expectedTime) {
     this.url = url;
     this.isRead = isRead == 1;
-    this.title = title;
-    this.content = content;
+    this.title = StringEscapeUtils.unescapeHtml4(title);
+    this.content = StringEscapeUtils.unescapeHtml4(content);
     this.repImageUrl = repImageUrl;
     this.expectedTime = expectedTime;
   }

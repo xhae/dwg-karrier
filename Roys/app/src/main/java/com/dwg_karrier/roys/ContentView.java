@@ -1,6 +1,8 @@
 package com.dwg_karrier.roys;
 
-import android.content.Context;
+import static com.dwg_karrier.roys.ContentSwipe.saveSwipeActivity;
+import static com.dwg_karrier.roys.ListActivity.saveActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,20 +20,14 @@ public class ContentView extends AppCompatActivity {
   private final String imgSizeCtrl = "<style>img{display: inline; height: auto; max-width: 100%;}</style>\n"; // fit image to the size of viewer
   String title;
   String content;
+  String escapedContent;
   String url;
   Date finTime;
   Date curTime;
   long startTime;
   long endTime;
-  /*
-   * TODO(Juung): get CurTime and finTime so that could use them to calculate rest of the time --> use in next recommendation
-   * TODO: think about 'go-back' action (should go back to the first page or the second?)
-   */
-  /*
-   * TODO(Csoyee): make translation menu bar and show translation result in webview
-   */
 
-  protected void onCreate(Bundle savedInstanceState) {
+  protected void onCreate(final Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.content);
 
@@ -41,19 +37,8 @@ public class ContentView extends AppCompatActivity {
     finTime = (Date) getPageInfo.getSerializableExtra("finTime");
     curTime = (Date) getPageInfo.getSerializableExtra("curTime");
 
-    String view = title + "\n\n" + imgSizeCtrl + StringEscapeUtils.unescapeHtml4(content);
-
-    WebView wv = (WebView) findViewById(R.id.contentView);
-      /*
-       * viewer settings
-       * v.2 might have image scaling (Let's talk about this after using v.1)
-       */
-    wv.setVerticalScrollBarEnabled(true);
-    wv.setHorizontalScrollBarEnabled(false);
-
-    final String mimeType = "text/html";
-    final String encoding = "UTF-8";
-    wv.loadDataWithBaseURL("", view, mimeType, encoding, "");
+    escapedContent = StringEscapeUtils.unescapeHtml4(content);
+    setView(title, escapedContent);
 
     startTime = System.currentTimeMillis();
 
@@ -69,9 +54,17 @@ public class ContentView extends AppCompatActivity {
         // Temporal check for DB and read time
         long readTime = (endTime - startTime) / 1000;
 
-        ListActivity finActivity = (ListActivity) ListActivity.saveActivity;
-        finActivity.finish();
-        Intent backToList = new Intent(ContentView.this, ListActivity.class);
+        Intent backToList = null;
+        if (saveActivity != null) {
+          saveActivity.finish();
+          saveActivity = null;
+          backToList = new Intent(ContentView.this, ListActivity.class);
+        } else if (saveSwipeActivity != null) {
+          saveSwipeActivity.finish();
+          saveSwipeActivity = null;
+          backToList = new Intent(ContentView.this, ContentSwipe.class);
+        }
+
         backToList.putExtra("finTime", finTime);
         backToList.putExtra("curTime", curTime);
         backToList.putExtra("readTime", String.valueOf(readTime));
@@ -79,5 +72,44 @@ public class ContentView extends AppCompatActivity {
         finish();
       }
     });
+  }
+
+  public void setView(String showTitle, String showContent) {
+    String view = showTitle + "\n\n" + imgSizeCtrl + showContent;
+
+    WebView wv = (WebView) findViewById(R.id.contentView);
+    wv.setVerticalScrollBarEnabled(true);
+    wv.setHorizontalScrollBarEnabled(false);
+
+    final String mimeType = "text/html";
+    final String encoding = "UTF-8";
+    wv.loadDataWithBaseURL("", view, mimeType, encoding, "");
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.translatelanguagemenu, menu);
+    return super.onCreateOptionsMenu(menu);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    String translatedContent;
+    Translator translator = new Translator("en", escapedContent);
+    switch (item.getItemId()) {
+      case R.id.chineses:
+        translatedContent = translator.getTranslate("zh-TW");
+        setView(title, translatedContent);
+        return true;
+      case R.id.korean:
+        translatedContent = translator.getTranslate("ko");
+        setView(title, translatedContent);
+        return true;
+      case R.id.german:
+        translatedContent = translator.getTranslate("de");
+        setView(title, translatedContent);
+        return true;
+    }
+    return super.onOptionsItemSelected(item);
   }
 }

@@ -5,7 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -44,11 +47,16 @@ public class ListViewAdapter extends BaseAdapter {
     }
     ScriptedURL scriptedURL = data.get(position);
     TextView title = (TextView) convertView.findViewById(R.id.TitleView);
-    title.setText("Title: " + scriptedURL.getTitle());
+    title.setText(scriptedURL.getTitle());
     TextView expectedTime = (TextView) convertView.findViewById(R.id.TimeView);
-    expectedTime.setText("Time: " + (int) scriptedURL.getExpectedTime() / minute + "hour"
+    expectedTime.setText((int) scriptedURL.getExpectedTime() / minute + "hour"
         + Double.parseDouble(String.format("%.2f", (float) scriptedURL.getExpectedTime() % minute)) + "min");
 
+    try {
+      Picasso.with(convertView.getContext()).load(scriptedURL.getRepImageUrl()).into((ImageView) convertView.findViewById(R.id.listViewImage));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
     return convertView;
   }
 }

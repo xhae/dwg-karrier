@@ -5,6 +5,7 @@ import static com.dwg_karrier.roys.R.layout.auth_dialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -85,7 +86,6 @@ public class Authentication {
         if (url.contains("?code=")) {
           Uri uri = Uri.parse(url);
           authCode = uri.getQueryParameter("code");
-
           authDialog.dismiss();
           new TokenGet(authCode, mainContext).execute();
         } else if (url.contains("error=access_denied")) {
@@ -212,9 +212,9 @@ public class Authentication {
         for (int i = 0; i < len; i++) {
           JSONObject feed = arr.getJSONObject(i);
           String feedUrl = feed.getString("originId");
-          String feedTitle = feed.getString("title");
+          String feedTitle = (String) feed.get("title");
           JSONObject feedSummary = feed.getJSONObject("summary");
-          String feedContent = feedSummary.getString("content");
+          String feedContent = (String) feedSummary.get("content");
           int feedExpectedTime = countWords(feedContent) / WORDPERMIN;
 
           //Please Let me know if you have smart way of getting image url from html :)
@@ -229,6 +229,7 @@ public class Authentication {
           }
         }
         urlConnection.disconnect();
+
       } catch (IOException | JSONException e) {
         e.printStackTrace();
       } catch (Exception e) {
@@ -244,6 +245,8 @@ public class Authentication {
           "Bring the pages from your feedly account", Toast.LENGTH_LONG);
       toast.setGravity(Gravity.CENTER, 0, 0);
       toast.show();
+      Intent startRoys = new Intent(mainContext, MainActivity.class);
+      mainContext.startActivity(startRoys);
     }
   }
 }
