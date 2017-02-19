@@ -15,9 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -34,7 +32,7 @@ public class ContentSwipe extends AppCompatActivity {
   String content;
   String imageUrl;
   double duration; // time duration between current_time and finish time
-  public int totalPageNum ;
+  public int totalPageNum;
   private SectionsPagerAdapter pageSwipeAdapter;
   private ViewPager pageSwipeView;
   private static ArrayList<ScriptedURL> unreadPageList; // TODO (Csoyee, Jungshik): static prob...
@@ -90,10 +88,10 @@ public class ContentSwipe extends AppCompatActivity {
 
       args.putInt(ARG_SECTION_NUMBER, sectionNumber);
       args.putInt("TOTALPAGENUM", totalPageNum);
-      if(totalPageNum == 0){
-        args.putString("TITLE","No Content");
-        args.putString("CONTENT","There is no content saved");
-      }else {
+      if (totalPageNum == 0) {
+        args.putString("TITLE", "No Content");
+        args.putString("CONTENT", "There is no content saved");
+      } else {
         ScriptedURL pageInfo = unreadPageList.get(sectionNumber);
         args.putString("TITLE", pageInfo.getTitle());
         args.putString("CONTENT", pageInfo.getContent());
@@ -104,17 +102,18 @@ public class ContentSwipe extends AppCompatActivity {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
+        savedInstanceState) {
       View rootView = inflater.inflate(R.layout.contentfragment, container, false);
       final TextView contentTitle = (TextView) rootView.findViewById(R.id.title);
       TextView contentSum = (TextView) rootView.findViewById(R.id.summary);
       ImageView backgroundImage = (ImageView) rootView.findViewById(R.id.backImage);
 
-      if(getArguments().getInt("TOTALPAGENUM") == 0){
+      if (getArguments().getInt("TOTALPAGENUM") == 0) {
         contentTitle.setText(getArguments().getString("TITLE"));
         contentSum.setText(getArguments().getString("CONTENT"));
         backgroundImage.setImageResource(R.drawable.empty);
-      }else {
+      } else {
         final String getTitle = getArguments().getString("TITLE");
         final String getContent = getArguments().getString("CONTENT");
 
@@ -150,19 +149,18 @@ public class ContentSwipe extends AppCompatActivity {
         }
         final TextView contentSummary = (TextView) rootView.findViewById(R.id.summary);
         contentSummary.setText(summaryResult);
-
         backgroundImage.setOnClickListener(new ImageView.OnClickListener() {
-           public void onClick(View v) {
-             Intent openSelectedPage = new Intent(getActivity(), ContentView.class);
-             saveSwipeActivity = getActivity();
-             saveActivity = null;
-             openSelectedPage.putExtra("finTime", finTime);
-             openSelectedPage.putExtra("curTime", curTime);
-             openSelectedPage.putExtra("title", getTitle);
-             openSelectedPage.putExtra("content", getContent);
-             startActivity(openSelectedPage);
-           }
-         });
+          public void onClick(View v) {
+            Intent openSelectedPage = new Intent(getActivity(), ContentView.class);
+            saveSwipeActivity = getActivity();
+            saveActivity = null;
+            openSelectedPage.putExtra("finTime", finTime);
+            openSelectedPage.putExtra("curTime", curTime);
+            openSelectedPage.putExtra("title", getTitle);
+            openSelectedPage.putExtra("content", getContent);
+            startActivity(openSelectedPage);
+          }
+        });
       }
 
       return rootView;
@@ -182,10 +180,10 @@ public class ContentSwipe extends AppCompatActivity {
 
     @Override
     public int getCount() {
-      if(totalPageNum != 0){
+      if (totalPageNum != 0) {
         return totalPageNum;
-      }else{
-       return 1;
+      } else {
+        return 1;
       }
     }
   }

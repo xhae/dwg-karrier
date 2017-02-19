@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <group android:checkableBehavior="single">
+    <item
+        android:id="@+id/all_contents"
+        android:icon="@drawable/ic_all_contents"
+        android:title="All Contents"/>
+    <item
+        android:id="@+id/recommendations"
+        android:icon="@drawable/ic_recommendations"
+        android:title="Recommend Pages"/>
+    <item
+        android:id="@+id/my_report"
+        android:icon="@drawable/ic_my_report"
+        android:title="My Report"/>
+  </group>
+</menu>
