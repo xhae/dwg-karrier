@@ -8,7 +8,7 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:id="@+id/listView"
-      android:divider="@android:color/darker_gray"
+      android:divider="@android:color/background_light"
       android:dividerHeight="1.5dp"/>
   <android.support.design.widget.FloatingActionButton
       android:id="@+id/toSwipe"

@@ -6,6 +6,7 @@ import static com.dwg_karrier.roys.ListActivity.saveActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +31,7 @@ public class ContentView extends AppCompatActivity {
   protected void onCreate(final Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.content);
+    toolbarSetting();
 
     final Intent getPageInfo = new Intent(this.getIntent());
     title = getPageInfo.getStringExtra("title");
@@ -37,8 +39,7 @@ public class ContentView extends AppCompatActivity {
     finTime = (Date) getPageInfo.getSerializableExtra("finTime");
     curTime = (Date) getPageInfo.getSerializableExtra("curTime");
 
-    escapedContent = StringEscapeUtils.unescapeHtml4(content);
-    setView(title, escapedContent);
+    setView(title, content);
 
     startTime = System.currentTimeMillis();
 
@@ -50,7 +51,6 @@ public class ContentView extends AppCompatActivity {
         endTime = System.currentTimeMillis();
         DataBaseOpenHelper dbHelper = new DataBaseOpenHelper(ContentView.this);
         dbHelper.setIsRead(url, 1);
-
         // Temporal check for DB and read time
         long readTime = (endTime - startTime) / 1000;
 
@@ -86,30 +86,27 @@ public class ContentView extends AppCompatActivity {
     wv.loadDataWithBaseURL("", view, mimeType, encoding, "");
   }
 
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.translatelanguagemenu, menu);
-    return super.onCreateOptionsMenu(menu);
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    String translatedContent;
-    Translator translator = new Translator("en", escapedContent);
-    switch (item.getItemId()) {
-      case R.id.chineses:
-        translatedContent = translator.getTranslate("zh-TW");
-        setView(title, translatedContent);
+  private void toolbarSetting() {
+    Toolbar toolbar = (Toolbar) findViewById(R.id.contentToolbar);
+    toolbar.inflateMenu(R.menu.translatelanguagemenu);
+    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+      @Override
+      public boolean onMenuItemClick(MenuItem item) {
+        Translator contentTranslator = new Translator("en", content);
+        Translator titleTranslator = new Translator("en", title);
+        switch (item.getItemId()) {
+          case R.id.chineses:
+            setView(titleTranslator.getTranslate("zh-TW"), contentTranslator.getTranslate("zh-TW"));
+            return true;
+          case R.id.korean:
+            setView(titleTranslator.getTranslate("ko"), contentTranslator.getTranslate("ko"));
+            return true;
+          case R.id.german:
+            setView(titleTranslator.getTranslate("de"), contentTranslator.getTranslate("de"));
+            return true;
+        }
         return true;
-      case R.id.korean:
-        translatedContent = translator.getTranslate("ko");
-        setView(title, translatedContent);
-        return true;
-      case R.id.german:
-        translatedContent = translator.getTranslate("de");
-        setView(title, translatedContent);
-        return true;
-    }
-    return super.onOptionsItemSelected(item);
+      }
+    });
   }
 }
