@@ -1,6 +1,7 @@
 package com.dwg_karrier.roys;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -22,6 +23,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   public final int contentColumn = 5;
   public final int expectedTimeColumn = 6;
   public final int keywordsColumn = 7;
+  public final int isrecommendedColumn = 8;
 
   public DataBaseOpenHelper(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -54,18 +56,6 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     int result = 0;
 
     Cursor cursor = dataBase.rawQuery("SELECT count(url) FROM page WHERE read = 1;", null);
-    while (cursor.moveToNext()) {
-      result = cursor.getInt(0);
-    }
-    return result;
-  }
-
-  // test
-  public int getunReadPageCount() {
-    SQLiteDatabase dataBase = getReadableDatabase();
-    int result = 0;
-
-    Cursor cursor = dataBase.rawQuery("SELECT count(url) FROM page WHERE read = 0;", null);
     while (cursor.moveToNext()) {
       result = cursor.getInt(0);
     }
@@ -197,7 +187,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   /**
    * Please Check duplicated url before using insert method. Using isDuplicatedUrl()
    */
-  public void insertScriptedData(String url, String title, String content, int expectedTime, String imgUrl, String keywords, boolean isRecommended) {
+  public void insertScriptedData(String url, String title, String content, int expectedTime, String imgUrl, String keywords, Integer isRecommended) {
     SQLiteDatabase dataBase = getWritableDatabase();
     String escapedTitle = StringEscapeUtils.escapeHtml4(title);
     String escapedContent = StringEscapeUtils.escapeHtml4(content);
