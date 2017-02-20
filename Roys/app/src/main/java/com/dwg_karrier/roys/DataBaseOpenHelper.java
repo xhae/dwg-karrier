@@ -115,11 +115,6 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     updateDataQuery(query, url);
   }
 
-  public void setExpectedTime(String url, int expectedTime) {
-    String query = "expectedtime = " + expectedTime;
-    updateDataQuery(query, url);
-  }
-
   public void setTitle(String url, String title) {
     String query = "title = '" + title + "'";
     updateDataQuery(query, url);
