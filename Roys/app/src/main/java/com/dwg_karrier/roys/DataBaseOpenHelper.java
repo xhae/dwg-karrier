@@ -76,7 +76,8 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
    * @return ScriptedUrl List, Item's expected time : over then minTime and less then maxTime.
    */
   public ArrayList<ScriptedURL> getScriptedUrlListByTime(int minTime, int maxTime) {
-    String getUrlListQuery = "SELECT * from page where expectedtime >= " + minTime + "and expectedtime <= " + maxTime;
+    String getUrlListQuery = "SELECT * from page where expectedtime >= " + minTime + "and expectedtime <= " + maxTime
+        + "and read = 0";
     return getUrlListFromQuery(getUrlListQuery);
   }
 
@@ -114,6 +115,11 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     updateDataQuery(query, url);
   }
 
+  public void setExpectedTime(String url, int expectedTime) {
+    String query = "expectedtime = " + expectedTime;
+    updateDataQuery(query, url);
+  }
+
   public void setTitle(String url, String title) {
     String query = "title = '" + title + "'";
     updateDataQuery(query, url);
@@ -143,10 +149,10 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   }
 
   /**
-   * check url duplication from database data. If result returns true, you can't insert url data
-   * into DB.
-   *
-   * @return checked result. If the url is duplicated , returns true. Else return false.
+   * check duplicated url from database data.
+   * If result returns true, you can't insert url data into DB.
+   * @param url
+   * @return checked result. If duplicated url, returns true. Else return false.
    */
   public boolean isDuplicatedUrl(String url) {
     SQLiteDatabase dataBase = getReadableDatabase();
@@ -178,18 +184,22 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   }
 
   /**
-   * Please Check URL duplication before using insert method. Using isDuplicatedUrl()
+   * Please Check duplicated url before using insert method.
+   * Using isDuplicatedUrl()
+   * @param url
    */
   public void insertScriptedData(String url, String title, String content, int expectedTime, String imgUrl) {
     SQLiteDatabase dataBase = getWritableDatabase();
     String escapedTitle = StringEscapeUtils.escapeHtml4(title);
     String escapedContent = StringEscapeUtils.escapeHtml4(content);
-    dataBase.execSQL("INSERT INTO PAGE (URL, TITLE, CONTENT, EXPECTEDTIME, repImage) VALUES ('" + url + "',\"" + escapedTitle + "\", \"" + escapedContent + "\", " + String.valueOf((int) expectedTime) + " , '" + imgUrl + "');");
+    dataBase.execSQL("INSERT INTO PAGE (URL, TITLE, CONTENT, EXPECTEDTIME, repImage) VALUES ('" + url + "',\"" + escapedTitle + "\", \"" + escapedContent + "\", " + String.valueOf((int)expectedTime) + " , '" + imgUrl + "');");
     dataBase.close();
   }
 
   /**
-   * Please Check URL duplication before using insert method. Using Duplication()
+   * Please Check duplicated url before using insert method.
+   * Using isDuplicatedUrl()
+   * @param scriptedURL
    */
   public void insertScriptedUrl(ScriptedURL scriptedURL) {
     int readValue = scriptedURL.getIsRead() ? 1 : 0;
