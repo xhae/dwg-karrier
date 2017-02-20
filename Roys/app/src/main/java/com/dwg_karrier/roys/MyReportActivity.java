@@ -40,6 +40,9 @@ public class MyReportActivity extends AppCompatActivity {
     wordCloudView.getLayoutParams().height = (int) (screenHeight * 0.6);
     ScrollView reportScroll = (ScrollView) findViewById(R.id.myScrollView);
     reportScroll.smoothScrollTo(0,0);
+    TextView pageNum = (TextView) findViewById(R.id.pagecount);
+    DataBaseOpenHelper dbhelper = new DataBaseOpenHelper(MyReportActivity.this);
+    pageNum.setText(dbhelper.getReadPageCount() +" pages");
 
     // show user_image
     ImageView imageView = (ImageView) findViewById(R.id.my_image);

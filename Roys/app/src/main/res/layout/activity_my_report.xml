@@ -34,7 +34,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="172 Pages | 41 hours"
+        android:id="@+id/pagecount"
+        android:text="totalpage"
         android:textSize="15sp"
         android:textColor="@color/textColorPrimaryDark"
         android:layout_gravity="center"/>

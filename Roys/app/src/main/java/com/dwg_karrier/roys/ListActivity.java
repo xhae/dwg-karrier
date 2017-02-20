@@ -30,14 +30,12 @@ public class ListActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.list);
     saveActivity = ListActivity.this;
-
     Intent getTimeInfo = new Intent(this.getIntent());
     finTime = (Date) getTimeInfo.getSerializableExtra("finTime");
     curTime = (Date) getTimeInfo.getSerializableExtra("curTime");
     flag = getTimeInfo.getCharExtra("FLAG", '2');
 
     DataBaseOpenHelper dbHelper = new DataBaseOpenHelper(this);
-    Log.d("countreadpage", "" + dbHelper.getReadPageCount());
     FloatingActionButton changeMode = (FloatingActionButton) findViewById(R.id.toSwipe);
     changeMode.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -81,11 +79,10 @@ public class ListActivity extends AppCompatActivity {
           openSelectedPage.putExtra("curTime", curTime);
         }
         ScriptedURL pageInfo = unreadPageList.get(position);
-        String title = pageInfo.getTitle();
-        String content = pageInfo.getContent();
 
-        openSelectedPage.putExtra("title", title);
-        openSelectedPage.putExtra("content", content);
+        openSelectedPage.putExtra("title", pageInfo.getTitle());
+        openSelectedPage.putExtra("content", pageInfo.getContent());
+        openSelectedPage.putExtra("url", pageInfo.getUrl());
         startActivity(openSelectedPage);
       }
     });

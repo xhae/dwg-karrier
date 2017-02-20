@@ -59,6 +59,18 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     return result;
   }
 
+  // test
+  public int getunReadPageCount() {
+    SQLiteDatabase dataBase = getReadableDatabase();
+    int result = 0;
+
+    Cursor cursor = dataBase.rawQuery("SELECT count(url) FROM page WHERE read = 0;", null);
+    while (cursor.moveToNext()) {
+      result = cursor.getInt(0);
+    }
+    return result;
+  }
+
   public ArrayList<ScriptedURL> getAllUrlList() {
     String getUrlListQuery = "SELECT * from page";
     return getUrlListFromQuery(getUrlListQuery);
