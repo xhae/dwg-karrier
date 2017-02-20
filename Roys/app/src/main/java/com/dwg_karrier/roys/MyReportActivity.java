@@ -24,7 +24,7 @@ public class MyReportActivity extends AppCompatActivity {
   private String user = "xhae";
   // TODO(juung): bring keywords from isRead == 1
   String[] wordCloud = new String[]{"Google", "Software Engineer", "App", "Google Korea", "Woman",
-      "Develop with Google", "Karrier", "Roys", "Soyee", "Jihyung", "Sera", "Sunjoo", "xhae", "Jungshik"};
+      "Develop with Google", "Karrier", "Roys", "Soyee", "Jihyung", "Sera", "Sunju", "xhae", "Jungshik"};
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
