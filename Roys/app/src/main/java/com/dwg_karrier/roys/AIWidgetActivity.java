@@ -71,8 +71,6 @@ public class AIWidgetActivity extends ActionBarActivity {
                     }
                 }
 
-                Log.d("**",String.valueOf(timeValue));
-                Log.d("**",String.valueOf(contentType));
                 String viewtype = "";
                 if(contentType == 1) viewtype = "read";
                 else if(contentType == 2) viewtype = "show";
