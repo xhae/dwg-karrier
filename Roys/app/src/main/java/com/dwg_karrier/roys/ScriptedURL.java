@@ -10,6 +10,7 @@ public class ScriptedURL {
   private String title;
   private String content;
   private String repImageUrl;
+  private String[] keywords;
 
   ScriptedURL(String url, boolean isRead) {
     this.url = url;
@@ -32,20 +33,22 @@ public class ScriptedURL {
   }
 
   ScriptedURL(int isRead, String title, String content, double expectedTime) {
-	  
+
     this.isRead = isRead == 1;
     this.title = title;
     this.content = content;
     this.expectedTime = expectedTime;
   }
 
-  ScriptedURL(String url, int isRead, String title, String content, String repImageUrl, double expectedTime) {
+  ScriptedURL(String url, int isRead, String title, String content, String repImageUrl, double expectedTime, String keywordsString) {
     this.url = url;
     this.isRead = isRead == 1;
     this.title = StringEscapeUtils.unescapeHtml4(title);
     this.content = StringEscapeUtils.unescapeHtml4(content);
     this.repImageUrl = repImageUrl;
     this.expectedTime = expectedTime;
+
+    this.keywords = (String[]) keywordsString.replace("[\"", "").replace("\"]", "").split("\",\"");
   }
 
   public String getUrl() {

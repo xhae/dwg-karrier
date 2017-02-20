@@ -11,7 +11,8 @@ public final class DataBases {
     public static final String REPIMAGEURL = "repImage";
     public static final String EXPECTEDTIME = "expectedtime";
     public static final String _TABLENAME = "page";
-    public static final String IMGURL = "imgurl";
+    public static final String KEYWORDS = "keywords";
+    public static final String ISRECOMMENDED = "isrecommended";
     public static final String _CREATE =
         "create table " + _TABLENAME + "("
             + _ID + " integer primary key autoincrement, "
@@ -21,6 +22,8 @@ public final class DataBases {
             + REPIMAGEURL + " text default '' , "
             + CONTENT + " text default '' , "
             + EXPECTEDTIME + " integer, "
+            + KEYWORDS + " text default '' , "
+            + ISRECOMMENDED + " integer default 0 ,"
             // TODO: Data Type Change
             // if wordCount will change to expectedTime and data type change to double -> USE REAL TYPE instead INTEGER
             + "unique(" + URL + ")" + ");";

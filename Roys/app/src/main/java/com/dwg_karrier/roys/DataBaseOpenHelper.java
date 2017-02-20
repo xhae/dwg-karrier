@@ -10,7 +10,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import java.util.ArrayList;
 
 public class DataBaseOpenHelper extends SQLiteOpenHelper {
-  public static final int DATABASE_VERSION = 2;
+  public static final int DATABASE_VERSION = 4;
 
   public static final String DATABASE_NAME = "FeedReader.db";
 
@@ -20,6 +20,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   public final int repImageUrlColumn = 4;
   public final int contentColumn = 5;
   public final int expectedTimeColumn = 6;
+  public final int keywordsColumn = 7;
 
   public DataBaseOpenHelper(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -58,6 +59,18 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     return result;
   }
 
+  // test
+  public int getunReadPageCount() {
+    SQLiteDatabase dataBase = getReadableDatabase();
+    int result = 0;
+
+    Cursor cursor = dataBase.rawQuery("SELECT count(url) FROM page WHERE read = 0;", null);
+    while (cursor.moveToNext()) {
+      result = cursor.getInt(0);
+    }
+    return result;
+  }
+
   public ArrayList<ScriptedURL> getAllUrlList() {
     String getUrlListQuery = "SELECT * from page";
     return getUrlListFromQuery(getUrlListQuery);
@@ -90,7 +103,8 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
       ScriptedURL scriptedItem = new ScriptedURL(cursor.getString(urlColumn),
           cursor.getInt(readColumn), cursor.getString(titleColumn),
           cursor.getString(contentColumn), cursor.getString(repImageUrlColumn),
-          cursor.getInt(expectedTimeColumn));
+          cursor.getInt(expectedTimeColumn),
+          cursor.getString(keywordsColumn));
       resultList.add(scriptedItem);
     }
 
@@ -144,9 +158,9 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   }
 
   /**
-   * check duplicated url from database data.
-   * If result returns true, you can't insert url data into DB.
-   * @param url
+   * check duplicated url from database data. If result returns true, you can't insert url data into
+   * DB.
+   *
    * @return checked result. If duplicated url, returns true. Else return false.
    */
   public boolean isDuplicatedUrl(String url) {
@@ -159,6 +173,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   }
 
   //For test
+  /*
   public void getTableAsString() {
     SQLiteDatabase db = getReadableDatabase();
     String tableName = "page";
@@ -177,24 +192,20 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
       } while (allRows.moveToNext());
     }
   }
-
+*/
   /**
-   * Please Check duplicated url before using insert method.
-   * Using isDuplicatedUrl()
-   * @param url
+   * Please Check duplicated url before using insert method. Using isDuplicatedUrl()
    */
-  public void insertScriptedData(String url, String title, String content, int expectedTime, String imgUrl) {
+  public void insertScriptedData(String url, String title, String content, int expectedTime, String imgUrl, String keywords, boolean isRecommended) {
     SQLiteDatabase dataBase = getWritableDatabase();
     String escapedTitle = StringEscapeUtils.escapeHtml4(title);
     String escapedContent = StringEscapeUtils.escapeHtml4(content);
-    dataBase.execSQL("INSERT INTO PAGE (URL, TITLE, CONTENT, EXPECTEDTIME, repImage) VALUES ('" + url + "',\"" + escapedTitle + "\", \"" + escapedContent + "\", " + String.valueOf((int)expectedTime) + " , '" + imgUrl + "');");
+    dataBase.execSQL("INSERT INTO PAGE (URL, TITLE, CONTENT, EXPECTEDTIME, repImage, keywords, isrecommended) VALUES ('" + url + "',\"" + escapedTitle + "\", \"" + escapedContent + "\", " + String.valueOf((int) expectedTime) + " , '" + imgUrl + "', '" + keywords + "', " + String.valueOf(isRecommended) + ");");
     dataBase.close();
   }
 
   /**
-   * Please Check duplicated url before using insert method.
-   * Using isDuplicatedUrl()
-   * @param scriptedURL
+   * Please Check duplicated url before using insert method. Using isDuplicatedUrl()
    */
   public void insertScriptedUrl(ScriptedURL scriptedURL) {
     int readValue = scriptedURL.getIsRead() ? 1 : 0;

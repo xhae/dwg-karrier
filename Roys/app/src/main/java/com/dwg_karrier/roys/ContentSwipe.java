@@ -26,18 +26,17 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ContentSwipe extends AppCompatActivity {
+  public static Activity saveSwipeActivity;
+  static Date finTime;
+  static Date curTime;
+  private static ArrayList<ScriptedURL> unreadPageList; // TODO (Csoyee, Jungshik): static prob...
+  public int totalPageNum;
   String title;
   String content;
   String imageUrl;
   double duration; // time duration between current_time and finish time
-  public int totalPageNum;
   private SectionsPagerAdapter pageSwipeAdapter;
   private ViewPager pageSwipeView;
-  private static ArrayList<ScriptedURL> unreadPageList; // TODO (Csoyee, Jungshik): static prob...
-  static Date finTime;
-  static Date curTime;
-  public static Activity saveSwipeActivity;
-
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +44,7 @@ public class ContentSwipe extends AppCompatActivity {
     setContentView(R.layout.swipecontent);
 
     DataBaseOpenHelper dbHelper = new DataBaseOpenHelper(this);
-    dbHelper.getTableAsString();
+    // change to time
     unreadPageList = dbHelper.getUnreadUrlList();
     totalPageNum = unreadPageList.size();
     pageSwipeAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -94,6 +93,7 @@ public class ContentSwipe extends AppCompatActivity {
         args.putString("TITLE", pageInfo.getTitle());
         args.putString("CONTENT", pageInfo.getContent());
         args.putString("REPIMAGE", pageInfo.getRepImageUrl());
+        args.putString("URL", pageInfo.getUrl());
       }
       fragment.setArguments(args);
       return fragment;
@@ -114,6 +114,8 @@ public class ContentSwipe extends AppCompatActivity {
       } else {
         final String getTitle = getArguments().getString("TITLE");
         final String getContent = getArguments().getString("CONTENT");
+        final String getUrl = getArguments().getString("URL");
+
         contentTitle.setText(getTitle);
         try {
           Picasso.with(getActivity().getApplicationContext()).load(getArguments().getString("REPIMAGE")).into(backgroundImage);
@@ -134,26 +136,13 @@ public class ContentSwipe extends AppCompatActivity {
         final String contentText = jsoupdoc.text();
         String[] splitedText = contentText.split("\\.");
         String cutText = "";
-//        Summarizer summarizer;
         if (splitedText.length >= 30) {
           cutText = " " + splitedText[0] + ". \n" + splitedText[10] + ". \n" + splitedText[20] + ".";
-//          summarizer = new Summarizer(cutText);
         } else {
           cutText = " " + splitedText[0] + ". \n" + splitedText[1] + ".";
-//        summarizer = new Summarizer(contentText);
-//        }
-          int summaryNum = 3;
-//        JSONArray summaryArrayResult = summarizer.getSummary(summaryNum);
-//        String summaryResult = "";
-//        for (int i = 0; i < summaryArrayResult.size(); i++) {
-//          try {
-//            summaryResult += summaryArrayResult.get(i) + "\n";
-//          } catch (Exception e) {
-//            Log.e("Summarize", "No Summarized result");
-//          }
         }
         final TextView contentSummary = (TextView) rootView.findViewById(R.id.summary);
-        contentSummary.setText(cutText); //  summaryResult
+        contentSummary.setText(cutText);
         backgroundImage.setOnClickListener(new ImageView.OnClickListener() {
           public void onClick(View v) {
             Intent openSelectedPage = new Intent(getActivity(), ContentView.class);
@@ -163,6 +152,7 @@ public class ContentSwipe extends AppCompatActivity {
             openSelectedPage.putExtra("curTime", curTime);
             openSelectedPage.putExtra("title", getTitle);
             openSelectedPage.putExtra("content", getContent);
+            openSelectedPage.putExtra("url", getUrl);
             startActivity(openSelectedPage);
           }
         });

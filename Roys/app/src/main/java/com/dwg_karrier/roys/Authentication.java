@@ -5,12 +5,10 @@ import static com.dwg_karrier.roys.R.layout.auth_dialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.Gravity;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
@@ -18,6 +16,7 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -62,6 +61,13 @@ public class Authentication {
       }
     }
     return sb.toString();
+  }
+
+  public static int countWords(String html) throws Exception {
+    org.jsoup.nodes.Document dom = Jsoup.parse(html);
+    String text = dom.text();
+
+    return text.split(" ").length;
   }
 
   void authenticationAndBringPages() {
@@ -205,7 +211,7 @@ public class Authentication {
     @Override
     protected void onPostExecute(JSONArray arr) {
       final int len = arr.length();
-      final int WORDPERMIN = 100;
+      final int WORDPERMIN = 150;
       try {
         for (int i = 0; i < len; i++) {
           Log.d("iteration", Integer.toString(i));
@@ -214,44 +220,31 @@ public class Authentication {
           Log.d("feedUrl", feedUrl);
           Crawler crawler = new Crawler(feedUrl);
           String feedTitle = crawler.getTitle();
-          Log.d("feedTitle", feedTitle);
           String feedContent = crawler.getContent();
           int wordCount = crawler.getWordCount();
           int feedExpectedTime = wordCount / WORDPERMIN;
           String imgUrl = crawler.getLeadImgUrl();
-          if (!dataBaseOpenHelper.isDuplicatedUrl(feedUrl)) {
+          // TODO(sera): keywords and isRecommended
+          String keywords = feed.getString("keywords");
+          boolean isRecommended = false;
+          if (!dataBaseOpenHelper.isDuplicatedUrl(feedUrl))
             try {
-              dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl);
+              dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl, keywords);
             } catch (Exception e) {
               continue;
             }
-//          } else {
-//            try {
-//              String escapedContent = StringEscapeUtils.escapeHtml4(feedContent);
-//              dataBaseOpenHelper.setContent(feedUrl, escapedContent);
-//              String escapedTitle = StringEscapeUtils.escapeHtml4(feedTitle);
-//              dataBaseOpenHelper.setTitle(feedUrl, escapedTitle);
-//              dataBaseOpenHelper.setExpectedTime(feedUrl, feedExpectedTime);
-//            } catch (Exception e) {
-//              continue;
-//            }
-          }
         }
-//          //Please Let me know if you have smart way of getting image url from html :)
-//          String imgUrl = feedContent.split("src=\"")[1].split("\">")[0];
-//          if (imgUrl == null) {
-//            imgUrl = DEFAULTIMGURL;
-      } catch (Exception e) {
+      } catch (
+          Exception e
+          )
+
+      {
         Log.e("crawler error", e.getMessage(), e);
       }
 
       pDialog.dismiss();
-      Toast toast = Toast.makeText(mainContext,
-          "Bring the pages from your feedly account", Toast.LENGTH_LONG);
-      toast.setGravity(Gravity.CENTER, 0, 0);
-      toast.show();
-      Intent startRoys = new Intent(mainContext, MainActivity.class);
-      mainContext.startActivity(startRoys);
+//      Intent startRoys = new Intent(mainContext, MainActivity.class);
+//      mainContext.startActivity(startRoys);
     }
   }
 }
