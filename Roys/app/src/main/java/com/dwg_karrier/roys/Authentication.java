@@ -14,6 +14,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
+import org.apache.commons.collections4.map.DefaultedMap;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,6 +28,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
+import java.util.Set;
 
 public class Authentication {
   static final String DEFAULTIMGURL = "https://blogdotstartlinkdotio.files.wordpress.com/2016/01/12620892_1077588858927687_1133266313_o.jpg?w=490&h=772";
@@ -209,6 +212,8 @@ public class Authentication {
 
         final int WORDPERMIN = 40;
 
+        Map<String, Integer> keywordCount = new DefaultedMap<>(0);
+
         for (int i = 0; i < len; i++) {
           JSONObject feed = arr.getJSONObject(i);
           String feedUrl = feed.getString("originId");
@@ -218,6 +223,9 @@ public class Authentication {
           String feedContent = (String) feedSummary.get("content");
           int feedExpectedTime = countWords(feedContent) / WORDPERMIN;
 
+          for (String keyword : keywords.replace("[\"", "").replace("\"]", "").split("\",\"")) {
+           keywordCount.put(keyword, keywordCount.get(keyword) + 1);
+          }
           //Please Let me know if you have smart way of getting image url from html :)
           String imgUrl = feedContent.split("src=\"")[1].split("\">")[0];
           if (imgUrl == null) {
@@ -229,6 +237,20 @@ public class Authentication {
             dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl, keywords, 0);
           }
         }
+
+        //for max value
+        Set<String> keys = keywordCount.keySet();
+        Integer max = -1;
+        String maxKey = "";
+        for(String key : keys) {
+          if (keywordCount.get(key) > max) {
+            max = keywordCount.get(key);
+            maxKey = key;
+          }
+        }
+        Recommender recommender = new Recommender(mainContext);
+        recommender.withKeywords(new String[]{maxKey});
+
         urlConnection.disconnect();
 
       } catch (IOException | JSONException e) {
