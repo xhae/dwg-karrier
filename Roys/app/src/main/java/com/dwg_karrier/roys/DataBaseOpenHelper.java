@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
@@ -22,6 +21,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   public final int contentColumn = 5;
   public final int expectedTimeColumn = 6;
   public final int keywordsColumn = 7;
+  public final int isRecommended = 8;
 
   public DataBaseOpenHelper(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -105,7 +105,9 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
           cursor.getInt(readColumn), cursor.getString(titleColumn),
           cursor.getString(contentColumn), cursor.getString(repImageUrlColumn),
           cursor.getInt(expectedTimeColumn),
-          cursor.getString(keywordsColumn));
+          cursor.getString(keywordsColumn),
+          cursor.getInt(isRecommended)
+      );
       resultList.add(scriptedItem);
     }
 
@@ -197,7 +199,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   /**
    * Please Check duplicated url before using insert method. Using isDuplicatedUrl()
    */
-  public void insertScriptedData(String url, String title, String content, int expectedTime, String imgUrl, String keywords, boolean isRecommended) {
+  public void insertScriptedData(String url, String title, String content, int expectedTime, String imgUrl, String keywords, Integer isRecommended) {
     SQLiteDatabase dataBase = getWritableDatabase();
     String escapedTitle = StringEscapeUtils.escapeHtml4(title);
     String escapedContent = StringEscapeUtils.escapeHtml4(content);

@@ -11,6 +11,7 @@ public class ScriptedURL {
   private String content;
   private String repImageUrl;
   private String[] keywords;
+  private Integer isRecommended;
 
   ScriptedURL(String url, boolean isRead) {
     this.url = url;
@@ -40,14 +41,14 @@ public class ScriptedURL {
     this.expectedTime = expectedTime;
   }
 
-  ScriptedURL(String url, int isRead, String title, String content, String repImageUrl, double expectedTime, String keywordsString) {
+  ScriptedURL(String url, int isRead, String title, String content, String repImageUrl, double expectedTime, String keywordsString, Integer isRecommended) {
     this.url = url;
     this.isRead = isRead == 1;
     this.title = StringEscapeUtils.unescapeHtml4(title);
     this.content = StringEscapeUtils.unescapeHtml4(content);
     this.repImageUrl = repImageUrl;
     this.expectedTime = expectedTime;
-
+    this.isRecommended = isRecommended;
     this.keywords = (String[]) keywordsString.replace("[\"", "").replace("\"]", "").split("\",\"");
   }
 
