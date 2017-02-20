@@ -7,11 +7,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.TextView;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
@@ -27,6 +27,7 @@ public class ContentView extends AppCompatActivity {
   Date curTime;
   long startTime;
   long endTime;
+  int flag;
 
   protected void onCreate(final Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -38,6 +39,7 @@ public class ContentView extends AppCompatActivity {
     content = getPageInfo.getStringExtra("content");
     finTime = (Date) getPageInfo.getSerializableExtra("finTime");
     curTime = (Date) getPageInfo.getSerializableExtra("curTime");
+    flag = getPageInfo.getCharExtra("FLAG", '2');
 
     setView(title, content);
 
@@ -53,7 +55,6 @@ public class ContentView extends AppCompatActivity {
         dbHelper.setIsRead(url, 1);
         // Temporal check for DB and read time
         long readTime = (endTime - startTime) / 1000;
-
         Intent backToList = null;
         if (saveActivity != null) {
           saveActivity.finish();
@@ -65,8 +66,15 @@ public class ContentView extends AppCompatActivity {
           backToList = new Intent(ContentView.this, ContentSwipe.class);
         }
 
-        backToList.putExtra("finTime", finTime);
-        backToList.putExtra("curTime", curTime);
+        if(flag == '0') {
+          backToList.putExtra("FLAG", '0');
+        } else if(flag == '1') {
+          backToList.putExtra("FLAG", '1');
+        } else {
+          backToList.putExtra("finTime", finTime);
+          backToList.putExtra("curTime", curTime);
+        }
+
         backToList.putExtra("readTime", String.valueOf(readTime));
         startActivity(backToList);
         finish();
@@ -75,12 +83,14 @@ public class ContentView extends AppCompatActivity {
   }
 
   public void setView(String showTitle, String showContent) {
-    String view = showTitle + "\n\n" + imgSizeCtrl + showContent;
+    String view = imgSizeCtrl + showContent;
+
+    TextView tv = (TextView) findViewById(R.id.contenttitleview);
+    tv.setText(showTitle);
 
     WebView wv = (WebView) findViewById(R.id.contentView);
     wv.setVerticalScrollBarEnabled(true);
     wv.setHorizontalScrollBarEnabled(false);
-
     final String mimeType = "text/html";
     final String encoding = "UTF-8";
     wv.loadDataWithBaseURL("", view, mimeType, encoding, "");

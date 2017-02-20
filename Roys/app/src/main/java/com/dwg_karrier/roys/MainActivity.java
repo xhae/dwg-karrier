@@ -1,5 +1,7 @@
 package com.dwg_karrier.roys;
 
+import static com.dwg_karrier.roys.LoginActivity.loginActivity;
+
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -26,12 +28,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
   // TODO(juung): calculate level from preference
   private String user_level = "Lv.2";
   // TODO(juung): bring total read pages and spend hours from preference
-  private String user_record = "172 Pages | 41 hours";
+  private String user_record = "172 Pages";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_navigation);
+    if(loginActivity != null) {
+      loginActivity.finish();
+      loginActivity = null;
+    }
 
     // toolbar
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -55,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     nav_user.setText(user);
     TextView nav_user_level = (TextView) hView.findViewById(R.id.nav_user_level);
     nav_user_level.setText(user_level);
+    DataBaseOpenHelper dbhelper = new DataBaseOpenHelper(MainActivity.this);
+    user_record = dbhelper.getReadPageCount() + " Pages";
     TextView nav_user_record = (TextView) hView.findViewById(R.id.nav_user_record);
     nav_user_record.setText(user_record);
     navigationView.setNavigationItemSelectedListener(this);
@@ -103,9 +111,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     int id = item.getItemId();
 
     if (id == R.id.all_contents) {
-      // Handle the camera action
+      Intent openRcmdList = new Intent(MainActivity.this, ListActivity.class); // open Recommend Lists
+      openRcmdList.putExtra("FLAG", '0');
+      startActivity(openRcmdList);
     } else if (id == R.id.recommendations) {
-
+      Intent openRcmdList = new Intent(MainActivity.this, ListActivity.class); // open Recommend Lists
+      openRcmdList.putExtra("FLAG", '1');
+      startActivity(openRcmdList);
     } else if (id == R.id.my_report) {
       Intent go_my_report = new Intent(this, MyReportActivity.class);
       startActivity(go_my_report);

@@ -1,5 +1,6 @@
 package com.dwg_karrier.roys;
 
+import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.handstudio.android.hzgrapherlib.animation.GraphAnimation;
@@ -30,6 +32,17 @@ public class MyReportActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_my_report);
+    Point windowSize = new Point();
+    getWindowManager().getDefaultDisplay().getSize(windowSize);
+    final int screenHeight = windowSize.y;
+
+    WebView wordCloudView = (WebView) findViewById(R.id.my_keyword);
+    wordCloudView.getLayoutParams().height = (int) (screenHeight * 0.6);
+    ScrollView reportScroll = (ScrollView) findViewById(R.id.myScrollView);
+    reportScroll.smoothScrollTo(0,0);
+    TextView pageNum = (TextView) findViewById(R.id.pagecount);
+    DataBaseOpenHelper dbhelper = new DataBaseOpenHelper(MyReportActivity.this);
+    pageNum.setText(dbhelper.getReadPageCount() +" pages");
 
     // show user_image
     ImageView imageView = (ImageView) findViewById(R.id.my_image);

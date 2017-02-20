@@ -1,5 +1,6 @@
 package com.dwg_karrier.roys;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,27 +10,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 public class LoginActivity extends AppCompatActivity {
-  boolean isAccountConnected; // check if user connect to Account.
-
+  public static Activity loginActivity;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_login);
-    isAccountConnected = false;
+    loginActivity = LoginActivity.this;
+
     findViewById(R.id.login_button).setOnClickListener(loginClickListener);
-
-    Thread thread = new Thread() {
-      @Override
-      public void run() {
-        while (!isAccountConnected) {
-        }
-        Intent showMain = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(showMain);
-        finish();
-      }
-    };
-
-    thread.start();
   }
 
   Button.OnClickListener loginClickListener = new View.OnClickListener() {
