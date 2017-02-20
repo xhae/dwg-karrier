@@ -11,7 +11,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import java.util.ArrayList;
 
 public class DataBaseOpenHelper extends SQLiteOpenHelper {
-  public static final int DATABASE_VERSION = 2;
+  public static final int DATABASE_VERSION = 3;
 
   public static final String DATABASE_NAME = "FeedReader.db";
 
@@ -21,6 +21,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   public final int repImageUrlColumn = 4;
   public final int contentColumn = 5;
   public final int expectedTimeColumn = 6;
+  public final int keywordsColumn = 7;
 
   public DataBaseOpenHelper(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -103,7 +104,8 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
       ScriptedURL scriptedItem = new ScriptedURL(cursor.getString(urlColumn),
           cursor.getInt(readColumn), cursor.getString(titleColumn),
           cursor.getString(contentColumn), cursor.getString(repImageUrlColumn),
-          cursor.getInt(expectedTimeColumn));
+          cursor.getInt(expectedTimeColumn),
+          cursor.getString(keywordsColumn));
       resultList.add(scriptedItem);
     }
 
@@ -197,11 +199,11 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
    * Using isDuplicatedUrl()
    * @param url
    */
-  public void insertScriptedData(String url, String title, String content, int expectedTime, String imgUrl) {
+  public void insertScriptedData(String url, String title, String content, int expectedTime, String imgUrl, String keywords) {
     SQLiteDatabase dataBase = getWritableDatabase();
     String escapedTitle = StringEscapeUtils.escapeHtml4(title);
     String escapedContent = StringEscapeUtils.escapeHtml4(content);
-    dataBase.execSQL("INSERT INTO PAGE (URL, TITLE, CONTENT, EXPECTEDTIME, repImage) VALUES ('" + url + "',\"" + escapedTitle + "\", \"" + escapedContent + "\", " + String.valueOf((int)expectedTime) + " , '" + imgUrl + "');");
+    dataBase.execSQL("INSERT INTO PAGE (URL, TITLE, CONTENT, EXPECTEDTIME, repImage, keywords) VALUES ('" + url + "',\"" + escapedTitle + "\", \"" + escapedContent + "\", " + String.valueOf((int)expectedTime) + " , '" + imgUrl + "', '"+keywords+"');");
     dataBase.close();
   }
 

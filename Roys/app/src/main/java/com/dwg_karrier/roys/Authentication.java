@@ -214,6 +214,7 @@ public class Authentication {
           JSONObject feed = arr.getJSONObject(i);
           String feedUrl = feed.getString("originId");
           String feedTitle = (String) feed.get("title");
+          String keywords = feed.getString("keywords");
           JSONObject feedSummary = feed.getJSONObject("summary");
           String feedContent = (String) feedSummary.get("content");
           int feedExpectedTime = countWords(feedContent) / WORDPERMIN;
@@ -226,7 +227,7 @@ public class Authentication {
 
           // TODO: add another check url duplication method. (Without database query.)
           if (!dataBaseOpenHelper.isDuplicatedUrl(feedUrl)) {
-            dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl);
+            dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl, keywords);
           }
         }
         urlConnection.disconnect();

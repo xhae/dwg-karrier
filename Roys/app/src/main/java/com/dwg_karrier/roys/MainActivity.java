@@ -21,6 +21,7 @@ import android.widget.TextView;
 import java.util.Calendar;
 import java.util.Date;
 
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
   // TODO(juung): bring user name from preference
   private String user = "xhae";
@@ -157,3 +158,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     more.getLayoutParams().height = (int) (screenHeight * 0.25);
   }
 }
+
