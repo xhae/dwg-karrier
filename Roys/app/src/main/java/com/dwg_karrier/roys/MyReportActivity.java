@@ -21,12 +21,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyReportActivity extends AppCompatActivity {
-  private ViewGroup layoutGraphView;
-  // TODO(juung): bring user_id from preference
-  private String user = "xhae";
   // TODO(juung): bring keywords from isRead == 1
   String[] wordCloud = new String[]{"Google", "Software Engineer", "App", "Google Korea", "Woman",
       "Develop with Google", "Karrier", "Roys", "Soyee", "Jihyung", "Sera", "Sunju", "xhae", "Jungshik"};
+  private ViewGroup layoutGraphView;
+  // TODO(juung): bring user_id from preference
+  private String user = "xhae";
+
+  public static float getMaxValue(float[] numbers) {
+    float maxValue = numbers[0];
+    for (int i = 1; i < numbers.length; i++) {
+      if (numbers[i] > maxValue) {
+        maxValue = numbers[i];
+      }
+    }
+    return maxValue;
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -129,15 +139,5 @@ public class MyReportActivity extends AppCompatActivity {
     //set draw graph region
     vo.setDrawRegion(true);
     return vo;
-  }
-
-  public static float getMaxValue(float[] numbers) {
-    float maxValue = numbers[0];
-    for (int i = 1; i < numbers.length; i++) {
-      if (numbers[i] > maxValue) {
-        maxValue = numbers[i];
-      }
-    }
-    return maxValue;
   }
 }

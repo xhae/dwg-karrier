@@ -159,9 +159,9 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   }
 
   /**
-   * check duplicated url from database data.
-   * If result returns true, you can't insert url data into DB.
-   * @param url
+   * check duplicated url from database data. If result returns true, you can't insert url data into
+   * DB.
+   *
    * @return checked result. If duplicated url, returns true. Else return false.
    */
   public boolean isDuplicatedUrl(String url) {
@@ -195,22 +195,18 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   }
 */
   /**
-   * Please Check duplicated url before using insert method.
-   * Using isDuplicatedUrl()
-   * @param url
+   * Please Check duplicated url before using insert method. Using isDuplicatedUrl()
    */
-  public void insertScriptedData(String url, String title, String content, int expectedTime, String imgUrl, String keywords) {
+  public void insertScriptedData(String url, String title, String content, int expectedTime, String imgUrl, String keywords, boolean isRecommended) {
     SQLiteDatabase dataBase = getWritableDatabase();
     String escapedTitle = StringEscapeUtils.escapeHtml4(title);
     String escapedContent = StringEscapeUtils.escapeHtml4(content);
-    dataBase.execSQL("INSERT INTO PAGE (URL, TITLE, CONTENT, EXPECTEDTIME, repImage, keywords) VALUES ('" + url + "',\"" + escapedTitle + "\", \"" + escapedContent + "\", " + String.valueOf((int)expectedTime) + " , '" + imgUrl + "', '"+keywords+"');");
+    dataBase.execSQL("INSERT INTO PAGE (URL, TITLE, CONTENT, EXPECTEDTIME, repImage, keywords, isrecommended) VALUES ('" + url + "',\"" + escapedTitle + "\", \"" + escapedContent + "\", " + String.valueOf((int) expectedTime) + " , '" + imgUrl + "', '" + keywords + "', " + String.valueOf(isRecommended) + ");");
     dataBase.close();
   }
 
   /**
-   * Please Check duplicated url before using insert method.
-   * Using isDuplicatedUrl()
-   * @param scriptedURL
+   * Please Check duplicated url before using insert method. Using isDuplicatedUrl()
    */
   public void insertScriptedUrl(ScriptedURL scriptedURL) {
     int readValue = scriptedURL.getIsRead() ? 1 : 0;

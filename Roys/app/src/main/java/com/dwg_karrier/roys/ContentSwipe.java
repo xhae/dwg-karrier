@@ -28,18 +28,17 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ContentSwipe extends AppCompatActivity {
+  public static Activity saveSwipeActivity;
+  static Date finTime;
+  static Date curTime;
+  private static ArrayList<ScriptedURL> unreadPageList; // TODO (Csoyee, Jungshik): static prob...
+  public int totalPageNum;
   String title;
   String content;
   String imageUrl;
   double duration; // time duration between current_time and finish time
-  public int totalPageNum;
   private SectionsPagerAdapter pageSwipeAdapter;
   private ViewPager pageSwipeView;
-  private static ArrayList<ScriptedURL> unreadPageList; // TODO (Csoyee, Jungshik): static prob...
-  static Date finTime;
-  static Date curTime;
-  public static Activity saveSwipeActivity;
-
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

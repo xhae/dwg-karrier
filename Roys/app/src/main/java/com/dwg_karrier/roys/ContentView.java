@@ -13,8 +13,6 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.apache.commons.lang3.StringEscapeUtils;
-
 import java.util.Date;
 
 public class ContentView extends AppCompatActivity {

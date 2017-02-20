@@ -62,7 +62,7 @@ public class Summarizer {
    * <p> AsyncTask runs in the background of main Thread. AsyncTask = Thread + Handler
    *
    * @returns json format response from Mercury-API (detailed response is described in {@link
-   *     #getSummary(int outputSize)} document.
+   * #getSummary(int outputSize)} document.
    */
   public class SummaryAsyncTask extends AsyncTask<Integer, Void, JSONArray> {
 

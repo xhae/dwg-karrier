@@ -7,10 +7,17 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 
 public class LoginActivity extends AppCompatActivity {
-  public static Activity loginActivity;
+  boolean isAccountConnected; // check if user connect to Account.
+  Button.OnClickListener loginClickListener = new View.OnClickListener() {
+    public void onClick(View v) {
+      final Context loginActivity = LoginActivity.this;
+      Authentication authentication = new Authentication(loginActivity);
+      authentication.authenticationAndBringPages();
+    }
+  };
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -19,12 +26,4 @@ public class LoginActivity extends AppCompatActivity {
 
     findViewById(R.id.login_button).setOnClickListener(loginClickListener);
   }
-
-  Button.OnClickListener loginClickListener = new View.OnClickListener() {
-    public void onClick(View v) {
-      final Context loginActivity = LoginActivity.this;
-      Authentication authentication = new Authentication(loginActivity);
-      authentication.authenticationAndBringPages();
-    }
-  };
 }

@@ -66,6 +66,13 @@ public class Authentication {
     return sb.toString();
   }
 
+  public static int countWords(String html) throws Exception {
+    org.jsoup.nodes.Document dom = Jsoup.parse(html);
+    String text = dom.text();
+
+    return text.split(" ").length;
+  }
+
   void authenticationAndBringPages() {
     final Dialog authDialog = new Dialog(mainContext);
     authDialog.setContentView(auth_dialog);
@@ -170,6 +177,7 @@ public class Authentication {
     }
   }
 
+
   private class GetPageList extends AsyncTask<String, Void, String> {
     String accessToken;
     private DataBaseOpenHelper dataBaseOpenHelper;
@@ -181,13 +189,6 @@ public class Authentication {
       mainContext = context;
       accessToken = token;
       pDialog = dialog;
-    }
-
-    private int countWords(String html) throws Exception {
-      org.jsoup.nodes.Document dom = Jsoup.parse(html);
-      String text = dom.text();
-
-      return text.split(" ").length;
     }
 
     @Override
@@ -227,7 +228,7 @@ public class Authentication {
 
           // TODO: add another check url duplication method. (Without database query.)
           if (!dataBaseOpenHelper.isDuplicatedUrl(feedUrl)) {
-            dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl, keywords);
+            dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl, keywords, false);
           }
         }
         urlConnection.disconnect();
