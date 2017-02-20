@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import org.json.simple.JSONArray;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -116,7 +114,6 @@ public class ContentSwipe extends AppCompatActivity {
       } else {
         final String getTitle = getArguments().getString("TITLE");
         final String getContent = getArguments().getString("CONTENT");
-
         contentTitle.setText(getTitle);
         try {
           Picasso.with(getActivity().getApplicationContext()).load(getArguments().getString("REPIMAGE")).into(backgroundImage);
@@ -135,20 +132,28 @@ public class ContentSwipe extends AppCompatActivity {
          */
         Document jsoupdoc = Jsoup.parse(getContent);
         final String contentText = jsoupdoc.text();
-
-        Summarizer summarizer = new Summarizer(contentText);
-        int summaryNum = 3;
-        JSONArray summaryArrayResult = summarizer.getSummary(summaryNum);
-        String summaryResult = "";
-        for (int i = 0; i < summaryArrayResult.size(); i++) {
-          try {
-            summaryResult += summaryArrayResult.get(i) + "\n";
-          } catch (Exception e) {
-            Log.e("Summarize", "No Summarized result");
-          }
+        String[] splitedText = contentText.split("\\.");
+        String cutText = "";
+//        Summarizer summarizer;
+        if (splitedText.length >= 30) {
+          cutText = " " + splitedText[0] + ". \n" + splitedText[10] + ". \n" + splitedText[20] + ".";
+//          summarizer = new Summarizer(cutText);
+        } else {
+          cutText = " " + splitedText[0] + ". \n" + splitedText[1] + ".";
+//        summarizer = new Summarizer(contentText);
+//        }
+          int summaryNum = 3;
+//        JSONArray summaryArrayResult = summarizer.getSummary(summaryNum);
+//        String summaryResult = "";
+//        for (int i = 0; i < summaryArrayResult.size(); i++) {
+//          try {
+//            summaryResult += summaryArrayResult.get(i) + "\n";
+//          } catch (Exception e) {
+//            Log.e("Summarize", "No Summarized result");
+//          }
         }
         final TextView contentSummary = (TextView) rootView.findViewById(R.id.summary);
-        contentSummary.setText(summaryResult);
+        contentSummary.setText(cutText); //  summaryResult
         backgroundImage.setOnClickListener(new ImageView.OnClickListener() {
           public void onClick(View v) {
             Intent openSelectedPage = new Intent(getActivity(), ContentView.class);

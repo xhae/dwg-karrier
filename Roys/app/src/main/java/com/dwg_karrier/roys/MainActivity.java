@@ -20,12 +20,10 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-  // TODO(juung): bring user name from preference
   private String user = "xhae";
-  // TODO(juung): calculate level from preference
   private String user_level = "Lv.2";
-  // TODO(juung): bring total read pages and spend hours from preference
-  private String user_record = "172 Pages | 41 hours";
+  // TODO(juung): bring total read pages (isRead == 1)
+  private int user_page;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TextView nav_user_level = (TextView) hView.findViewById(R.id.nav_user_level);
     nav_user_level.setText(user_level);
     TextView nav_user_record = (TextView) hView.findViewById(R.id.nav_user_record);
+    String user_record = Integer.toString(user_page) +" pages";
     nav_user_record.setText(user_record);
     navigationView.setNavigationItemSelectedListener(this);
 

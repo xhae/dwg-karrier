@@ -18,7 +18,6 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -169,7 +168,7 @@ public class Authentication {
     }
   }
 
-  private class GetPageList extends AsyncTask<String, Void, String> {
+  private class GetPageList extends AsyncTask<String, Void, JSONArray> {
     String accessToken;
     private DataBaseOpenHelper dataBaseOpenHelper;
     private Context mainContext;
@@ -182,15 +181,8 @@ public class Authentication {
       pDialog = dialog;
     }
 
-    private int countWords(String html) throws Exception {
-      org.jsoup.nodes.Document dom = Jsoup.parse(html);
-      String text = dom.text();
-
-      return text.split(" ").length;
-    }
-
     @Override
-    protected String doInBackground(String... params) {
+    protected JSONArray doInBackground(String... params) {
       try {
         URL url = new URL(params[0]);
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -201,35 +193,7 @@ public class Authentication {
 
         JSONObject obj = new JSONObject(result);
         JSONArray arr = obj.getJSONArray("items");
-        final int len = arr.length();
-
-        //For Test
-        //dataBaseOpenHelper.deleteAllPage();
-        //dataBaseOpenHelper.getTableAsString();
-
-        final int WORDPERMIN = 40;
-
-        for (int i = 0; i < len; i++) {
-          JSONObject feed = arr.getJSONObject(i);
-          String feedUrl = feed.getString("originId");
-          String feedTitle = (String) feed.get("title");
-          JSONObject feedSummary = feed.getJSONObject("summary");
-          String feedContent = (String) feedSummary.get("content");
-          int feedExpectedTime = countWords(feedContent) / WORDPERMIN;
-
-          //Please Let me know if you have smart way of getting image url from html :)
-          String imgUrl = feedContent.split("src=\"")[1].split("\">")[0];
-          if (imgUrl == null) {
-            imgUrl = DEFAULTIMGURL;
-          }
-
-          // TODO: add another check url duplication method. (Without database query.)
-          if (!dataBaseOpenHelper.isDuplicatedUrl(feedUrl)) {
-            dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl);
-          }
-        }
-        urlConnection.disconnect();
-
+        return arr;
       } catch (IOException | JSONException e) {
         e.printStackTrace();
       } catch (Exception e) {
@@ -239,7 +203,48 @@ public class Authentication {
     }
 
     @Override
-    protected void onPostExecute(String result) {
+    protected void onPostExecute(JSONArray arr) {
+      final int len = arr.length();
+      final int WORDPERMIN = 100;
+      try {
+        for (int i = 0; i < len; i++) {
+          Log.d("iteration", Integer.toString(i));
+          JSONObject feed = arr.getJSONObject(i);
+          String feedUrl = feed.getString("originId");
+          Log.d("feedUrl", feedUrl);
+          Crawler crawler = new Crawler(feedUrl);
+          String feedTitle = crawler.getTitle();
+          Log.d("feedTitle", feedTitle);
+          String feedContent = crawler.getContent();
+          int wordCount = crawler.getWordCount();
+          int feedExpectedTime = wordCount / WORDPERMIN;
+          String imgUrl = crawler.getLeadImgUrl();
+          if (!dataBaseOpenHelper.isDuplicatedUrl(feedUrl)) {
+            try {
+              dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl);
+            } catch (Exception e) {
+              continue;
+            }
+//          } else {
+//            try {
+//              String escapedContent = StringEscapeUtils.escapeHtml4(feedContent);
+//              dataBaseOpenHelper.setContent(feedUrl, escapedContent);
+//              String escapedTitle = StringEscapeUtils.escapeHtml4(feedTitle);
+//              dataBaseOpenHelper.setTitle(feedUrl, escapedTitle);
+//              dataBaseOpenHelper.setExpectedTime(feedUrl, feedExpectedTime);
+//            } catch (Exception e) {
+//              continue;
+//            }
+          }
+        }
+//          //Please Let me know if you have smart way of getting image url from html :)
+//          String imgUrl = feedContent.split("src=\"")[1].split("\">")[0];
+//          if (imgUrl == null) {
+//            imgUrl = DEFAULTIMGURL;
+      } catch (Exception e) {
+        Log.e("crawler error", e.getMessage(), e);
+      }
+
       pDialog.dismiss();
       Toast toast = Toast.makeText(mainContext,
           "Bring the pages from your feedly account", Toast.LENGTH_LONG);
