@@ -1,5 +1,7 @@
 package com.dwg_karrier.roys;
 
+import static com.dwg_karrier.roys.LoginActivity.loginActivity;
+
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -31,6 +33,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_navigation);
+    if(loginActivity != null) {
+      loginActivity.finish();
+      loginActivity = null;
+    }
 
     // toolbar
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -102,9 +108,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     int id = item.getItemId();
 
     if (id == R.id.all_contents) {
-      // Handle the camera action
+      Intent openRcmdList = new Intent(MainActivity.this, ListActivity.class); // open Recommend Lists
+      openRcmdList.putExtra("FLAG", '0');
+      startActivity(openRcmdList);
     } else if (id == R.id.recommendations) {
-
+      Intent openRcmdList = new Intent(MainActivity.this, ListActivity.class); // open Recommend Lists
+      openRcmdList.putExtra("FLAG", '1');
+      startActivity(openRcmdList);
     } else if (id == R.id.my_report) {
       Intent go_my_report = new Intent(this, MyReportActivity.class);
       startActivity(go_my_report);

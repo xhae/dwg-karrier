@@ -47,7 +47,7 @@ public class ContentSwipe extends AppCompatActivity {
     setContentView(R.layout.swipecontent);
 
     DataBaseOpenHelper dbHelper = new DataBaseOpenHelper(this);
-    dbHelper.getTableAsString();
+    // change to time
     unreadPageList = dbHelper.getUnreadUrlList();
     totalPageNum = unreadPageList.size();
     pageSwipeAdapter = new SectionsPagerAdapter(getSupportFragmentManager());

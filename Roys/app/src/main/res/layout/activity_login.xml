@@ -19,14 +19,9 @@
       android:layout_height="230dp"
       android:id="@+id/login_image"
       android:background="@drawable/appicon"
-      android:layout_marginTop="70dp"
+      android:layout_marginTop="100dp"
       android:layout_alignParentTop="true"
       android:layout_centerHorizontal="true"/>
-  <ImageView
-      android:layout_width="match_parent"
-      android:layout_height="230dp" app:srcCompat="@android:color/background_dark"
-      android:layout_alignTop="@+id/login_image" android:layout_alignParentStart="true"
-      android:id="@+id/imageView3" android:alpha="0.6"/>
   <Button
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -45,4 +40,9 @@
       android:textColor="@color/textColorPrimary"
       android:layout_marginTop="55dp"
       android:layout_below="@+id/login_image" android:layout_centerHorizontal="true"/>
+  <ImageView
+      android:layout_width="match_parent"
+      android:layout_height="230dp" app:srcCompat="@android:color/background_dark"
+      android:id="@+id/imageView3" android:alpha="0.6" android:layout_alignTop="@+id/login_image"
+      android:layout_alignParentStart="true"/>
 </RelativeLayout>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
@@ -159,6 +160,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   }
 
   //For test
+  /*
   public void getTableAsString() {
     SQLiteDatabase db = getReadableDatabase();
     String tableName = "page";
@@ -177,7 +179,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
       } while (allRows.moveToNext());
     }
   }
-
+*/
   /**
    * Please Check duplicated url before using insert method.
    * Using isDuplicatedUrl()
