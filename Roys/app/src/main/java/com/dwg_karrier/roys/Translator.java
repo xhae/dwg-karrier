@@ -31,7 +31,7 @@ public class Translator {
    *
    * <p> Change simple text format to utf-8 encoded text
    *
-   * @param source original language (e.g., en)
+   * @param source    original language (e.g., en)
    * @param inputText simple text
    */
   public Translator(String source, String inputText) {

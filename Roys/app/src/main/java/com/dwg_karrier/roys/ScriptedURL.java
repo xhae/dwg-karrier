@@ -33,7 +33,7 @@ public class ScriptedURL {
   }
 
   ScriptedURL(int isRead, String title, String content, double expectedTime) {
-	  
+
     this.isRead = isRead == 1;
     this.title = title;
     this.content = content;
@@ -48,7 +48,7 @@ public class ScriptedURL {
     this.repImageUrl = repImageUrl;
     this.expectedTime = expectedTime;
 
-    this.keywords = (String[]) keywordsString.replace("[\"","").replace("\"]","").split("\",\"");
+    this.keywords = (String[]) keywordsString.replace("[\"", "").replace("\"]", "").split("\",\"");
   }
 
   public String getUrl() {
