@@ -1,114 +1,149 @@
 package com.dwg_karrier.roys;
 
+import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
-import android.os.StrictMode;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import java.util.Calendar;
+import java.util.Date;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import android.util.Log;
-import android.widget.TextView;
 
-import java.util.ArrayList;
-
-public class MainActivity extends AppCompatActivity {
-  final String accessToken = "A06EprS0187tNdGMJ1XPTVQa1eE8SeGLXZeK3GZy2UwZ8qzOGSqZlPmXNcYul0zueeQRLYwN1nWbFszj6PyoNOkCGSbUp9zfJ3eLROo3bJWsUQktkXPfbFruJn9TGFQQ5r16aLhP7f-VXMFNxMtlrJw21eabhWzhzO-9r0OkXBesU_0Kscpb4SaRPW4TpYpfGiusnAKhaWmeNYdu5VaCGMdFpoch:feedlydev";
-  final String id = "3d0c7dd1-a7bb-4cdf-92f0-6c25d88c52db";
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+  // TODO(juung): bring user name from preference
+  private String user = "xhae";
+  // TODO(juung): calculate level from preference
+  private String user_level = "Lv.2";
+  // TODO(juung): bring total read pages and spend hours from preference
+  private String user_record = "172 Pages | 41 hours";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+    setContentView(R.layout.activity_navigation);
 
-    Button btnFeedlyAccount=(Button)findViewById(R.id.FeedlyAccountBtn);
-    btnFeedlyAccount.setOnClickListener(new Button.OnClickListener() {
-      public void onClick(View v) {
-        if(android.os.Build.VERSION.SDK_INT > 9) {
-          StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-          StrictMode.setThreadPolicy(policy);
+    // toolbar
+    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+    setSupportActionBar(toolbar);
+    ActionBar actionBar = getSupportActionBar();
+    actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+    actionBar.setDisplayHomeAsUpEnabled(true);
+
+    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+    ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+    drawer.setDrawerListener(toggle);
+    toggle.syncState();
+
+    NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+    View hView = navigationView.getHeaderView(0);
+    ImageView nav_user_image = (ImageView) hView.findViewById(R.id.nav_user_image);
+    // TODO(juung): bring user_image from preference
+    nav_user_image.setImageResource(R.mipmap.ic_user_xhae);
+    TextView nav_user = (TextView) hView.findViewById(R.id.nav_user_id);
+    nav_user.setText(user);
+    TextView nav_user_level = (TextView) hView.findViewById(R.id.nav_user_level);
+    nav_user_level.setText(user_level);
+    TextView nav_user_record = (TextView) hView.findViewById(R.id.nav_user_record);
+    nav_user_record.setText(user_record);
+    navigationView.setNavigationItemSelectedListener(this);
+
+    setImage();
+    GridLayout minuteLayout = (GridLayout) findViewById(R.id.maingridLayout);
+
+    int childCount = minuteLayout.getChildCount();
+    final int timeUnit = 10;
+
+    for (int i = 0; i < childCount; i++) {
+      final ImageView container = (ImageView) minuteLayout.getChildAt(i);
+      container.setTag((i + 1) * timeUnit + "");
+      container.setOnClickListener(new View.OnClickListener() {
+        public void onClick(View view) {
+          Date curTime = new Date(System.currentTimeMillis());
+          Calendar cal = Calendar.getInstance();
+          cal.setTime(curTime);
+          String inputTime = (String) container.getTag();
+          cal.add(Calendar.MINUTE, Integer.parseInt(inputTime));
+          Date d = new Date(cal.getTimeInMillis());
+
+          Intent openRcmdList = new Intent(MainActivity.this, ContentSwipe.class); // open Recommend Lists
+          openRcmdList.putExtra("finTime", d);
+          openRcmdList.putExtra("curTime", curTime);
+          startActivity(openRcmdList);
         }
-
-        HttpClient client = new DefaultHttpClient();
-        HttpGet request = new HttpGet("https://cloud.feedly.com/v3/streams/contents?streamId=user/"+id+"/category/global.all");
-        // replace with your url
-        request.setHeader("Authorization","OAuth "+accessToken);
-        HttpResponse response;
-        try {
-          response = client.execute(request);
-          TextView TextView = (TextView)findViewById(R.id.textView2);
-          HttpEntity entity = response.getEntity();
-
-          if (entity != null) {
-
-            // A Simple JSON Response Read
-            InputStream instream = entity.getContent();
-            String result = convertStreamToString(instream);
-            // now you have the string representation of the HTML request
-            TextView.setText("RESPONSE: " + result);
-            instream.close();
-            try {
-              JSONObject obj = new JSONObject(result);
-              JSONArray arr = obj.getJSONArray("items");
-              int len = arr.length();
-              TextView.setText("");
-              for(int i = 0; i<len; i++){
-                TextView.append(arr.getJSONObject(i).getString("originId"));
-              };
-
-            }catch(org.json.JSONException e)
-            {
-              e.printStackTrace();
-            }
-
-
-          }
-
-          //TextView.setText(response.toString());
-
-        } catch (ClientProtocolException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (IOException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
-      }
-    });
-  }
-  private static String convertStreamToString(InputStream is) {
-
-    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-    StringBuilder sb = new StringBuilder();
-
-    String line = null;
-    try {
-      while ((line = reader.readLine()) != null) {
-        sb.append(line + "\n");
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-    } finally {
-      try {
-        is.close();
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
+      });
     }
-    return sb.toString();
+  }
+
+  @Override
+  public void onBackPressed() {
+    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+    if (drawer.isDrawerOpen(GravityCompat.START)) {
+      drawer.closeDrawer(GravityCompat.START);
+    } else {
+      super.onBackPressed();
+    }
+  }
+
+  @SuppressWarnings("StatementWithEmptyBody")
+  @Override
+  public boolean onNavigationItemSelected(MenuItem item) {
+    // Handle navigation view item clicks here.
+    int id = item.getItemId();
+
+    if (id == R.id.all_contents) {
+      // Handle the camera action
+    } else if (id == R.id.recommendations) {
+
+    } else if (id == R.id.my_report) {
+      Intent go_my_report = new Intent(this, MyReportActivity.class);
+      startActivity(go_my_report);
+    }
+    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+    drawer.closeDrawer(GravityCompat.START);
+    return true;
+  }
+
+  private void setImage() {
+    Point windowSize = new Point();
+    getWindowManager().getDefaultDisplay().getSize(windowSize);
+    final int screenWidth = windowSize.x;
+    final int screenHeight = windowSize.y;
+
+    ImageView min10 = (ImageView) findViewById(R.id.min10);
+    ImageView min20 = (ImageView) findViewById(R.id.min20);
+    ImageView min30 = (ImageView) findViewById(R.id.min30);
+    ImageView min40 = (ImageView) findViewById(R.id.min40);
+    ImageView min50 = (ImageView) findViewById(R.id.min50);
+    ImageView min60 = (ImageView) findViewById(R.id.min60);
+    ImageView more = (ImageView) findViewById(R.id.more);
+
+    min10.getLayoutParams().width = (int) (screenWidth * 0.5);
+    min20.getLayoutParams().width = (int) (screenWidth * 0.5);
+    min30.getLayoutParams().width = (int) (screenWidth * 0.5);
+    min40.getLayoutParams().width = (int) (screenWidth * 0.5);
+    min50.getLayoutParams().width = (int) (screenWidth * 0.5);
+    min60.getLayoutParams().width = (int) (screenWidth * 0.5);
+    more.getLayoutParams().width = (int) (screenWidth * 0.5);
+
+    min10.getLayoutParams().height = (int) (screenHeight * 0.5);
+    min20.getLayoutParams().height = (int) (screenHeight * 0.25);
+    min30.getLayoutParams().height = (int) (screenHeight * 0.25);
+    min40.getLayoutParams().height = (int) (screenHeight * 0.25);
+    min50.getLayoutParams().height = (int) (screenHeight * 0.25);
+    min60.getLayoutParams().height = (int) (screenHeight * 0.25);
+    more.getLayoutParams().height = (int) (screenHeight * 0.25);
   }
 }
 
