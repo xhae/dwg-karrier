@@ -5,6 +5,7 @@ import static com.dwg_karrier.roys.R.layout.auth_dialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -226,10 +227,9 @@ public class Authentication {
           String imgUrl = crawler.getLeadImgUrl();
           // TODO(sera): keywords and isRecommended
           String keywords = feed.getString("keywords");
-          boolean isRecommended = false;
           if (!dataBaseOpenHelper.isDuplicatedUrl(feedUrl))
             try {
-              dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl, keywords);
+              dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl, keywords, 0);
             } catch (Exception e) {
               continue;
             }
@@ -243,8 +243,8 @@ public class Authentication {
       }
 
       pDialog.dismiss();
-//      Intent startRoys = new Intent(mainContext, MainActivity.class);
-//      mainContext.startActivity(startRoys);
+      Intent startRoys = new Intent(mainContext, MainActivity.class);
+      mainContext.startActivity(startRoys);
     }
   }
 }

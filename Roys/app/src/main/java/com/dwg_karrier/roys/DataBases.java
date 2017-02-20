@@ -23,7 +23,7 @@ public final class DataBases {
             + CONTENT + " text default '' , "
             + EXPECTEDTIME + " integer, "
             + KEYWORDS + " text default '' , "
-            + ISRECOMMENDED + " integer default 0 ,"
+            + ISRECOMMENDED + " integer default 0 , "
             // TODO: Data Type Change
             // if wordCount will change to expectedTime and data type change to double -> USE REAL TYPE instead INTEGER
             + "unique(" + URL + ")" + ");";

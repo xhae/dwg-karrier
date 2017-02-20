@@ -87,7 +87,7 @@ public class Recommender implements AsyncResponse {
 
           // TODO: add another check url duplication method. (Without database query.)
           if (!dataBaseOpenHelper.isDuplicatedUrl(feedUrl)) {
-            dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl, keywords, true);
+            dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl, keywords, 1);
           }
         }
         urlConnection.disconnect();
