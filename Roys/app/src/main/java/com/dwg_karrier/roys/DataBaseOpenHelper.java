@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
@@ -23,7 +22,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   public final int contentColumn = 5;
   public final int expectedTimeColumn = 6;
   public final int keywordsColumn = 7;
-  public final int isrecommendedColumn = 8;
+  public final int isRecommended = 8;
 
   public DataBaseOpenHelper(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -95,7 +94,9 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
           cursor.getInt(readColumn), cursor.getString(titleColumn),
           cursor.getString(contentColumn), cursor.getString(repImageUrlColumn),
           cursor.getInt(expectedTimeColumn),
-          cursor.getString(keywordsColumn));
+          cursor.getString(keywordsColumn),
+          cursor.getInt(isRecommended)
+      );
       resultList.add(scriptedItem);
     }
 
