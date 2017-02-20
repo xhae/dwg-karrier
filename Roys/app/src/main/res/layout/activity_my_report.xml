@@ -5,11 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" android:weightSum="1">
   <LinearLayout
+      android:layout_gravity="bottom"
       android:layout_width="match_parent"
-      android:layout_height="163dp"
+      android:layout_height="253dp"
       android:orientation="vertical" android:weightSum="1" android:layout_weight="0.19">
     <ImageView
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="0dp"
         android:layout_width="83dp"
         android:layout_height="85dp"
@@ -49,7 +50,7 @@
         android:layout_gravity="center"
         android:textColor="@color/textColorPrimaryDark"
         android:text="My Record"
-        android:textSize="20sp"/>
+        android:textSize="17sp"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -57,26 +58,28 @@
         android:background="@android:color/darker_gray"/>
   </LinearLayout>
   <ScrollView
-      android:layout_marginTop="6dp"
+      xmlns:android="http://schemas.android.com/apk/res/android"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content">
+      android:layout_height="wrap_content"
+      android:fillViewport="true">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" android:weightSum="1">
+        android:orientation="vertical"
+        android:id="@+id/my_record">
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="My Using Time"
+          android:text="My Using Pattern"
           android:layout_marginLeft="16dp"
           android:textColor="@android:color/black"
           android:textSize="15sp"/>
       <LinearLayout
           android:layout_marginTop="6dp"
           android:id="@+id/layout_graph_view"
-          android:layout_width="384dp"
-          android:layout_height="150dp"
-          android:orientation="horizontal" android:layout_weight="9.17">
+          android:layout_width="match_parent"
+          android:layout_height="170dp"
+          android:orientation="vertical">
       </LinearLayout>
       <TextView
           android:layout_marginTop="6dp"
@@ -88,10 +91,15 @@
           android:textSize="15sp"/>
       <LinearLayout
           android:layout_marginTop="6dp"
-          android:id="@+id/keyword_view"
-          android:layout_width="384dp"
-          android:layout_height="150dp"
-          android:orientation="horizontal" android:layout_weight="9.17">
+          android:layout_width="match_parent"
+          android:layout_height="170dp"
+          android:orientation="vertical"
+          android:descendantFocusability="blocksDescendants">
+        <WebView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/my_keyword">
+        </WebView>
       </LinearLayout>
     </LinearLayout>
   </ScrollView>
