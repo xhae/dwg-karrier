@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
@@ -53,6 +54,18 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     int result = 0;
 
     Cursor cursor = dataBase.rawQuery("SELECT count(url) FROM page WHERE read = 1;", null);
+    while (cursor.moveToNext()) {
+      result = cursor.getInt(0);
+    }
+    return result;
+  }
+
+  // test
+  public int getunReadPageCount() {
+    SQLiteDatabase dataBase = getReadableDatabase();
+    int result = 0;
+
+    Cursor cursor = dataBase.rawQuery("SELECT count(url) FROM page WHERE read = 0;", null);
     while (cursor.moveToNext()) {
       result = cursor.getInt(0);
     }
@@ -161,6 +174,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   }
 
   //For test
+  /*
   public void getTableAsString() {
     SQLiteDatabase db = getReadableDatabase();
     String tableName = "page";
@@ -179,7 +193,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
       } while (allRows.moveToNext());
     }
   }
-
+*/
   /**
    * Please Check duplicated url before using insert method.
    * Using isDuplicatedUrl()

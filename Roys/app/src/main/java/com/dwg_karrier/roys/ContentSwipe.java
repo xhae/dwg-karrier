@@ -47,7 +47,7 @@ public class ContentSwipe extends AppCompatActivity {
     setContentView(R.layout.swipecontent);
 
     DataBaseOpenHelper dbHelper = new DataBaseOpenHelper(this);
-    dbHelper.getTableAsString();
+    // change to time
     unreadPageList = dbHelper.getUnreadUrlList();
     totalPageNum = unreadPageList.size();
     pageSwipeAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -96,6 +96,7 @@ public class ContentSwipe extends AppCompatActivity {
         args.putString("TITLE", pageInfo.getTitle());
         args.putString("CONTENT", pageInfo.getContent());
         args.putString("REPIMAGE", pageInfo.getRepImageUrl());
+        args.putString("URL", pageInfo.getUrl());
       }
       fragment.setArguments(args);
       return fragment;
@@ -116,6 +117,7 @@ public class ContentSwipe extends AppCompatActivity {
       } else {
         final String getTitle = getArguments().getString("TITLE");
         final String getContent = getArguments().getString("CONTENT");
+        final String getUrl = getArguments().getString("URL");
 
         contentTitle.setText(getTitle);
         try {
@@ -158,6 +160,7 @@ public class ContentSwipe extends AppCompatActivity {
             openSelectedPage.putExtra("curTime", curTime);
             openSelectedPage.putExtra("title", getTitle);
             openSelectedPage.putExtra("content", getContent);
+            openSelectedPage.putExtra("url", getUrl);
             startActivity(openSelectedPage);
           }
         });

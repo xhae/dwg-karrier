@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.webkit.WebView;
@@ -242,10 +243,6 @@ public class Authentication {
     @Override
     protected void onPostExecute(String result) {
       pDialog.dismiss();
-      Toast toast = Toast.makeText(mainContext,
-          "Bring the pages from your feedly account", Toast.LENGTH_LONG);
-      toast.setGravity(Gravity.CENTER, 0, 0);
-      toast.show();
       Intent startRoys = new Intent(mainContext, MainActivity.class);
       mainContext.startActivity(startRoys);
     }
