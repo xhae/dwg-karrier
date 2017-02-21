@@ -19,7 +19,6 @@ public class ContentView extends AppCompatActivity {
   private final String imgSizeCtrl = "<style>img{display: inline; height: auto; max-width: 100%;}</style>\n"; // fit image to the size of viewer
   String title;
   String content;
-  String escapedContent;
   String url;
   Date finTime;
   Date curTime;
