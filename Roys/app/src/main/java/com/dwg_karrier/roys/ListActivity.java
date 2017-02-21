@@ -97,11 +97,4 @@ public class ListActivity extends AppCompatActivity {
       checkInfo.show();
     }
   }
-
-  private ArrayList<ScriptedURL> callUrl() {
-    DataBaseOpenHelper dbHelper = new DataBaseOpenHelper(this);
-    ArrayList<ScriptedURL> unreadPageList = dbHelper.getUnreadUrlList();
-
-    return unreadPageList;
-  }
 }
