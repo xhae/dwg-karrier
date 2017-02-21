@@ -86,6 +86,7 @@ public class AIWidgetActivity extends ActionBarActivity {
                     cal.add(Calendar.MINUTE, timeValue);
                     Date d = new Date(cal.getTimeInMillis());
 
+                    
                     Intent openRcmdList = new Intent(getApplicationContext(), ContentSwipe.class); // open Recommend Lists
                     openRcmdList.putExtra("finTime", d);
                     openRcmdList.putExtra("curTime", curTime);
