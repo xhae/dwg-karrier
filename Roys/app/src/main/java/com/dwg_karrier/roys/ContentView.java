@@ -19,7 +19,6 @@ public class ContentView extends AppCompatActivity {
   private final String imgSizeCtrl = "<style>img{display: inline; height: auto; max-width: 100%;}</style>\n"; // fit image to the size of viewer
   String title;
   String content;
-  String escapedContent;
   String url;
   Date finTime;
   Date curTime;
@@ -89,9 +88,12 @@ public class ContentView extends AppCompatActivity {
     WebView wv = (WebView) findViewById(R.id.contentView);
     wv.setVerticalScrollBarEnabled(true);
     wv.setHorizontalScrollBarEnabled(false);
+
     final String mimeType = "text/html";
     final String encoding = "UTF-8";
+
     wv.loadDataWithBaseURL("", view, mimeType, encoding, "");
+
   }
 
   private void toolbarSetting() {

@@ -254,9 +254,6 @@ public class Authentication {
             maxKey = key;
           }
         }
-        Recommender recommender = new Recommender(mainContext,dataBaseOpenHelper);
-        recommender.withKeywords(new String[]{maxKey});
-
       } catch (
           Exception e
           )

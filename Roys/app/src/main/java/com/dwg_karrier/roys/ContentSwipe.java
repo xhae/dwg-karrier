@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -138,6 +139,8 @@ public class ContentSwipe extends AppCompatActivity {
         String cutText = "";
         if (splitedText.length >= 30) {
           cutText = " " + splitedText[0] + ". \n" + splitedText[10] + ". \n" + splitedText[20] + ".";
+        } else if(splitedText.length < 2){
+          cutText = " " + splitedText[0] + ".";
         } else {
           cutText = " " + splitedText[0] + ". \n" + splitedText[1] + ".";
         }
