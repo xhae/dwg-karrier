@@ -21,16 +21,17 @@ import java.util.ArrayList;
 public class Recommender implements AsyncResponse {
   final String recommendUrl = "https://sandbox.feedly.com/v3/search/feeds?query=";
   Context mainContext;
+  DataBaseOpenHelper dbHelper;
 
-  public Recommender(Context mainContext) {
+  public Recommender(Context mainContext, DataBaseOpenHelper dbHelper) {
     this.mainContext = mainContext;
+    this.dbHelper = dbHelper;
   }
 
   public void withKeywords(String[] keywords) {
     for (String keyword : keywords) {
-      String url = recommendUrl + keyword+"&fields=[keywords]";
-      DataBaseOpenHelper dbhelper = new DataBaseOpenHelper(mainContext);
-      GetRecommendFeedList RR = new GetRecommendFeedList(dbhelper, keyword);
+      String url = recommendUrl + keyword.split(" ")[0]+"&fields=[keywords]";
+      GetRecommendFeedList RR = new GetRecommendFeedList(dbHelper, keyword);
       RR.delegate = this;
       RR.execute(url);
     }
@@ -138,6 +139,7 @@ public class Recommender implements AsyncResponse {
             try {
               dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl, keywords, 1);
             } catch (Exception e) {
+              e.printStackTrace();
               continue;
             }
         }
