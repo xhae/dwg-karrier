@@ -1,9 +1,15 @@
 package com.dwg_karrier.roys;
 
+import static com.dwg_karrier.roys.R.layout.activity_navigation;
+import static com.dwg_karrier.roys.R.menu.activity_navigation_drawer;
+
+import android.content.Context;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -42,6 +48,7 @@ public class MyReportActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_my_report);
+
     Point windowSize = new Point();
     getWindowManager().getDefaultDisplay().getSize(windowSize);
     final int screenHeight = windowSize.y;

@@ -14,6 +14,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
+import org.apache.commons.collections4.map.DefaultedMap;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,6 +28,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
+import java.util.Set;
 
 public class Authentication {
   static final String DEFAULTIMGURL = "https://blogdotstartlinkdotio.files.wordpress.com/2016/01/12620892_1077588858927687_1133266313_o.jpg?w=490&h=772";
@@ -200,6 +203,7 @@ public class Authentication {
 
         JSONObject obj = new JSONObject(result);
         JSONArray arr = obj.getJSONArray("items");
+        urlConnection.disconnect();
         return arr;
       } catch (IOException | JSONException e) {
         e.printStackTrace();
@@ -214,19 +218,25 @@ public class Authentication {
       final int len = arr.length();
       final int WORDPERMIN = 150;
       try {
+        //For Test
+        dataBaseOpenHelper.deleteAllPage();
+        //dataBaseOpenHelper.getTableAsString();
+
+        Map<String, Integer> keywordCount = new DefaultedMap<>(0);
         for (int i = 0; i < len; i++) {
           Log.d("iteration", Integer.toString(i));
           JSONObject feed = arr.getJSONObject(i);
           String feedUrl = feed.getString("originId");
-          Log.d("feedUrl", feedUrl);
           Crawler crawler = new Crawler(feedUrl);
           String feedTitle = crawler.getTitle();
           String feedContent = crawler.getContent();
           int wordCount = crawler.getWordCount();
           int feedExpectedTime = wordCount / WORDPERMIN;
           String imgUrl = crawler.getLeadImgUrl();
-          // TODO(sera): keywords and isRecommended
           String keywords = feed.getString("keywords");
+          for (String keyword : keywords.replace("[\"", "").replace("\"]", "").split("\",\"")) {
+           keywordCount.put(keyword, keywordCount.get(keyword) + 1);
+          }
           if (!dataBaseOpenHelper.isDuplicatedUrl(feedUrl))
             try {
               dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl, keywords, 0);
@@ -234,6 +244,19 @@ public class Authentication {
               continue;
             }
         }
+        //for max value
+        Set<String> keys = keywordCount.keySet();
+        Integer max = -1;
+        String maxKey = "";
+        for(String key : keys) {
+          if (keywordCount.get(key) > max) {
+            max = keywordCount.get(key);
+            maxKey = key;
+          }
+        }
+        Recommender recommender = new Recommender(mainContext,dataBaseOpenHelper);
+        recommender.withKeywords(new String[]{maxKey});
+
       } catch (
           Exception e
           )
