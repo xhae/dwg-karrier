@@ -88,9 +88,12 @@ public class ContentView extends AppCompatActivity {
     WebView wv = (WebView) findViewById(R.id.contentView);
     wv.setVerticalScrollBarEnabled(true);
     wv.setHorizontalScrollBarEnabled(false);
+
     final String mimeType = "text/html";
     final String encoding = "UTF-8";
+
     wv.loadDataWithBaseURL("", view, mimeType, encoding, "");
+
   }
 
   private void toolbarSetting() {
