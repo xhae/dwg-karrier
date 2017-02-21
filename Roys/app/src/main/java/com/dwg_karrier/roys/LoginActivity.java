@@ -18,7 +18,7 @@ public class LoginActivity extends AppCompatActivity {
 
     findViewById(R.id.login_button).setOnClickListener(loginClickListener);
   }
-
+  
   Button.OnClickListener loginClickListener = new View.OnClickListener() {
     public void onClick(View v) {
       final Context loginActivity = LoginActivity.this;

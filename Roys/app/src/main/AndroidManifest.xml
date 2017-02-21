@@ -31,8 +31,6 @@
     <activity
         android:name=".ContentSwipe"
         android:exported="true"/>
-    <activity android:name=".ImageListActivity">
-    </activity>
     <activity android:name=".MyReportActivity">
     </activity>
 

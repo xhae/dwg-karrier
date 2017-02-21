@@ -64,9 +64,9 @@ public class ContentView extends AppCompatActivity {
           backToList = new Intent(ContentView.this, ContentSwipe.class);
         }
 
-        if(flag == '0') {
+        if (flag == '0') {
           backToList.putExtra("FLAG", '0');
-        } else if(flag == '1') {
+        } else if (flag == '1') {
           backToList.putExtra("FLAG", '1');
         } else {
           backToList.putExtra("finTime", finTime);

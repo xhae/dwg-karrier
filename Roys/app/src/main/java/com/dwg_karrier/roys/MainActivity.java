@@ -24,9 +24,7 @@ import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-  // TODO(juung): bring user name from preference
   private String user = "xhae";
-  // TODO(juung): calculate level from preference
   private String user_level = "Lv.2";
   // TODO(juung): bring total read pages and spend hours from preference
   private String user_record = "172 Pages";
@@ -37,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_navigation);
-    if(loginActivity != null) {
+    if (loginActivity != null) {
       loginActivity.finish();
       loginActivity = null;
     }
