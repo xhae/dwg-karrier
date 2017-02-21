@@ -218,12 +218,15 @@ public class Authentication {
       final int len = arr.length();
       final int WORDPERMIN = 150;
       try {
+        //For Test
+        dataBaseOpenHelper.deleteAllPage();
+        //dataBaseOpenHelper.getTableAsString();
+
         Map<String, Integer> keywordCount = new DefaultedMap<>(0);
         for (int i = 0; i < len; i++) {
           Log.d("iteration", Integer.toString(i));
           JSONObject feed = arr.getJSONObject(i);
           String feedUrl = feed.getString("originId");
-          Log.d("feedUrl", feedUrl);
           Crawler crawler = new Crawler(feedUrl);
           String feedTitle = crawler.getTitle();
           String feedContent = crawler.getContent();
@@ -251,7 +254,7 @@ public class Authentication {
             maxKey = key;
           }
         }
-        Recommender recommender = new Recommender(mainContext);
+        Recommender recommender = new Recommender(mainContext,dataBaseOpenHelper);
         recommender.withKeywords(new String[]{maxKey});
 
       } catch (
