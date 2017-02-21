@@ -216,7 +216,7 @@ public class Authentication {
     @Override
     protected void onPostExecute(JSONArray arr) {
       final int len = arr.length();
-      final int WORDPERMIN = 150;
+      final int WORDPERMIN = 90;
       try {
         //For Test
         dataBaseOpenHelper.deleteAllPage();
