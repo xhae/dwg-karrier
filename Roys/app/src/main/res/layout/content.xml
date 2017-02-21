@@ -13,10 +13,9 @@
         android:id="@+id/contentToolbar"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        app:popupTheme="@style/AppTheme.PopupOverlay">
+        app:popupTheme="@style/AppTheme.NoActionBar">
     </android.support.v7.widget.Toolbar>
   </android.support.design.widget.AppBarLayout>
-
   <android.support.v4.widget.NestedScrollView
       android:layout_width="match_parent"
       android:layout_height="match_parent"
@@ -25,11 +24,12 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent" android:weightSum="1">
+
       <Button
           android:text="Finish Reading"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:id="@+id/finishReading" android:layout_weight="0.005"/>
+          android:id="@+id/finishReading"/>
       <TextView
           android:layout_width="match_parent" android:layout_height="wrap_content"
           android:id="@+id/contenttitleview" android:textSize="30sp"

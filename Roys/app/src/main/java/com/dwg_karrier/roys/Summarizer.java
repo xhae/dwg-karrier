@@ -88,6 +88,7 @@ public class Summarizer {
         JSONArray response = null;
         try {
           String jsonStr = stringBuilder.toString();
+          Log.d("jsonStr", jsonStr);
           JSONParser jsonParser = new JSONParser();
           response = (JSONArray) jsonParser.parse(jsonStr);
         } catch (Exception e) {

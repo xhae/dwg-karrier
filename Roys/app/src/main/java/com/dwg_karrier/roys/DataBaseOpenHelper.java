@@ -1,6 +1,7 @@
 package com.dwg_karrier.roys;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -10,7 +11,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import java.util.ArrayList;
 
 public class DataBaseOpenHelper extends SQLiteOpenHelper {
-  public static final int DATABASE_VERSION = 3;
+  public static final int DATABASE_VERSION = 4;
 
   public static final String DATABASE_NAME = "FeedReader.db";
 
@@ -54,18 +55,6 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     int result = 0;
 
     Cursor cursor = dataBase.rawQuery("SELECT count(url) FROM page WHERE read = 1;", null);
-    while (cursor.moveToNext()) {
-      result = cursor.getInt(0);
-    }
-    return result;
-  }
-
-  // test
-  public int getunReadPageCount() {
-    SQLiteDatabase dataBase = getReadableDatabase();
-    int result = 0;
-
-    Cursor cursor = dataBase.rawQuery("SELECT count(url) FROM page WHERE read = 0;", null);
     while (cursor.moveToNext()) {
       result = cursor.getInt(0);
     }

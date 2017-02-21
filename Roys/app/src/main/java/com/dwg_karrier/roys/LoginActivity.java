@@ -8,15 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class LoginActivity extends AppCompatActivity {
-  boolean isAccountConnected; // check if user connect to Account.
   public static Activity loginActivity;
-  Button.OnClickListener loginClickListener = new View.OnClickListener() {
-    public void onClick(View v) {
-      final Context loginActivity = LoginActivity.this;
-      Authentication authentication = new Authentication(loginActivity);
-      authentication.authenticationAndBringPages();
-    }
-  };
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -26,4 +18,12 @@ public class LoginActivity extends AppCompatActivity {
 
     findViewById(R.id.login_button).setOnClickListener(loginClickListener);
   }
+  
+  Button.OnClickListener loginClickListener = new View.OnClickListener() {
+    public void onClick(View v) {
+      final Context loginActivity = LoginActivity.this;
+      Authentication authentication = new Authentication(loginActivity);
+      authentication.authenticationAndBringPages();
+    }
+  };
 }

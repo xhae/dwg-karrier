@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridLayout;
@@ -23,18 +24,18 @@ import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-  // TODO(juung): bring user name from preference
   private String user = "xhae";
-  // TODO(juung): calculate level from preference
   private String user_level = "Lv.2";
   // TODO(juung): bring total read pages and spend hours from preference
   private String user_record = "172 Pages";
+  NavigationView navigationView ;
+  View hView ;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_navigation);
-    if(loginActivity != null) {
+    if (loginActivity != null) {
       loginActivity.finish();
       loginActivity = null;
     }
@@ -51,22 +52,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
     drawer.setDrawerListener(toggle);
     toggle.syncState();
-
-    NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-    View hView = navigationView.getHeaderView(0);
-    ImageView nav_user_image = (ImageView) hView.findViewById(R.id.nav_user_image);
-    // TODO(juung): bring user_image from preference
-    nav_user_image.setImageResource(R.mipmap.ic_user_xhae);
-    TextView nav_user = (TextView) hView.findViewById(R.id.nav_user_id);
-    nav_user.setText(user);
-    TextView nav_user_level = (TextView) hView.findViewById(R.id.nav_user_level);
-    nav_user_level.setText(user_level);
-    DataBaseOpenHelper dbhelper = new DataBaseOpenHelper(MainActivity.this);
-    user_record = dbhelper.getReadPageCount() + " Pages";
-    TextView nav_user_record = (TextView) hView.findViewById(R.id.nav_user_record);
-    nav_user_record.setText(user_record);
-    navigationView.setNavigationItemSelectedListener(this);
-
+    navigationView = (NavigationView) findViewById(R.id.nav_view);
+    hView = navigationView.getHeaderView(0);
+    setUserInfo();
     setImage();
     GridLayout minuteLayout = (GridLayout) findViewById(R.id.maingridLayout);
 
@@ -92,6 +80,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
       });
     }
+  }
+
+  @Override
+  public void onStart() {
+    super.onStart();
+    setUserInfo();
   }
 
   @Override
@@ -125,6 +119,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
     drawer.closeDrawer(GravityCompat.START);
     return true;
+  }
+
+  private void setUserInfo() {
+    ImageView nav_user_image = (ImageView) hView.findViewById(R.id.nav_user_image);
+    // TODO(juung): bring user_image from preference
+    nav_user_image.setImageResource(R.mipmap.ic_user_xhae);
+    TextView nav_user = (TextView) hView.findViewById(R.id.nav_user_id);
+    nav_user.setText(user);
+    TextView nav_user_level = (TextView) hView.findViewById(R.id.nav_user_level);
+    nav_user_level.setText(user_level);
+    DataBaseOpenHelper dbhelper = new DataBaseOpenHelper(MainActivity.this);
+    user_record = dbhelper.getReadPageCount() + " Pages";
+    TextView nav_user_record = (TextView) hView.findViewById(R.id.nav_user_record);
+    nav_user_record.setText(user_record);
+    navigationView.setNavigationItemSelectedListener(this);
   }
 
   private void setImage() {

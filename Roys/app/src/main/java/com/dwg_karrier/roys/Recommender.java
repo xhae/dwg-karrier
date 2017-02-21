@@ -1,9 +1,7 @@
 package com.dwg_karrier.roys;
 
 
-import static com.dwg_karrier.roys.Authentication.DEFAULTIMGURL;
 import static com.dwg_karrier.roys.Authentication.convertStreamToString;
-import static com.dwg_karrier.roys.Authentication.countWords;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -125,26 +123,23 @@ public class Recommender implements AsyncResponse {
         final int WORDPERMIN = 40;
 
         for (int i = 0; i < len; i++) {
+          Log.d("iteration", Integer.toString(i));
           JSONObject feed = arr.getJSONObject(i);
           String feedUrl = feed.getString("originId");
-          String feedTitle = (String) feed.get("title");
+          Log.d("feedUrl", feedUrl);
+          Crawler crawler = new Crawler(feedUrl);
+          String feedTitle = crawler.getTitle();
+          String feedContent = crawler.getContent();
+          int wordCount = crawler.getWordCount();
+          int feedExpectedTime = wordCount / WORDPERMIN;
+          String imgUrl = crawler.getLeadImgUrl();
           String keywords = feed.getString("keywords");
-          JSONObject feedSummary = feed.getJSONObject("summary");
-          String feedContent = (String) feedSummary.get("content");
-          int feedExpectedTime = countWords(feedContent) / WORDPERMIN;
-          //Please Let me know if you have smart way of getting image url from html :)
-          String[] imgUrls = feedContent.split("src=\"");
-          String imgUrl = null;
-          if (imgUrls.length == 0) {
-            imgUrl = DEFAULTIMGURL;
-          } else{
-            imgUrl = imgUrls[0].split("\">")[0];
-          }
-
-          // TODO: add another check url duplication method. (Without database query.)
-          if (!dataBaseOpenHelper.isDuplicatedUrl(feedUrl)) {
-            dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl, keywords, 1);
-          }
+          if (!dataBaseOpenHelper.isDuplicatedUrl(feedUrl))
+            try {
+              dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl, keywords, 1);
+            } catch (Exception e) {
+              continue;
+            }
         }
         urlConnection.disconnect();
 
