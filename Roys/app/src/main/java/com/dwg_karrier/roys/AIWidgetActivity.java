@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.Toast;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 import ai.api.android.AIConfiguration;
@@ -77,8 +79,18 @@ public class AIWidgetActivity extends ActionBarActivity {
 
                 if(timeValue !=0) {
                     Toast.makeText(getApplicationContext(), String.valueOf(timeValue) + "min / " + viewtype, Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
+
+                    Date curTime = new Date(System.currentTimeMillis());
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(curTime);
+                    cal.add(Calendar.MINUTE, timeValue);
+                    Date d = new Date(cal.getTimeInMillis());
+
+                    Intent openRcmdList = new Intent(getApplicationContext(), ContentSwipe.class); // open Recommend Lists
+                    openRcmdList.putExtra("finTime", d);
+                    openRcmdList.putExtra("curTime", curTime);
+                    startActivity(openRcmdList);
+
                 } else {
                     Toast.makeText(getApplicationContext(), "다시 말씀해 주세요", Toast.LENGTH_SHORT).show();
                 }
