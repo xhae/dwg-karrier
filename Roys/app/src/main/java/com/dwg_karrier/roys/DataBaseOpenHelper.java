@@ -67,7 +67,12 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   }
 
   public ArrayList<ScriptedURL> getUnreadUrlList() {
-    String unreadQuery = "SELECT * from page where read = 0";
+    String unreadQuery = "SELECT * from page where read = 0 and isrecommended == 0";
+    return getUrlListFromQuery(unreadQuery);
+  }
+
+  public ArrayList<ScriptedURL> getUnreadRecommededUrlList() {
+    String unreadQuery = "SELECT * from page where read = 0 and isrecommended == 1";
     return getUrlListFromQuery(unreadQuery);
   }
 
