@@ -19,7 +19,7 @@ import java.net.URLEncoder;
  */
 public class Translator {
   private final static String TRANSLATOR_URL = "https://translation.googleapis.com/language/translate/v2?";
-  private final static String KEY = "key=AIzaSyAUeWE4PYyB4JOtEsUZYwMit1OvAiAd5_E";
+  private final static String KEY = "key=AIzaSyDaveRm4x7EzZcBw_Ulxzxf7Q8RMR14_aE"; // v2: AIzaSyAUeWE4PYyB4JOtEsUZYwMit1OvAiAd5_E
   private final static String SOURCE = "&source=";
   private final static String TARGET = "&target=";
   private final static String QUERY = "&q=";

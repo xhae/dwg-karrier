@@ -2,7 +2,6 @@ package com.dwg_karrier.roys;
 
 import static com.dwg_karrier.roys.ContentSwipe.saveSwipeActivity;
 import static com.dwg_karrier.roys.ListActivity.saveActivity;
-import static com.dwg_karrier.roys.R.layout.item;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -135,6 +134,7 @@ public class ContentView extends AppCompatActivity implements NavigationView.OnN
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.tts, menu);
     getMenuInflater().inflate(R.menu.translatelanguagemenu, menu);
     return true;
   }
