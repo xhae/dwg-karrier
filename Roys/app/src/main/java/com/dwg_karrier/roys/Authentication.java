@@ -187,11 +187,13 @@ public class Authentication {
     @Override
     protected void onPreExecute() {
       super.onPreExecute();
+      /*
       pDialog2 = new ProgressDialog(mainContext);
       pDialog2.setMessage("Bring Pages ...");
       pDialog2.setIndeterminate(false);
       pDialog2.setCancelable(true);
       pDialog2.show();
+      */
     }
 
     @Override
@@ -225,28 +227,57 @@ public class Authentication {
         dataBaseOpenHelper.deleteAllPage();
         //dataBaseOpenHelper.getTableAsString();
 
-        Map<String, Integer> keywordCount = new DefaultedMap<>(0);
+
+        final Map<String, Integer> keywordCount = new DefaultedMap<>(0);
         for (int i = 0; i < len; i++) {
           Log.d("iteration", Integer.toString(i));
-          JSONObject feed = arr.getJSONObject(i);
-          String feedUrl = feed.getString("originId");
-          Crawler crawler = new Crawler(feedUrl);
-          String feedTitle = crawler.getTitle();
-          String feedContent = crawler.getContent();
-          int wordCount = crawler.getWordCount();
-          int feedExpectedTime = wordCount / WORDPERMIN;
-          String imgUrl = crawler.getLeadImgUrl();
-          String keywords = feed.getString("keywords");
-          for (String keyword : keywords.replace("[\"", "").replace("\"]", "").split("\",\"")) {
-            keywordCount.put(keyword, keywordCount.get(keyword) + 1);
-          }
-          if (!dataBaseOpenHelper.isDuplicatedUrl(feedUrl))
+          final JSONObject feed = arr.getJSONObject(i);
+          final String feedUrl = feed.getString("originId");
+          if (len < 7) {
+            Crawler crawler = new Crawler(feedUrl);
+            String feedTitle = crawler.getTitle();
+            String feedContent = crawler.getContent();
+            int wordCount = crawler.getWordCount();
+            int feedExpectedTime = wordCount / WORDPERMIN;
+            String imgUrl = crawler.getLeadImgUrl();
+            String keywords = null;
             try {
-              dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl, keywords, 0);
-            } catch (Exception e) {
-              continue;
+              keywords = feed.getString("keywords");
+            } catch (JSONException e) {
+              e.printStackTrace();
             }
+            for (String keyword : keywords.replace("[\"", "").replace("\"]", "").split("\",\"")) {
+              keywordCount.put(keyword, keywordCount.get(keyword) + 1);
+            }
+            if (!dataBaseOpenHelper.isDuplicatedUrl(feedUrl))
+              dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl, keywords, 0);
+
+          } else {
+          new Thread(new Runnable() {
+            public void run() {
+              Crawler crawler = new Crawler(feedUrl);
+              String feedTitle = crawler.getTitle();
+              String feedContent = crawler.getContent();
+              int wordCount = crawler.getWordCount();
+              int feedExpectedTime = wordCount / WORDPERMIN;
+              String imgUrl = crawler.getLeadImgUrl();
+              String keywords = null;
+              try {
+                keywords = feed.getString("keywords");
+              } catch (JSONException e) {
+                e.printStackTrace();
+              }
+              for (String keyword : keywords.replace("[\"", "").replace("\"]", "").split("\",\"")) {
+                keywordCount.put(keyword, keywordCount.get(keyword) + 1);
+              }
+              if (!dataBaseOpenHelper.isDuplicatedUrl(feedUrl))
+                dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl, keywords, 0);
+
+            }
+          }).start();
+          }
         }
+        pDialog2.dismiss();
         //for max value
         Set<String> keys = keywordCount.keySet();
         Integer max = -1;
@@ -263,7 +294,7 @@ public class Authentication {
         Log.e("crawler error", e.getMessage(), e);
       }
 
-      pDialog2.dismiss();
+
       Intent startRoys = new Intent(mainContext, MainActivity.class);
       mainContext.startActivity(startRoys);
     }
