@@ -175,6 +175,9 @@ public class MyReportActivity extends AppCompatActivity
     } else if (id == R.id.my_report) {
       Intent go_my_report = new Intent(this, MyReportActivity.class);
       startActivity(go_my_report);
+    } else if (id == R.id.home) {
+      Intent go_home = new Intent(this, MainActivity.class);
+      startActivity(go_home);
     }
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
     drawer.closeDrawer(GravityCompat.START);

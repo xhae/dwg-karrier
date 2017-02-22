@@ -18,7 +18,6 @@ import org.apache.commons.collections4.map.DefaultedMap;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -65,13 +64,6 @@ public class Authentication {
       }
     }
     return sb.toString();
-  }
-
-  public static int countWords(String html) throws Exception {
-    org.jsoup.nodes.Document dom = Jsoup.parse(html);
-    String text = dom.text();
-
-    return text.split(" ").length;
   }
 
   void authenticationAndBringPages() {
@@ -138,7 +130,7 @@ public class Authentication {
 
   private class TokenGet extends AsyncTask<String, String, JSONObject> {
     private String code;
-    private ProgressDialog pDialog;
+    private ProgressDialog pDialog1;
     private Context mainContext;
 
     public TokenGet(String tokencode, Context context) {
@@ -149,11 +141,11 @@ public class Authentication {
     @Override
     protected void onPreExecute() {
       super.onPreExecute();
-      pDialog = new ProgressDialog(mainContext);
-      pDialog.setMessage("Contacting Feedly ...");
-      pDialog.setIndeterminate(false);
-      pDialog.setCancelable(true);
-      pDialog.show();
+      pDialog1 = new ProgressDialog(mainContext);
+      pDialog1.setMessage("Contacting Feedly ...");
+      pDialog1.setIndeterminate(false);
+      pDialog1.setCancelable(true);
+      pDialog1.show();
     }
 
     @Override
@@ -167,13 +159,14 @@ public class Authentication {
       if (json != null) {
         try {
           final String URL = "https://sandbox.feedly.com/v3/streams/contents?streamId=user/" + json.getString("id") + "/category/global.all";
-          new GetPageList(new DataBaseOpenHelper(mainContext), mainContext, json.getString("access_token"), pDialog).execute(URL);
+          pDialog1.dismiss();
+          new GetPageList(new DataBaseOpenHelper(mainContext), mainContext, json.getString("access_token"), pDialog1).execute(URL);
         } catch (JSONException e) {
           e.printStackTrace();
         }
       } else {
         Toast.makeText(mainContext, "Network Error", Toast.LENGTH_SHORT).show();
-        pDialog.dismiss();
+        pDialog1.dismiss();
       }
     }
   }
@@ -182,13 +175,23 @@ public class Authentication {
     String accessToken;
     private DataBaseOpenHelper dataBaseOpenHelper;
     private Context mainContext;
-    private ProgressDialog pDialog;
+    private ProgressDialog pDialog2;
 
     public GetPageList(DataBaseOpenHelper dbHelper, Context context, String token, ProgressDialog dialog) {
       dataBaseOpenHelper = dbHelper;
       mainContext = context;
       accessToken = token;
-      pDialog = dialog;
+      pDialog2 = dialog;
+    }
+
+    @Override
+    protected void onPreExecute() {
+      super.onPreExecute();
+      pDialog2 = new ProgressDialog(mainContext);
+      pDialog2.setMessage("Bring Pages ...");
+      pDialog2.setIndeterminate(false);
+      pDialog2.setCancelable(true);
+      pDialog2.show();
     }
 
     @Override
@@ -235,7 +238,7 @@ public class Authentication {
           String imgUrl = crawler.getLeadImgUrl();
           String keywords = feed.getString("keywords");
           for (String keyword : keywords.replace("[\"", "").replace("\"]", "").split("\",\"")) {
-           keywordCount.put(keyword, keywordCount.get(keyword) + 1);
+            keywordCount.put(keyword, keywordCount.get(keyword) + 1);
           }
           if (!dataBaseOpenHelper.isDuplicatedUrl(feedUrl))
             try {
@@ -248,23 +251,19 @@ public class Authentication {
         Set<String> keys = keywordCount.keySet();
         Integer max = -1;
         String maxKey = "";
-        for(String key : keys) {
+        for (String key : keys) {
           if (keywordCount.get(key) > max) {
             max = keywordCount.get(key);
             maxKey = key;
           }
         }
-        Recommender recommender = new Recommender(mainContext,dataBaseOpenHelper);
+        Recommender recommender = new Recommender(mainContext, dataBaseOpenHelper);
         recommender.withKeywords(new String[]{maxKey});
-      } catch (
-          Exception e
-          )
-
-      {
+      } catch (Exception e) {
         Log.e("crawler error", e.getMessage(), e);
       }
 
-      pDialog.dismiss();
+      pDialog2.dismiss();
       Intent startRoys = new Intent(mainContext, MainActivity.class);
       mainContext.startActivity(startRoys);
     }
