@@ -46,6 +46,8 @@ public class ContentView extends AppCompatActivity implements NavigationView.OnN
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     Drawable translate_icon = getResources().getDrawable(R.drawable.ic_translate_white);
     toolbar.setOverflowIcon(translate_icon);
+    Drawable tts_icon = getDrawable(R.drawable.ic_mic);
+    toolbar.setOverflowIcon(tts_icon);
     setSupportActionBar(toolbar);
 
     ActionBar actionBar = getSupportActionBar();
@@ -129,6 +131,7 @@ public class ContentView extends AppCompatActivity implements NavigationView.OnN
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.translatelanguagemenu, menu);
+    getMenuInflater().inflate(R.menu.tts, menu);
     return true;
   }
 
@@ -149,7 +152,9 @@ public class ContentView extends AppCompatActivity implements NavigationView.OnN
       return true;
     } else if (id == R.id.original) {
       setView(title, content);
-    } 
+    } else if (id == R.id.tts) {
+
+    }
     return super.onOptionsItemSelected(item);
   }
 
