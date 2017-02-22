@@ -173,8 +173,8 @@ public class ContentView extends AppCompatActivity implements NavigationView.OnN
     } else if (id == R.id.home) {
       Intent go_home = new Intent(this, MainActivity.class);
       startActivity(go_home);
-      finish();
     }
+    finish();
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
     drawer.closeDrawer(GravityCompat.START);
     return true;
