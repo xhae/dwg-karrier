@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,6 +94,7 @@ public class ContentSwipe extends AppCompatActivity {
         args.putString("CONTENT", pageInfo.getContent());
         args.putString("REPIMAGE", pageInfo.getRepImageUrl());
         args.putString("URL", pageInfo.getUrl());
+        args.putInt("EXPECTEDTIME", (int) pageInfo.getExpectedTime());
       }
       fragment.setArguments(args);
       return fragment;
@@ -103,10 +103,15 @@ public class ContentSwipe extends AppCompatActivity {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
         savedInstanceState) {
+      int minute = 60;
+
       View rootView = inflater.inflate(R.layout.contentfragment, container, false);
       final TextView contentTitle = (TextView) rootView.findViewById(R.id.title);
       TextView contentSum = (TextView) rootView.findViewById(R.id.summary);
       ImageView backgroundImage = (ImageView) rootView.findViewById(R.id.backImage);
+      TextView expectedTime = (TextView) rootView.findViewById(R.id.expected_time);
+      expectedTime.setText( getArguments().getInt("EXPECTEDTIME") / minute + "hour"
+          + Double.parseDouble(String.format("%.2f", (float) getArguments().getInt("EXPECTEDTIME") % minute)) + "min");
 
       if (getArguments().getInt("TOTALPAGENUM") == 0) {
         contentTitle.setText(getArguments().getString("TITLE"));
@@ -123,16 +128,6 @@ public class ContentSwipe extends AppCompatActivity {
         } catch (Exception e) {
           e.printStackTrace();
         }
-        /*
-         * TODO(juung): get wordCount and determine different summarized line
-         * if (wordCount < ) {
-         *  summaryNum = 3;
-         *  return summaryNum;
-         * } elif (wordCount < ) {
-         *  summaryNum = 6;
-         *  return summaryNum;
-         * }
-         */
         Document jsoupdoc = Jsoup.parse(getContent);
         final String contentText = jsoupdoc.text();
         String[] splitedText = contentText.split("\\.");
