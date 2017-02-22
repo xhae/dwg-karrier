@@ -6,6 +6,7 @@ import static com.dwg_karrier.roys.ListActivity.saveActivity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -21,10 +22,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.Date;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
-public class ContentView extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import java.util.Date;
+import java.util.Locale;
+
+public class ContentView extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, TextToSpeech.OnInitListener {
   private final String imgSizeCtrl = "<style>img{display: inline; height: auto; max-width: 100%;}</style>\n"; // fit image to the size of viewer
+  private TextToSpeech myTTS;
   String title;
   String content;
   String url;
@@ -42,7 +48,7 @@ public class ContentView extends AppCompatActivity implements NavigationView.OnN
   protected void onCreate(final Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_navigation_contentview);
-//    toolbarSetting();
+    //toolbarSetting();
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     Drawable translate_icon = getResources().getDrawable(R.drawable.ic_translate_white);
     toolbar.setOverflowIcon(translate_icon);
@@ -149,6 +155,12 @@ public class ContentView extends AppCompatActivity implements NavigationView.OnN
       return true;
     } else if (id == R.id.original) {
       setView(title, content);
+    } else if (id == R.id.tts) {
+      if(myTTS == null || !myTTS.isSpeaking()) {
+        myTTS = new TextToSpeech(this, this);
+      }else {
+        myTTS.stop();
+      }
     }
     return super.onOptionsItemSelected(item);
   }
@@ -211,5 +223,22 @@ public class ContentView extends AppCompatActivity implements NavigationView.OnN
 
     wv.loadDataWithBaseURL("", view, mimeType, encoding, "");
 
+  }
+  public void onStop(){
+
+    if(myTTS != null){
+      myTTS.shutdown();
+    }
+
+    super.onStop();
+  }
+
+  @Override
+  public void onInit(int status) {
+    myTTS.setLanguage(Locale.ENGLISH);
+    Document jsoupdoc = Jsoup.parse(content);
+    final String contentText = jsoupdoc.text();
+    myTTS.speak(title, TextToSpeech.QUEUE_FLUSH, null);
+    myTTS.speak(contentText,TextToSpeech.QUEUE_ADD,null);
   }
 }
