@@ -11,11 +11,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -70,6 +72,15 @@ public class ContentSwipe extends AppCompatActivity {
         finish();
       }
     });
+    // from ContentView
+    Intent getReadTime = new Intent(this.getIntent());
+    String readTime = getReadTime.getStringExtra("readTime");
+    if (readTime != null) {
+      Toast checkInfo = Toast.makeText(getApplicationContext(), "Congratulations!" + "\n" +
+          "You finished reading in " + readTime + "sec", Toast.LENGTH_LONG);
+      checkInfo.setGravity(Gravity.CENTER, 0, 0);
+      checkInfo.show();
+    }
   }
 
   public static class PlaceholderFragment extends Fragment {
