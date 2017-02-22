@@ -125,7 +125,8 @@ public class Recommender implements AsyncResponse {
         final int WORDPERMIN = 40;
 
         this.urls = new ArrayList<JSONObject>();
-        for (int i = 0; i < len; i++) {
+        final int limit = 10;
+        for (int i = 0; i < limit; i++) {
           Log.d("iteration", Integer.toString(i));
           JSONObject feed = arr.getJSONObject(i);
           String feedUrl = feed.getString("originId");

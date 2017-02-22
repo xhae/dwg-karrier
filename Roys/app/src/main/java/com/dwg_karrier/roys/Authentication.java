@@ -225,7 +225,7 @@ public class Authentication {
       final int WORDPERMIN = 90;
       try {
         //For Test
-        dataBaseOpenHelper.deleteAllPage();
+        //dataBaseOpenHelper.deleteAllPage();
         //dataBaseOpenHelper.getTableAsString();
         boolean rcmcheck = false;
 
@@ -249,7 +249,7 @@ public class Authentication {
         new Thread(new Runnable() {
           public void run() {
             Recommender recommender = new Recommender(mainContext, dataBaseOpenHelper);
-            recommender.withKeywords(new String[]{allKeywords.get(4)});
+            recommender.withKeywords(new String[]{"TC"});
           }
         }).start();
 
@@ -257,8 +257,6 @@ public class Authentication {
           Log.d("iteration", Integer.toString(i));
           final JSONObject feed = arr.getJSONObject(i);
           final String feedUrl = feed.getString("originId");
-
-
           new Thread(new Runnable() {
             public void run() {
               Crawler crawler = new Crawler(feedUrl);

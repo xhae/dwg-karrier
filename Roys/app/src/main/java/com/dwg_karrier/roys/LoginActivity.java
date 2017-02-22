@@ -11,7 +11,6 @@ import android.widget.Button;
 public class LoginActivity extends AppCompatActivity {
   public static Activity loginActivity;
 
-  private TextToSpeech myTTS;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
