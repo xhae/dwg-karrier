@@ -148,7 +148,7 @@ public class Recommender implements AsyncResponse {
       final int limit = 10;
       for (int i = 0; i < limit; i++) {
         Log.d("iteration", Integer.toString(i));
-        JSONObject feed = urls.get(i);
+        final JSONObject feed = urls.get(i);
         String feedUrl = null;
         try {
           feedUrl = feed.getString("originId");
@@ -156,7 +156,8 @@ public class Recommender implements AsyncResponse {
           e.printStackTrace();
         }
         final int WORDPERMIN = 40;
-        Crawler crawler = new Crawler(feedUrl);
+        final String finalFeedUrl = feedUrl;
+        Crawler crawler = new Crawler(finalFeedUrl);
         String feedTitle = crawler.getTitle();
         String feedContent = crawler.getContent();
         int wordCount = crawler.getWordCount();
@@ -169,12 +170,10 @@ public class Recommender implements AsyncResponse {
           e.printStackTrace();
         }
 
-        if (!dataBaseOpenHelper.isDuplicatedUrl(feedUrl))
-          try {
-            dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl, keywords, 1);
-          } catch (Exception e) {
-            continue;
-          }
+        if (!dataBaseOpenHelper.isDuplicatedUrl(finalFeedUrl))
+          dataBaseOpenHelper.insertScriptedData(finalFeedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl, keywords, 1);
+
+
       }
     }
   }
