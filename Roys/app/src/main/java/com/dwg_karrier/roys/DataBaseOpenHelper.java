@@ -1,12 +1,9 @@
 package com.dwg_karrier.roys;
 
-import static org.jsoup.Connection.Method.HEAD;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
