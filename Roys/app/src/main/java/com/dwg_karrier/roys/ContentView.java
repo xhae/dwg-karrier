@@ -2,6 +2,7 @@ package com.dwg_karrier.roys;
 
 import static com.dwg_karrier.roys.ContentSwipe.saveSwipeActivity;
 import static com.dwg_karrier.roys.ListActivity.saveActivity;
+import static com.dwg_karrier.roys.R.layout.item;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -156,9 +157,9 @@ public class ContentView extends AppCompatActivity implements NavigationView.OnN
     } else if (id == R.id.original) {
       setView(title, content);
     } else if (id == R.id.tts) {
-      if(myTTS == null || !myTTS.isSpeaking()) {
+      if (myTTS == null || !myTTS.isSpeaking()) {
         myTTS = new TextToSpeech(this, this);
-      }else {
+      } else {
         myTTS.stop();
       }
     }
@@ -224,13 +225,20 @@ public class ContentView extends AppCompatActivity implements NavigationView.OnN
     wv.loadDataWithBaseURL("", view, mimeType, encoding, "");
 
   }
+  @Override
   public void onStop(){
-
+    super.onStop();
     if(myTTS != null){
       myTTS.shutdown();
     }
-
-    super.onStop();
+  }
+  
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+    if(myTTS != null) {
+      myTTS.shutdown();
+    }
   }
 
   @Override

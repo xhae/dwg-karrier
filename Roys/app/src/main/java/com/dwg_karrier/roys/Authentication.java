@@ -240,7 +240,7 @@ public class Authentication {
             int wordCount = crawler.getWordCount();
             int feedExpectedTime = wordCount / WORDPERMIN;
             String imgUrl = crawler.getLeadImgUrl();
-            if(imgUrl == null) {
+            if(imgUrl == null)  {
               imgUrl = DEFAULTIMGURL;
             }
             String keywords = null;
@@ -264,6 +264,9 @@ public class Authentication {
                 int wordCount = crawler.getWordCount();
                 int feedExpectedTime = wordCount / WORDPERMIN;
                 String imgUrl = crawler.getLeadImgUrl();
+                if(imgUrl == null)  {
+                  imgUrl = DEFAULTIMGURL;
+                }
                 String keywords = null;
                 try {
                   keywords = feed.getString("keywords");

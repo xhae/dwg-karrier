@@ -3,6 +3,7 @@ package com.dwg_karrier.roys;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
