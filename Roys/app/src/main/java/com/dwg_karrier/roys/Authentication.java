@@ -240,6 +240,9 @@ public class Authentication {
             int wordCount = crawler.getWordCount();
             int feedExpectedTime = wordCount / WORDPERMIN;
             String imgUrl = crawler.getLeadImgUrl();
+            if(imgUrl == null)  {
+              imgUrl = DEFAULTIMGURL;
+            }
             String keywords = null;
             try {
               keywords = feed.getString("keywords");
@@ -253,28 +256,31 @@ public class Authentication {
               dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl, keywords, 0);
 
           } else {
-          new Thread(new Runnable() {
-            public void run() {
-              Crawler crawler = new Crawler(feedUrl);
-              String feedTitle = crawler.getTitle();
-              String feedContent = crawler.getContent();
-              int wordCount = crawler.getWordCount();
-              int feedExpectedTime = wordCount / WORDPERMIN;
-              String imgUrl = crawler.getLeadImgUrl();
-              String keywords = null;
-              try {
-                keywords = feed.getString("keywords");
-              } catch (JSONException e) {
-                e.printStackTrace();
-              }
-              for (String keyword : keywords.replace("[\"", "").replace("\"]", "").split("\",\"")) {
-                keywordCount.put(keyword, keywordCount.get(keyword) + 1);
-              }
-              if (!dataBaseOpenHelper.isDuplicatedUrl(feedUrl))
-                dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl, keywords, 0);
+            new Thread(new Runnable() {
+              public void run() {
+                Crawler crawler = new Crawler(feedUrl);
+                String feedTitle = crawler.getTitle();
+                String feedContent = crawler.getContent();
+                int wordCount = crawler.getWordCount();
+                int feedExpectedTime = wordCount / WORDPERMIN;
+                String imgUrl = crawler.getLeadImgUrl();
+                if(imgUrl == null)  {
+                  imgUrl = DEFAULTIMGURL;
+                }
+                String keywords = null;
+                try {
+                  keywords = feed.getString("keywords");
+                } catch (JSONException e) {
+                  e.printStackTrace();
+                }
+                for (String keyword : keywords.replace("[\"", "").replace("\"]", "").split("\",\"")) {
+                  keywordCount.put(keyword, keywordCount.get(keyword) + 1);
+                }
+                if (!dataBaseOpenHelper.isDuplicatedUrl(feedUrl))
+                  dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl, keywords, 0);
 
-            }
-          }).start();
+              }
+            }).start();
           }
         }
         pDialog2.dismiss();

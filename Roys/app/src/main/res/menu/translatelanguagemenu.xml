@@ -17,4 +17,5 @@
         android:title="German"
         android:orderInCategory="100"
         app:showAsAction="withText"/>
+
 </menu>
