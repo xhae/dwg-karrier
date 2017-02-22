@@ -1,29 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" android:orientation="vertical">
-  <android.support.design.widget.AppBarLayout
-      android:id="@+id/contentAppbar"
-      android:layout_height="wrap_content"
-      android:layout_width="match_parent"
-      android:theme="@style/AppTheme.AppBarOverlay">
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/contentToolbar"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        app:popupTheme="@style/AppTheme.AppBarOverlay">
-    </android.support.v7.widget.Toolbar>
-  </android.support.design.widget.AppBarLayout>
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="false"
+    tools:context="com.dwg_karrier.roys.ContentView">
   <Button
       android:text="Finish Reading"
       android:layout_width="match_parent"
-      android:id="@+id/finishReading" android:layout_height="wrap_content"/>
+      android:layout_height="wrap_content"
+      android:id="@+id/finishReading"/>
   <android.support.v4.widget.NestedScrollView
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
+      android:layout_height="464dp"
+      app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior"
+      android:layout_gravity="bottom">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -44,4 +37,4 @@
       />
     </LinearLayout>
   </android.support.v4.widget.NestedScrollView>
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

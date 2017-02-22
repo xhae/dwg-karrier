@@ -12,7 +12,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridLayout;
@@ -25,9 +24,8 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
   private String user = "xhae";
-  private String user_level = "Lv.2";
-  // TODO(juung): bring total read pages and spend hours from preference
-  private String user_record = "172 Pages";
+  private String user_level;
+  private String user_record;
   NavigationView navigationView ;
   View hView ;
 
@@ -40,13 +38,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
       loginActivity = null;
     }
 
-    // toolbar
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
     ActionBar actionBar = getSupportActionBar();
     actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
     actionBar.setDisplayHomeAsUpEnabled(true);
-
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
     ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
         this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -55,12 +51,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     navigationView = (NavigationView) findViewById(R.id.nav_view);
     hView = navigationView.getHeaderView(0);
     setUserInfo();
+
     setImage();
     GridLayout minuteLayout = (GridLayout) findViewById(R.id.maingridLayout);
-
     int childCount = minuteLayout.getChildCount();
     final int timeUnit = 10;
-
     for (int i = 0; i < childCount; i++) {
       final ImageView container = (ImageView) minuteLayout.getChildAt(i);
       container.setTag((i + 1) * timeUnit + "");
@@ -115,6 +110,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     } else if (id == R.id.my_report) {
       Intent go_my_report = new Intent(this, MyReportActivity.class);
       startActivity(go_my_report);
+    } else if (id == R.id.home) {
+      Intent go_home = new Intent(this, MainActivity.class);
+      startActivity(go_home);
     }
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
     drawer.closeDrawer(GravityCompat.START);
@@ -128,8 +126,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TextView nav_user = (TextView) hView.findViewById(R.id.nav_user_id);
     nav_user.setText(user);
     TextView nav_user_level = (TextView) hView.findViewById(R.id.nav_user_level);
-    nav_user_level.setText(user_level);
     DataBaseOpenHelper dbhelper = new DataBaseOpenHelper(MainActivity.this);
+    user_level = "Lv. " + dbhelper.getReadPageCount() / 12;
+    nav_user_level.setText(user_level);
     user_record = dbhelper.getReadPageCount() + " Pages";
     TextView nav_user_record = (TextView) hView.findViewById(R.id.nav_user_record);
     nav_user_record.setText(user_record);

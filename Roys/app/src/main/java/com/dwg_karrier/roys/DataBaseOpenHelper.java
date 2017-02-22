@@ -60,6 +60,17 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     return result;
   }
 
+  public String getKeyword() {
+    SQLiteDatabase dataBase = getReadableDatabase();
+    String result = "";
+
+    Cursor cursor = dataBase.rawQuery("SELECT * from page where read = 1 and isrecommended == 0;", null);
+    while (cursor.moveToNext()) {
+      result += cursor.getString(keywordsColumn);
+    }
+    return result;
+  }
+
   public ArrayList<ScriptedURL> getAllUrlList() {
     String getUrlListQuery = "SELECT * from page";
     return getUrlListFromQuery(getUrlListQuery);
@@ -73,6 +84,11 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
   public ArrayList<ScriptedURL> getUnreadRecommededUrlList() {
     String unreadQuery = "SELECT * from page where read = 0 and isrecommended == 1";
     return getUrlListFromQuery(unreadQuery);
+  }
+
+  public ArrayList<ScriptedURL> getReadUrlList() {
+    String readQuery = "SELECT * from page where read = 1 and isrecommended == 0";
+    return getUrlListFromQuery(readQuery);
   }
 
   /**
@@ -189,6 +205,7 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     }
   }
 */
+
   /**
    * Please Check duplicated url before using insert method. Using isDuplicatedUrl()
    */

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.dwg_karrier.roys.MainActivity">
+    tools:context="com.dwg_karrier.roys.ContentView">
   <LinearLayout
       android:orientation="vertical"
       android:layout_width="match_parent"
@@ -14,8 +14,7 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:background="?attr/colorPrimary"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        android:layout_height="wrap_content">
+        android:theme="@style/AppTheme.AppBarOverlay" android:layout_height="wrap_content">
       <android.support.v7.widget.Toolbar
           android:id="@+id/toolbar"
           android:layout_width="match_parent"
@@ -24,9 +23,8 @@
           app:popupTheme="@style/AppTheme.NoActionBar"/>
     </android.support.design.widget.AppBarLayout>
     <include
-        layout="@layout/activity_main"
+        layout="@layout/content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="top"/>
+        android:layout_height="match_parent"/>
   </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
