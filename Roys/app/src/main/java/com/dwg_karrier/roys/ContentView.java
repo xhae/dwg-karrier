@@ -147,6 +147,8 @@ public class ContentView extends AppCompatActivity implements NavigationView.OnN
     } else if (id == R.id.german) {
       setView(titleTranslator.getTranslate("de"), contentTranslator.getTranslate("de"));
       return true;
+    } else if (id == R.id.original) {
+      setView(title, content);
     }
     return super.onOptionsItemSelected(item);
   }
