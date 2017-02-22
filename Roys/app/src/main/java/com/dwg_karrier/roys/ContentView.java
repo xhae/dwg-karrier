@@ -4,6 +4,7 @@ import static com.dwg_karrier.roys.ContentSwipe.saveSwipeActivity;
 import static com.dwg_karrier.roys.ListActivity.saveActivity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -99,6 +100,8 @@ public class ContentView extends AppCompatActivity {
   private void toolbarSetting() {
     Toolbar toolbar = (Toolbar) findViewById(R.id.contentToolbar);
     toolbar.inflateMenu(R.menu.translatelanguagemenu);
+    Drawable translate_icon = getResources().getDrawable(R.drawable.ic_translate_white);
+    toolbar.setOverflowIcon(translate_icon);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override
       public boolean onMenuItemClick(MenuItem item) {
