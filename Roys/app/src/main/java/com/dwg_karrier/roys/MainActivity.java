@@ -23,13 +23,12 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
   private String user = "xhae";
   private String user_level;
   private String user_record;
   NavigationView navigationView ;
   View hView ;
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -38,6 +37,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
       loginActivity.finish();
       loginActivity = null;
     }
+
+
+
 
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
@@ -89,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
   public void onStart() {
     super.onStart();
     setUserInfo();
+
   }
 
   @Override
@@ -174,5 +177,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     min60.getLayoutParams().height = (int) (screenHeight * 0.25);
     more.getLayoutParams().height = (int) (screenHeight * 0.25);
   }
+
+
 }
 
