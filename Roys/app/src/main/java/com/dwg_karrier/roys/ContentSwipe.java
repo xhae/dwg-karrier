@@ -47,19 +47,19 @@ public class ContentSwipe extends AppCompatActivity {
 
     DataBaseOpenHelper dbHelper = new DataBaseOpenHelper(this);
     // change to time
-    unreadPageList = dbHelper.getUnreadUrlList();
-    totalPageNum = unreadPageList.size();
-    pageSwipeAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-    pageSwipeView = (ViewPager) findViewById(R.id.container);
-    pageSwipeView.setAdapter(pageSwipeAdapter);
-
     Intent getTimeInfo = new Intent(this.getIntent());
     finTime = (Date) getTimeInfo.getSerializableExtra("finTime");
     curTime = (Date) getTimeInfo.getSerializableExtra("curTime");
 
     final int minute = 60000;
     duration = (finTime.getTime() - curTime.getTime()) / minute;
+    unreadPageList = dbHelper.getScriptedUrlListByTime(0, (int)duration) ;
+    totalPageNum = unreadPageList.size();
+    pageSwipeAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+    pageSwipeView = (ViewPager) findViewById(R.id.container);
+    pageSwipeView.setAdapter(pageSwipeAdapter);
+
 
     FloatingActionButton changeMode = (FloatingActionButton) findViewById(R.id.toList);
     changeMode.setOnClickListener(new View.OnClickListener() {

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -58,8 +59,7 @@ public class ListActivity extends AppCompatActivity {
     } else {
       final int minute = 60000;
       duration = (finTime.getTime() - curTime.getTime()) / minute;
-      // change to time..!
-      unreadPageList = dbHelper.getUnreadUrlList();
+      unreadPageList = dbHelper.getScriptedUrlListByTime(0, (int)duration) ;
     }
     lv = (ListView) findViewById(R.id.listView);
     lv.setAdapter(new ListViewAdapter(this, R.layout.item, unreadPageList));

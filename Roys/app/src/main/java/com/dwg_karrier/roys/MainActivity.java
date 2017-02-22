@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridLayout;
@@ -65,7 +66,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
           Calendar cal = Calendar.getInstance();
           cal.setTime(curTime);
           String inputTime = (String) container.getTag();
-          cal.add(Calendar.MINUTE, Integer.parseInt(inputTime));
+          int makeInputTime = Integer.parseInt(inputTime);
+          if(makeInputTime == 70){
+            makeInputTime = 10;
+          } else {
+            makeInputTime += 10;
+          }
+          Log.d("durationcheck", makeInputTime + "");
+          cal.add(Calendar.MINUTE, makeInputTime);
           Date d = new Date(cal.getTimeInMillis());
 
           Intent openRcmdList = new Intent(MainActivity.this, ContentSwipe.class); // open Recommend Lists
@@ -113,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     } else if (id == R.id.home) {
       Intent go_home = new Intent(this, MainActivity.class);
       startActivity(go_home);
+      finish();
     }
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
     drawer.closeDrawer(GravityCompat.START);
@@ -127,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     nav_user.setText(user);
     TextView nav_user_level = (TextView) hView.findViewById(R.id.nav_user_level);
     DataBaseOpenHelper dbhelper = new DataBaseOpenHelper(MainActivity.this);
-    user_level = "Lv. " + dbhelper.getReadPageCount() / 12;
+    user_level = "Lv. " + (dbhelper.getReadPageCount() / 12) + 1;
     nav_user_level.setText(user_level);
     user_record = dbhelper.getReadPageCount() + " Pages";
     TextView nav_user_record = (TextView) hView.findViewById(R.id.nav_user_record);
