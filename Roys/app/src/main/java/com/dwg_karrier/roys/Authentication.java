@@ -27,6 +27,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 
@@ -219,69 +220,65 @@ public class Authentication {
     }
 
     @Override
-    protected void onPostExecute(JSONArray arr) {
+    protected void onPostExecute(final JSONArray arr) {
       final int len = arr.length();
       final int WORDPERMIN = 90;
       try {
         //For Test
-        dataBaseOpenHelper.deleteAllPage();
+        //dataBaseOpenHelper.deleteAllPage();
         //dataBaseOpenHelper.getTableAsString();
-
+        boolean rcmcheck = false;
 
         final Map<String, Integer> keywordCount = new DefaultedMap<>(0);
+        //for bringing keywords
+        final ArrayList<String> allKeywords = new ArrayList<String>();
+        for(int i = 0; i < len; i++) {
+          final JSONObject feed = arr.getJSONObject(i);
+          final String feedUrl = feed.getString("originId");
+          String keywords = null;
+          String[] arrKeywords = null;
+          try {
+            arrKeywords = feed.getString("keywords").replace("[\"", "").replace("\"]", "").split("\",\"");
+            allKeywords.add(arrKeywords[0]);
+          } catch (JSONException e) {
+            continue;
+          }
+        }
+
+        //for temp
+        new Thread(new Runnable() {
+          public void run() {
+            Recommender recommender = new Recommender(mainContext, dataBaseOpenHelper);
+            recommender.withKeywords(new String[]{"TC"});
+          }
+        }).start();
+
         for (int i = 0; i < len; i++) {
           Log.d("iteration", Integer.toString(i));
           final JSONObject feed = arr.getJSONObject(i);
           final String feedUrl = feed.getString("originId");
-          if (len < 7) {
-            Crawler crawler = new Crawler(feedUrl);
-            String feedTitle = crawler.getTitle();
-            String feedContent = crawler.getContent();
-            int wordCount = crawler.getWordCount();
-            int feedExpectedTime = wordCount / WORDPERMIN;
-            String imgUrl = crawler.getLeadImgUrl();
-            if(imgUrl == null)  {
-              imgUrl = DEFAULTIMGURL;
-            }
-            String keywords = null;
-            try {
-              keywords = feed.getString("keywords");
-            } catch (JSONException e) {
-              e.printStackTrace();
-            }
-            for (String keyword : keywords.replace("[\"", "").replace("\"]", "").split("\",\"")) {
-              keywordCount.put(keyword, keywordCount.get(keyword) + 1);
-            }
-            if (!dataBaseOpenHelper.isDuplicatedUrl(feedUrl))
-              dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl, keywords, 0);
-
-          } else {
-            new Thread(new Runnable() {
-              public void run() {
-                Crawler crawler = new Crawler(feedUrl);
-                String feedTitle = crawler.getTitle();
-                String feedContent = crawler.getContent();
-                int wordCount = crawler.getWordCount();
-                int feedExpectedTime = wordCount / WORDPERMIN;
-                String imgUrl = crawler.getLeadImgUrl();
-                if(imgUrl == null)  {
-                  imgUrl = DEFAULTIMGURL;
-                }
-                String keywords = null;
-                try {
-                  keywords = feed.getString("keywords");
-                } catch (JSONException e) {
-                  e.printStackTrace();
-                }
-                for (String keyword : keywords.replace("[\"", "").replace("\"]", "").split("\",\"")) {
-                  keywordCount.put(keyword, keywordCount.get(keyword) + 1);
-                }
-                if (!dataBaseOpenHelper.isDuplicatedUrl(feedUrl))
-                  dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl, keywords, 0);
-
+          new Thread(new Runnable() {
+            public void run() {
+              Crawler crawler = new Crawler(feedUrl);
+              String feedTitle = crawler.getTitle();
+              String feedContent = crawler.getContent();
+              int wordCount = crawler.getWordCount();
+              int feedExpectedTime = wordCount / WORDPERMIN;
+              String imgUrl = crawler.getLeadImgUrl();
+              String keywords = null;
+              try {
+                keywords = feed.getString("keywords");
+              } catch (JSONException e) {
+                e.printStackTrace();
               }
-            }).start();
-          }
+              for (String keyword : keywords.replace("[\"", "").replace("\"]", "").split("\",\"")) {
+                keywordCount.put(keyword, keywordCount.get(keyword) + 1);
+              }
+              if (!dataBaseOpenHelper.isDuplicatedUrl(feedUrl))
+                dataBaseOpenHelper.insertScriptedData(feedUrl, feedTitle, feedContent, feedExpectedTime, imgUrl, keywords, 0);
+
+            }
+          }).start();
         }
         pDialog2.dismiss();
         //for max value
@@ -294,8 +291,7 @@ public class Authentication {
             maxKey = key;
           }
         }
-        Recommender recommender = new Recommender(mainContext, dataBaseOpenHelper);
-        recommender.withKeywords(new String[]{maxKey});
+
       } catch (Exception e) {
         Log.e("crawler error", e.getMessage(), e);
       }
