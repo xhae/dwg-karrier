@@ -17,4 +17,8 @@
         android:title="German"
         android:orderInCategory="100"
         app:showAsAction="withText"/>
+  <item android:id="@+id/tts"
+        android:icon="@drawable/tssicon"
+        android:showAsAction="always"
+        android:title="tts" />
 </menu>
