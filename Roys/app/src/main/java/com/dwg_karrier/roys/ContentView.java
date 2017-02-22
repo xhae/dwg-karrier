@@ -173,6 +173,7 @@ public class ContentView extends AppCompatActivity implements NavigationView.OnN
     } else if (id == R.id.home) {
       Intent go_home = new Intent(this, MainActivity.class);
       startActivity(go_home);
+      finish();
     }
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
     drawer.closeDrawer(GravityCompat.START);
@@ -187,7 +188,7 @@ public class ContentView extends AppCompatActivity implements NavigationView.OnN
     nav_user.setText(user);
     TextView nav_user_level = (TextView) hView.findViewById(R.id.nav_user_level);
     DataBaseOpenHelper dbhelper = new DataBaseOpenHelper(ContentView.this);
-    user_level = "Lv. " + dbhelper.getReadPageCount() / 12;
+    user_level = "Lv. " + (dbhelper.getReadPageCount() / 12) + 1;
     nav_user_level.setText(user_level);
     user_record = dbhelper.getReadPageCount() + " Pages";
     TextView nav_user_record = (TextView) hView.findViewById(R.id.nav_user_record);
