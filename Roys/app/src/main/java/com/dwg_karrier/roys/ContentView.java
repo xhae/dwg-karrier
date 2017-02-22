@@ -199,8 +199,11 @@ public class ContentView extends AppCompatActivity implements NavigationView.OnN
     WebView wv = (WebView) findViewById(R.id.contentView);
     wv.setVerticalScrollBarEnabled(true);
     wv.setHorizontalScrollBarEnabled(false);
+
     final String mimeType = "text/html";
     final String encoding = "UTF-8";
+
     wv.loadDataWithBaseURL("", view, mimeType, encoding, "");
+
   }
 }

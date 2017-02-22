@@ -1,5 +1,7 @@
 package com.dwg_karrier.roys;
 
+import static org.jsoup.Connection.Method.HEAD;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -214,9 +216,6 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     SQLiteDatabase dataBase = getWritableDatabase();
     String escapedTitle = StringEscapeUtils.escapeHtml4(title);
     String escapedContent = StringEscapeUtils.escapeHtml4(content);
-    if (isRecommended == 1)
-      Log.d("seralee", "yea");
-    Log.d("seralee", Integer.toString(isRecommended));
     dataBase.execSQL("INSERT INTO PAGE (URL, TITLE, CONTENT, EXPECTEDTIME, repImage, keywords, isrecommended) VALUES ('" + url + "',\"" + escapedTitle + "\", \"" + escapedContent + "\", " + String.valueOf((int) expectedTime) + " , '" + imgUrl + "', '" + keywords + "', " + Integer.toString(isRecommended) + ");");
     dataBase.close();
   }
