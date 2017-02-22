@@ -149,7 +149,7 @@ public class ContentView extends AppCompatActivity implements NavigationView.OnN
       return true;
     } else if (id == R.id.original) {
       setView(title, content);
-    }
+    } 
     return super.onOptionsItemSelected(item);
   }
 
