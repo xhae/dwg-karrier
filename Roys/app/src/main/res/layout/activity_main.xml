@@ -5,14 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:showIn="@layout/app_bar_navigation"
+    android:fitsSystemWindows="false"
     tools:context="com.dwg_karrier.roys.MainActivity">
   <android.support.v4.widget.NestedScrollView
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior"
-      android:layout_margin="0dp">
+      android:layout_margin="0dp"
+      android:layout_gravity="top">
     <RelativeLayout
         android:id="@+id/activity_main"
         android:layout_width="match_parent"
